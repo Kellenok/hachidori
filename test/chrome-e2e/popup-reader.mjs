@@ -929,7 +929,8 @@ async function popupReader(page, depth = 0) {
               ariaLabel: add.getAttribute("aria-label"),
               focused: add.getRootNode().activeElement === add,
               color: style.color, borderColor: style.borderColor,
-              successColored: style.color === successColor && style.borderColor === successColor,
+              // Buttons are borderless; the success colour is the state.
+              successColored: style.color === successColor,
               output: control?.querySelector("output")?.textContent ?? "",
               action: add.dataset.action,
               rect: add.getBoundingClientRect().toJSON() };

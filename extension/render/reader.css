@@ -1959,6 +1959,14 @@ html[data-hoshidicts-theme="girlypop"],
   > .gsm-hoshidicts-entry-actions {
   flex: 1 1 270px;
 }
+/* The headword takes its own width there rather than a reserved 12em, so the
+   room left goes to the labels; it leaves the toolbar more than its basis, so the two
+   keep sharing the row and a long headword wraps within its own column. */
+.gsm-hoshidicts-entry-header:has(> .gsm-hoshidicts-entry-actions > .gsm-hoshidicts-text-action-button)
+  > .gsm-hoshidicts-headword {
+  flex: 0 1 auto;
+  max-width: calc(100% - 300px - var(--hd-space-4));
+}
 
 .gsm-hoshidicts-entry-actions > .gsm-hoshidicts-external-link-button,
 .gsm-hoshidicts-entry-actions > .gsm-hoshidicts-custom-anki-button {
@@ -3030,8 +3038,14 @@ html[data-hoshidicts-theme="girlypop"],
  * in the muted one instead. */
 :host(:is([data-hoshidicts-theme="solarized-dark"], [data-hoshidicts-theme="coffee"],
   [data-hoshidicts-theme="solarized-light"], [data-hoshidicts-theme="emerald"], [data-hoshidicts-theme="retro"],
-  [data-hoshidicts-theme="winter"], [data-hoshidicts-theme="caramellatte"], [data-hoshidicts-theme="silk"])) .gsm-hoshidicts-popup {
+  [data-hoshidicts-theme="winter"], [data-hoshidicts-theme="caramellatte"], [data-hoshidicts-theme="silk"],
+  [data-hoshidicts-theme="valentine"], [data-hoshidicts-theme="nord"])) .gsm-hoshidicts-popup {
   --hd-compact-list-separator-color: var(--text-color-light1);
+}
+/* On Solarized Light's card even the muted colour stays under 3:1; the bar
+ * goes halfway to the text colour. */
+:host([data-hoshidicts-theme="solarized-light"]) .gsm-hoshidicts-popup {
+  --hd-compact-list-separator-color: color-mix(in srgb, var(--text-color) 50%, var(--text-color-light1));
 }
 
 .gsm-hoshidicts-structured-image[hidden] {
@@ -3424,4 +3438,216 @@ html[data-hoshidicts-theme="girlypop"],
 .gsm-hoshidicts-kanji-stats dd {
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------------------
+ * The standard popup in the Settings page's shapes: larger corners, roomier
+ * padding, and controls drawn as quiet fills instead of outlines. Only shapes
+ * change here; every colour still comes from the palette, and High contrast
+ * keeps its strong edges.
+ * ------------------------------------------------------------------------- */
+.gsm-hoshidicts-popup {
+  --hd-radius-control: 10px;
+  --hd-radius-card: 12px;
+  --hd-fill: color-mix(in srgb, var(--hoshidicts-palette-base-content) 9%, transparent);
+  --hd-fill-hover: color-mix(in srgb, var(--hoshidicts-palette-base-content) 15%, transparent);
+  --hd-tint-accent: color-mix(in srgb, var(--hoshidicts-palette-primary) 18%, transparent);
+  --hd-tint-success: color-mix(in srgb, var(--hoshidicts-palette-success) 18%, transparent);
+  --hd-tint-danger: color-mix(in srgb, var(--hoshidicts-palette-error) 18%, transparent);
+  --hd-popup-padding: 10px 12px 12px;
+  --hd-header-padding: 10px 12px;
+  --hd-card-padding: 10px 12px 11px;
+  border-radius: 18px;
+  border-color: var(--hoshidicts-border);
+}
+.gsm-hoshidicts-metadata-strip {
+  padding: 7px 12px 8px;
+}
+
+/* Controls: one radius; a fill shows the control, colour shows its state. */
+:is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-mine-button, .gsm-hoshidicts-note-button,
+  .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button, .gsm-hoshidicts-kanji-back,
+  .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more, .gsm-hoshidicts-note-actions button) {
+  border-radius: var(--hd-radius-control);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-mine-button,
+  .gsm-hoshidicts-note-button, .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button,
+  .gsm-hoshidicts-kanji-back, .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more,
+  .gsm-hoshidicts-note-actions button, .gsm-hoshidicts-tab) {
+  border-color: transparent;
+  background: var(--hd-fill);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-note-button,
+  .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button, .gsm-hoshidicts-kanji-back,
+  .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more, .gsm-hoshidicts-note-actions button):is(:hover, :focus-visible):not(:disabled, .gsm-hoshidicts-note-save, .gsm-hoshidicts-custom-anki-button[data-state],
+  .gsm-hoshidicts-note-button[aria-expanded="true"], .gsm-hoshidicts-word-status-button[aria-pressed="true"]) {
+  border-color: transparent;
+  background: var(--hd-fill-hover);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-mine-button,
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-note-actions .gsm-hoshidicts-note-save,
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-custom-anki-button:is([data-state="ready"],
+  [data-state="add-duplicate"], [data-state="overwrite"]),
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-note-button[aria-expanded="true"],
+  .gsm-hoshidicts-word-status-button[aria-pressed="true"]) {
+  border-color: transparent;
+  background: var(--hd-tint-accent);
+  color: var(--accent-color);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-mine-button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--hoshidicts-palette-primary) 28%, transparent);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-mine-button, .gsm-hoshidicts-custom-anki-button):is(
+  [data-state="view-existing"], [data-state="success"]),
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-audio-button[data-state="playing"] {
+  border-color: transparent;
+  background: var(--hd-tint-success);
+  color: var(--hoshidicts-success);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-custom-anki-button[data-state="error"] {
+  border-color: transparent;
+  background: var(--hd-tint-danger);
+  color: var(--hoshidicts-danger);
+}
+
+/* Dictionary tabs: quiet fills; the open one takes the accent tint. */
+.gsm-hoshidicts-tab {
+  min-height: 28px;
+  padding: 4px 11px;
+  border-radius: 8px;
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-tab:hover:not(:disabled):not([aria-selected="true"]) {
+  border-color: transparent;
+  background: var(--hd-fill-hover);
+}
+/* A light tint keeps the palette's text readable on it in every palette; a
+   ring in the accent marks the open tab without relying on the tint. */
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-tab[aria-selected="true"] {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--hoshidicts-palette-primary) 14%, var(--hoshidicts-palette-base-100));
+  box-shadow: inset 0 0 0 1.5px var(--hoshidicts-palette-primary);
+  color: var(--hoshidicts-text);
+}
+
+/* Cards and the panels in the popup: a fill and a faint ring, no outline. */
+.gsm-hoshidicts-glossary-card {
+  border-radius: var(--hd-radius-card);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-glossary-card {
+  border-color: transparent;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hoshidicts-palette-base-content) 7%, transparent);
+}
+.gsm-hoshidicts-note-form,
+.gsm-hoshidicts-lookup-notice,
+.gsm-hoshidicts-lookup-failure,
+.gsm-hoshidicts-audio-menu {
+  border-radius: var(--hd-radius-card);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-note-form {
+  border-color: transparent;
+}
+.gsm-hoshidicts-note-form {
+  padding: 10px;
+}
+.gsm-hoshidicts-note-form :is(input, textarea),
+.gsm-hoshidicts-note-error,
+.gsm-hoshidicts-audio-menu-item {
+  border-radius: 8px;
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-note-form :is(input, textarea) {
+  border-color: transparent;
+  background: var(--hd-fill);
+}
+
+/* Small chips: the lookup count, frequency and pitch tags. */
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-lookup-stats {
+  border-color: transparent;
+  background: var(--hd-fill);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-tag-frequency {
+  border-color: transparent;
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-pitch-source {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--hoshidicts-pitch) 8%, var(--hoshidicts-palette-base-100));
+}
+
+/* Hover and focus: every control only deepens its own fill. A neutral one gets
+   a stronger neutral fill and keeps its colours; a tinted one a stronger tint
+   of its own colour. No outline returns on hover. */
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-mine-button,
+  .gsm-hoshidicts-note-button, .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button,
+  .gsm-hoshidicts-kanji-back, .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more,
+  .gsm-hoshidicts-note-actions button):is(:hover, :focus-visible):not(:disabled) {
+  border-color: transparent;
+  background: var(--hd-fill-hover);
+  color: var(--text-color);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-mine-button,
+  .gsm-hoshidicts-note-actions .gsm-hoshidicts-note-save,
+  .gsm-hoshidicts-custom-anki-button:is([data-state="ready"], [data-state="add-duplicate"], [data-state="overwrite"]),
+  .gsm-hoshidicts-note-button[aria-expanded="true"],
+  .gsm-hoshidicts-word-status-button[aria-pressed="true"]):is(:hover, :focus-visible):not(:disabled) {
+  background: color-mix(in srgb, var(--hoshidicts-palette-primary) 30%, transparent);
+  color: var(--accent-color);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-mine-button, .gsm-hoshidicts-custom-anki-button):is(
+  [data-state="view-existing"], [data-state="success"]):is(:hover, :focus-visible):not(:disabled),
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-audio-button[data-state="playing"]:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--hoshidicts-palette-success) 30%, transparent);
+  color: var(--hoshidicts-success);
+}
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-custom-anki-button[data-state="error"]:is(:hover, :focus-visible):not(:disabled) {
+  background: color-mix(in srgb, var(--hoshidicts-palette-error) 30%, transparent);
+  color: var(--hoshidicts-danger);
+}
+
+/* Surfaces, the same as Settings' page and cards: in a dark palette the popup
+   is the base colour and a dictionary entry a step lighter; in a light one the
+   popup is a grey step and an entry the base colour itself. High contrast
+   keeps its own surfaces. */
+.gsm-hoshidicts-popup {
+  --hd-ground: light-dark(
+    color-mix(in srgb, var(--hoshidicts-palette-base-content) 4%, var(--hoshidicts-palette-base-100)),
+    var(--hoshidicts-palette-base-100)
+  );
+  --hoshidicts-popup-background: color-mix(in srgb, var(--hd-ground) var(--hoshidicts-background-opacity), transparent);
+  --hoshidicts-chrome-background: var(--hoshidicts-popup-background);
+  --hoshidicts-card-base: light-dark(
+    var(--hoshidicts-palette-base-100),
+    color-mix(in srgb, var(--hoshidicts-palette-base-content) 5.5%, var(--hoshidicts-palette-base-100))
+  );
+}
+
+/* A pressed or finished control shows its icon filled, as the current Settings
+   section does. */
+:is(.gsm-hoshidicts-note-button[aria-expanded="true"], .gsm-hoshidicts-word-status-button[aria-pressed="true"],
+  .gsm-hoshidicts-mine-button:is([data-state="success"], [data-state="view-existing"])) .hd-icon,
+.gsm-hoshidicts-audio-button[data-state="playing"]::before {
+  mask-image: var(--hd-icon-filled, var(--hd-icon));
+}
+
+/* The lookup count is a note about the word, not part of its entry: it reads
+   quieter than the definitions under it. */
+:host(:not([data-hoshidicts-theme="high-contrast"])) .gsm-hoshidicts-lookup-stats {
+  color: var(--hoshidicts-text-muted);
+  font-weight: 500;
+}
+
+/* A control gives a little under the pointer, so a click is felt at once. */
+:host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-mine-button,
+  .gsm-hoshidicts-note-button, .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button,
+  .gsm-hoshidicts-kanji-back, .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more,
+  .gsm-hoshidicts-note-actions button, .gsm-hoshidicts-tab):active:not(:disabled) {
+  scale: 0.97;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :host(:not([data-hoshidicts-theme="high-contrast"])) :is(.gsm-hoshidicts-audio-button, .gsm-hoshidicts-mine-button,
+    .gsm-hoshidicts-note-button, .gsm-hoshidicts-word-status-button, .gsm-hoshidicts-text-action-button,
+    .gsm-hoshidicts-kanji-back, .gsm-hoshidicts-popup-close, .gsm-hoshidicts-show-more,
+    .gsm-hoshidicts-note-actions button, .gsm-hoshidicts-tab) {
+    transition-property: scale;
+    transition-duration: 120ms;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
 }

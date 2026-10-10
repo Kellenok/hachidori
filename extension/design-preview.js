@@ -117,6 +117,8 @@
     onResultsRendered({ lookupStats, miningActions = [] }) {
       // A visual sample only: the preview never connects to Anki or saves notes.
       for (const { actions } of miningActions) {
+        // A rerender can reuse a row that already has its sample button.
+        if (actions.querySelector(":scope > .gsm-hoshidicts-mine-button")) continue;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "gsm-hoshidicts-mine-button";
