@@ -42,8 +42,14 @@ test("the vendored subset has pinned provenance and no unlisted SVGs", () => {
     Object.keys(sources.icons).map(name => `${name}.svg`).sort());
   const update = readFileSync(new URL("../scripts/vendor-fluent-icons.py", import.meta.url), "utf8");
   assert.ok(update.includes(`REVISION = "${sources.revision}"`));
+  const asset = name => `assets/${name.split("-").map(word => word[0].toUpperCase() + word.slice(1)).join(" ")}`
+    + `/SVG/ic_fluent_${name.replaceAll("-", "_")}`;
+  // Outlines use the heavier 16px drawing where Fluent has one; the filled
+  // 20px drawing marks a current or pressed control.
   for (const [name, path] of Object.entries(sources.icons)) {
-    assert.equal(path, `assets/${name.split("-").map(word => word[0].toUpperCase() + word.slice(1)).join(" ")}`
-      + `/SVG/ic_fluent_${name.replaceAll("-", "_")}_20_regular.svg`);
+    assert.ok([`${asset(name)}_16_regular.svg`, `${asset(name)}_20_regular.svg`].includes(path), path);
+    assert.equal(sources.filled[name], `${asset(name)}_20_filled.svg`);
   }
+  assert.deepEqual(readdirSync(new URL("filled/", directory)).filter(name => name.endsWith(".svg")).sort(),
+    Object.keys(sources.filled).map(name => `${name}.svg`).sort());
 });
