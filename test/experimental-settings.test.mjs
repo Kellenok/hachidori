@@ -53,7 +53,6 @@ test("each registered feature renders one labelled switch that reports changes",
   assert.equal(section.checked, true);
   assert.equal(section.closest("label").querySelector("span").textContent, "Section feature");
   const hint = document.getElementById(section.getAttribute("aria-describedby"));
-  assert.match(hint.textContent, /A setting with its own section\./);
   const link = hint.querySelector("a");
   assert.equal(link.getAttribute("href"), "#secondary");
   assert.equal(link.hidden, false, "an enabled feature links to its own section");

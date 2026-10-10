@@ -13,6 +13,7 @@ import { resolve } from "node:path";
 import { describe } from "node:test";
 import { check, diagnostics, EXTENSION, step } from "./harness.mjs";
 import { popupReader } from "./popup-reader.mjs";
+import { answerConfirmation } from "../chrome-confirm.mjs";
 import {
   browser,
   cycleVisualNovelScene,
@@ -956,15 +957,12 @@ describe("first-run setup", () => {
       search.dispatchEvent(new Event("input", { bubbles: true }));
     }, setupInstalled[0]?.title);
     const searchVisibleRows = await page.$$eval("#dict-list .dict-row", rows => rows.length);
-    let removeAllDialog = null;
-    const acceptRemoveAll = async (dialog) => { removeAllDialog = dialog.message(); await dialog.accept(); };
-    page.on("dialog", acceptRemoveAll);
     await page.click("#library-remove-all");
+    const removeAllDialog = await answerConfirmation(page, true);
     const removeAllOutcome = await page.waitForFunction(() => {
       const status = document.getElementById("library-reset-status");
       return status.classList.contains("is-ready") || status.classList.contains("is-error") ? status.textContent : false;
     }, { timeout: 120_000, polling: 100 }).then((handle) => handle.jsonValue()).catch(error => `no outcome: ${error.message}`);
-    page.off("dialog", acceptRemoveAll);
     const afterRemoveAll = await page.evaluate(async () =>
       (await chrome.storage.local.get("dictionaryState")).dictionaryState?.dictionaries?.map(entry => entry.title) ?? null);
     check(

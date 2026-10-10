@@ -41,16 +41,17 @@ export function createCustomButtonSettings({
   function button(text, label, onClick, iconName) {
     const node = document.createElement("button");
     node.type = "button";
-    node.className = "ghost";
+    node.className = iconName ? "ghost icon-only" : "ghost";
     if (iconName) {
       const icon = document.createElement("span");
       icon.className = "hd-icon";
       icon.dataset.icon = iconName;
       icon.setAttribute("aria-hidden", "true");
       node.append(icon);
-    } else {
-      node.textContent = text;
     }
+    // An icon button keeps its word as text for assistive tech; CSS shows the glyph.
+    if (text) node.append(text);
+    node.title = label;
     node.setAttribute("aria-label", label);
     node.addEventListener("click", onClick);
     return node;
@@ -89,6 +90,7 @@ export function createCustomButtonSettings({
     template.value = value.type === "anki" ? value.templateId : "";
     status.textContent = "";
     updateForm();
+    showEditor();
     name.focus();
   }
 
@@ -117,9 +119,11 @@ export function createCustomButtonSettings({
     down.dataset.action = "down";
     up.disabled = index === 0;
     down.disabled = index === count - 1;
-    const editButton = button("Edit", `Edit button ${value.label}`, () => edit(index));
+    const editButton = button("Edit", `Edit button ${value.label}`, () => edit(index), "edit");
     editButton.dataset.action = "edit";
-    actions.append(up, down, editButton, button("Delete", `Delete button ${value.label}`, () => remove(index)));
+    const deleteButton = button("Delete", `Delete button ${value.label}`, () => remove(index), "dismiss");
+    deleteButton.classList.add("danger");
+    actions.append(up, down, editButton, deleteButton);
     row.append(text, actions);
     return row;
   }
@@ -136,13 +140,29 @@ export function createCustomButtonSettings({
       ? selected : values[0]?.id ?? "";
   }
 
+  // The editor is a dialog in Settings; without one (a bare form) it edits in place.
+  const dialog = form.closest("dialog");
+  const heading = dialog?.querySelector("h2");
+  const opener = document.getElementById("custom-button-new");
+  function showEditor() {
+    if (!dialog || dialog.open) return;
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+  }
+  function hideEditor() {
+    if (!dialog?.open) return;
+    if (typeof dialog.close === "function") dialog.close();
+    else dialog.removeAttribute("open");
+  }
+
   function updateForm() {
     renderTemplateChoices();
     const link = type.value === "link";
     linkField.hidden = !link;
     ankiField.hidden = link;
     submit.textContent = editing ? "Save button" : "Add button";
-    cancel.hidden = !editing;
+    if (heading) heading.textContent = editing ? "Edit button" : "New button";
+    cancel.hidden = !editing && !dialog;
   }
 
   function closeForm() {
@@ -204,7 +224,12 @@ export function createCustomButtonSettings({
     saveButtons(buttons);
     closeForm();
     render();
-    name.focus();
+    if (dialog) {
+      hideEditor();
+      opener?.focus();
+    } else {
+      name.focus();
+    }
   });
   for (const input of [name, url, template]) {
     input.addEventListener("input", () => { status.textContent = ""; });
@@ -216,7 +241,22 @@ export function createCustomButtonSettings({
   });
   cancel.addEventListener("click", () => {
     closeForm();
+    if (dialog) {
+      hideEditor();
+      opener?.focus();
+    } else {
+      name.focus();
+    }
+  });
+  opener?.addEventListener("click", () => {
+    // A new button starts clean after an edit; an unsent new draft is kept.
+    if (editing) closeForm();
+    showEditor();
     name.focus();
+  });
+  // Escape leaves an edit unsaved; a new draft stays for next time.
+  dialog?.addEventListener("close", () => {
+    if (editing) closeForm();
   });
   updateForm();
   render();

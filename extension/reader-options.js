@@ -29,18 +29,18 @@
   // under `options.experimental`; `section` names the Settings card the flag
   // reveals.
   const EXPERIMENTAL_FEATURES = [
-    { id: "themeStore", label: "Theme Store",
-      description: "Try Default, Nazeka, Plain and JL popup layouts in Design." },
+    { id: "themeStore", label: "Advanced themes",
+      description: "More popup layouts in Design." },
     { id: "googleDocs", label: "Google Docs",
-      description: "Look up words in Google Docs. Asks Google Docs to expose its text to Hachidori, which Google may change or remove without notice; the sentence is the hovered run of text." },
+      description: "Look up words in Google Docs." },
     { id: "smallerAnkiCards", label: "Smaller Anki cards",
-      description: "Write compact definitions to new Anki notes: dictionary stylesheets, classes and wrappers are left out, keeping the text, line breaks, lists, tables, furigana and images. Notes already in Anki are not changed." },
+      description: "New notes leave out dictionary styling." },
     { id: "netflixMining", label: "Netflix mining",
-      description: "Add the Netflix subtitle line's audio to Anki notes with {sentence-audio} and a looping GIF of it with {gif}, and use the whole line as the sentence. Hovering a subtitle pauses the video until the pointer leaves the subtitle and the popup. Reads Netflix's subtitle files (adapted from Subadub), which Netflix may change without notice. The video's sound plays through Hachidori, which keeps the last 30 seconds in memory to cut the line from; a line you have not heard all of plays on or replays once. Reload Netflix after turning this on. Protected video can make the audio silent or the GIF black." },
+      description: "Line audio and a GIF in Anki. Reload Netflix after." },
     { id: "netflixPreviewScreenshots", label: "Netflix preview screenshots",
-      description: "Use Netflix's timeline preview image for {screenshot} when the video comes out black. Preview images have lower resolution and show a nearby moment, not necessarily the exact frame. Does not record or replay the video. Other pages keep normal screenshots. Netflix may change or remove these previews." },
+      description: "Preview frame when a screenshot comes out black." },
     { id: "wordHighlighting", label: "Word highlighting", section: "word-highlighting",
-      description: "Mark the Japanese words on every page by their Anki status: unknown, learning or known, or as you set them with Mark as known and Ignore in the popup. Your dictionaries split the page into words on this computer, and the status comes from Hachidori's copy of your Anki index, so opening a page never contacts Anki." },
+      description: "Mark words on pages by their Anki status." },
   ];
   const DEFAULT_EXPERIMENTAL = Object.fromEntries(EXPERIMENTAL_FEATURES.map(feature => [feature.id, false]));
   // yomitan-gsm hotkey actions that map onto existing Hachidori behaviour, in

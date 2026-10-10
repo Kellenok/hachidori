@@ -302,7 +302,7 @@ describe("import", () => {
           capability: badge.dataset.capability,
           text: badge.textContent,
         })),
-        metadata: row?.querySelector(".dict-metadata")?.textContent ?? "",
+        facts: [...(row?.querySelectorAll(".dict-fact:not([hidden]) > dd") ?? [])].map((fact) => fact.textContent),
       };
     });
     check("the dictionary list renders its alias, metadata, and five capability badges",
@@ -319,11 +319,10 @@ describe("import", () => {
           { capability: "kanji", text: "Kanji 1" },
           { capability: "media", text: "Media 1" },
         ])
-        && renderedDictionary.metadata.includes("Revision test-1")
-        && renderedDictionary.metadata.includes("ja")
-        && renderedDictionary.metadata.includes("Imported ")
-        && renderedDictionary.metadata.includes(`Package ID ${FIXTURE_ID}`)
-        && renderedDictionary.metadata.includes("Update source available"),
+        && renderedDictionary.facts.includes("test-1")
+        && renderedDictionary.facts.includes("Japanese")
+        && renderedDictionary.facts.some((fact) => fact.startsWith("Imported "))
+        && renderedDictionary.facts.includes("Update source available"),
       `#dict-list: ${JSON.stringify(renderedDictionary)}`);
   });
 });

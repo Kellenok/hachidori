@@ -206,7 +206,7 @@ function setControlsDisabled(disabled) {
     control.disabled = blocked || control.dataset.pinnedDisabled === "true";
   }
   element("dict-select-visible").disabled = blocked || visibleDictionaries().length === 0;
-  for (const control of element("dict-controls").querySelectorAll(".dict-bulk-actions button")) {
+  for (const control of element("dict-bulk-actions").querySelectorAll("button")) {
     control.disabled = blocked || selectedDictionaryIds.size === 0;
   }
   element("dict-bulk-remove").disabled = blocked || !selectedRemovableDictionaries().length;
@@ -234,22 +234,27 @@ function addCountBadge(container, label, count) {
   container.appendChild(badge);
 }
 
-function dictionaryMetadata(entry) {
-  const details = [];
-  if (entry.revision) {
-    details.push(`Revision ${entry.revision}`);
+function languageName(code) {
+  try {
+    return new Intl.DisplayNames(["en"], { type: "language" }).of(code) ?? code;
+  } catch {
+    return code;
   }
-  if (entry.language) {
-    details.push(entry.language);
-  }
+}
+
+// Label and value pairs for the Details facts, before the In memory one. The
+// values speak for themselves on screen; the labels are for screen readers.
+function dictionaryFacts(entry) {
+  const facts = [["Source", isUpdateCheckable(entry) ? "Update source available" : "Local archive"]];
+  if (entry.revision) facts.push(["Revision", entry.revision]);
+  if (entry.language) facts.push(["Language", languageName(entry.language)]);
   if (entry.installedAt) {
     const installed = new Date(entry.installedAt);
     if (!Number.isNaN(installed.getTime())) {
-      details.push(`Imported ${installed.toLocaleString()}`);
+      facts.push(["Imported", `Imported ${installed.toLocaleDateString(undefined, { dateStyle: "medium" })}`]);
     }
   }
-  details.push(`Package ID ${entry.id}`, isUpdateCheckable(entry) ? "Update source available" : "Local archive");
-  return details.join(" · ");
+  return facts;
 }
 
 function updateItemById(current, id, update) {
@@ -564,10 +569,18 @@ function renderDictionaryRow(template, entry, index) {
   addCountBadge(badges, "Pitch", entry.pitchCount);
   addCountBadge(badges, "Kanji", entry.kanjiCount);
   addCountBadge(badges, "Media", entry.mediaCount);
-  const metadata = dictionaryMetadata(entry);
-  row.querySelector(".dict-metadata").textContent = isManagedCustomDictionary(entry)
-    ? `Managed · always enabled and first · ${metadata}`
-    : metadata;
+  const memoryFact = row.querySelector(".dict-memory").parentElement;
+  for (const [label, value] of dictionaryFacts(entry)) {
+    const fact = document.createElement("div");
+    fact.className = "dict-fact";
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    detail.textContent = value;
+    detail.title = value;
+    fact.append(term, detail);
+    memoryFact.before(fact);
+  }
   bindDictionaryUpdate(row, entry);
 
   bindDictionaryAlias(row, entry);
@@ -926,8 +939,36 @@ function bindNameDraft(input, collection, id, field, value, normalise, validate)
   });
 }
 
+// Settings' own confirmation modal. It resolves true when the person confirms,
+// and false when they cancel, press Escape or click outside it. Its buttons
+// answer directly: a close event still queued from the previous question can
+// arrive after the next one opens, so close only answers for a closed dialog.
+let pendingConfirmation = null;
+
+function settleConfirmation(confirmed) {
+  const resolve = pendingConfirmation;
+  pendingConfirmation = null;
+  resolve?.(confirmed);
+}
+
+export function confirmAction({ title, body, confirm }) {
+  const dialog = element("confirm-dialog");
+  element("confirm-dialog-title").textContent = title;
+  element("confirm-dialog-body").textContent = body;
+  element("confirm-dialog-accept").textContent = confirm;
+  return new Promise((resolve) => {
+    pendingConfirmation = resolve;
+    dialog.returnValue = "";
+    dialog.showModal();
+  });
+}
+
 async function removeDictionary(id, title) {
-  if (!window.confirm(`Remove ${title}? Its imported data is deleted and has to be imported again.`)) {
+  if (!await confirmAction({
+    title: `Remove ${title}?`,
+    body: "Its imported data is deleted and has to be imported again.",
+    confirm: "Remove",
+  })) {
     return;
   }
   await removeDictionaries([{ id, title }]);
@@ -940,7 +981,11 @@ function selectedRemovableDictionaries() {
 
 async function removeSelectedDictionaries() {
   const selected = selectedRemovableDictionaries();
-  if (!selected.length || !window.confirm(`Remove ${selected.length} selected dictionaries? Their imported data is deleted and has to be imported again. The personal dictionary is kept.`)) {
+  if (!selected.length || !await confirmAction({
+    title: `Remove ${selected.length} selected dictionaries?`,
+    body: "Their imported data is deleted and has to be imported again. The personal dictionary is kept.",
+    confirm: "Remove",
+  })) {
     return;
   }
   await removeDictionaries(selected);
@@ -996,7 +1041,8 @@ function removeAllConfirmation(count, personal, erasePersonal) {
   ];
   if (!erasePersonal) parts.push("The personal dictionary is kept.");
   parts.push("This deletes them from this browser. Anki notes are not changed, and existing backups still hold them.");
-  return parts.join(" ");
+  const [title, ...body] = parts;
+  return { title, body: body.join(" "), confirm: "Remove all" };
 }
 
 // Empty source through the existing save transaction. The revision is the one
@@ -1055,7 +1101,7 @@ async function removeAllDictionaries() {
       setLibraryResetStatus("There is nothing to remove.", "ready");
       return;
     }
-    if (!window.confirm(removeAllConfirmation(entries.length, personal, erasePersonal))) return;
+    if (!await confirmAction(removeAllConfirmation(entries.length, personal, erasePersonal))) return;
     if (sharingLinkedAddress !== null) throw new Error("this browser is now linked to another Hachidori");
     setLibraryResetStatus("Removing dictionaries…", "working");
     const failures = await removePackages(entries);
@@ -1103,15 +1149,9 @@ function attachLibraryHandlers() {
     renderDictionaries(true);
   });
 
-  element("dict-select-visible").addEventListener("change", (event) => {
-    const visible = visibleDictionaries();
-    for (const dictionary of visible) {
-      if (event.target.checked) {
-        selectedDictionaryIds.add(dictionary.id);
-      } else {
-        selectedDictionaryIds.delete(dictionary.id);
-      }
-    }
+  // Select visible and Clear selection change the selection the same way and
+  // then redraw the row checkboxes, the toolbar and the controls.
+  const applySelection = (visible) => {
     if (dictionaryRenderDeferred) {
       renderDictionaries();
     } else {
@@ -1121,6 +1161,33 @@ function attachLibraryHandlers() {
       renderDictionarySelection(visible);
       setControlsDisabled(importing);
     }
+  };
+  element("dict-select-visible").addEventListener("change", (event) => {
+    const visible = visibleDictionaries();
+    for (const dictionary of visible) {
+      if (event.target.checked) {
+        selectedDictionaryIds.add(dictionary.id);
+      } else {
+        selectedDictionaryIds.delete(dictionary.id);
+      }
+    }
+    applySelection(visible);
+  });
+  element("confirm-dialog-accept").addEventListener("click", () => {
+    settleConfirmation(true);
+    element("confirm-dialog").close("accept");
+  });
+  element("confirm-dialog-cancel").addEventListener("click", () => {
+    settleConfirmation(false);
+    element("confirm-dialog").close("cancel");
+  });
+  element("confirm-dialog").addEventListener("close", () => {
+    if (!element("confirm-dialog").open) settleConfirmation(false);
+  });
+  element("dict-bulk-clear").addEventListener("click", () => {
+    selectedDictionaryIds.clear();
+    applySelection(visibleDictionaries());
+    element("dict-select-visible").focus();
   });
 
   element("dict-bulk-enable").addEventListener("click", () => {

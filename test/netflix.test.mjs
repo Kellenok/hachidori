@@ -27,7 +27,6 @@ test("Netflix mining is an experimental flag that starts off", () => {
   const { DEFAULT_OPTIONS, EXPERIMENTAL_FEATURES, normaliseOptions } = globalThis.HDReaderOptions;
   const feature = EXPERIMENTAL_FEATURES.find(entry => entry.id === "netflixMining");
   assert.equal(feature?.label, "Netflix mining");
-  assert.match(feature.description, /Subadub/u);
   assert.equal(feature.section, undefined, "the flag has no Settings section of its own");
   assert.equal(DEFAULT_OPTIONS.experimental.netflixMining, false);
   assert.equal(normaliseOptions({}).experimental.netflixMining, false);

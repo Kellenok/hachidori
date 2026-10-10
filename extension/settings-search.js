@@ -41,8 +41,16 @@ export function createSettingsSearch({ document, navigate }) {
       for (let parent = target; parent && parent !== section; parent = parent.parentElement) {
         // Conditional settings stay governed by their own enable control.
         // Lead to the enclosing group when the matching control is hidden.
-        if (parent.hidden) destination = parent.parentElement;
+        // A card only draws the group's surface; the group itself is the destination.
+        if (parent.hidden) {
+          destination = parent.parentElement.classList.contains("group-card")
+            ? parent.parentElement.parentElement : parent.parentElement;
+        }
         else if (parent.tagName === "DETAILS") parent.open = true;
+        else if (parent.tagName === "DIALOG" && !parent.open) {
+          if (typeof parent.showModal === "function") parent.showModal();
+          else parent.setAttribute("open", "");
+        }
       }
       const controls = [destination.control, ...destination.querySelectorAll("input, select, textarea, button")];
       const control = controls.find(node => node && !node.disabled && !node.closest("[hidden]")) || destination;

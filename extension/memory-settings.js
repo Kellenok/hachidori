@@ -46,7 +46,8 @@ export function createMemorySettings({ document, readMemory, readExtensionTotal,
     // Entry and hash residency are independent; metadata remains resident.
     const disk = [entry?.paged === true ? "entries" : "", entry?.hashIndexStorage === "paged" ? "hash index" : ""].filter(Boolean);
     const detail = disk.length ? ` (${disk.join(" and ")} read from disk)` : "";
-    target.textContent = `In memory: ${share}${detail}`;
+    target.textContent = `${share}${detail}`;
+    target.parentElement.hidden = share === UNAVAILABLE;
   }
 
   function renderRows() {

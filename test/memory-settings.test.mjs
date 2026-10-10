@@ -98,8 +98,8 @@ test("Advanced shows the engine total and each Library row shows its share", asy
   const { el, requests, rowMemory } = fixture(t);
   await settle();
   assert.equal(el("memory-total").textContent, "Engine memory: 3.00 GB across 2 dictionaries");
-  assert.equal(rowMemory(DICTIONARIES[0].id), "In memory: \u2248 512.0 MB");
-  assert.equal(rowMemory(DICTIONARIES[1].id), "In memory: \u2248 1.40 GB");
+  assert.equal(rowMemory(DICTIONARIES[0].id), "\u2248 512.0 MB");
+  assert.equal(rowMemory(DICTIONARIES[1].id), "\u2248 1.40 GB");
   assert.equal(requests.filter(message => message.type === "hd_memory").length, 1, "one read for the Advanced visit, not a poll");
 });
 
@@ -139,8 +139,8 @@ test("a row whose entries are read from disk says so", async t => {
   ] };
   const { rowMemory } = fixture(t, { memory: paged });
   await settle();
-  assert.equal(rowMemory(DICTIONARIES[0].id), "In memory: \u2248 13.0 MB (entries read from disk)");
-  assert.equal(rowMemory(DICTIONARIES[1].id), "In memory: \u2248 1.40 GB");
+  assert.equal(rowMemory(DICTIONARIES[0].id), "\u2248 13.0 MB (entries read from disk)");
+  assert.equal(rowMemory(DICTIONARIES[1].id), "\u2248 1.40 GB");
 });
 
 test("the Library asks only when a reader opens a row's Details", async t => {
@@ -149,7 +149,7 @@ test("the Library asks only when a reader opens a row's Details", async t => {
   const reads = () => requests.filter(message => message.type === "hd_memory").length;
   assert.equal(reads(), 0, "rendering the Library requests nothing");
   const totals = () => requests.filter(message => message.type === "hd_memory_total").length;
-  assert.equal(rowMemory(DICTIONARIES[0].id), "In memory: \u2014");
+  assert.equal(rowMemory(DICTIONARIES[0].id), "\u2014");
   window.rerenderDictionaries();
   await window.pollStatus();
   await settle();
@@ -157,9 +157,9 @@ test("the Library asks only when a reader opens a row's Details", async t => {
   openDetails(DICTIONARIES[0].id);
   await settle();
   assert.equal(reads(), 1);
-  assert.equal(rowMemory(DICTIONARIES[0].id), "In memory: \u2248 512.0 MB");
+  assert.equal(rowMemory(DICTIONARIES[0].id), "\u2248 512.0 MB");
   window.rerenderDictionaries();
-  assert.equal(rowMemory(DICTIONARIES[1].id), "In memory: \u2248 1.40 GB", "rebuilt rows show the last reading at once");
+  assert.equal(rowMemory(DICTIONARIES[1].id), "\u2248 1.40 GB", "rebuilt rows show the last reading at once");
   assert.equal(reads(), 1, "a rebuilt open row does not ask again");
   assert.equal(totals(), 0, "a row's Details does not measure the whole extension");
 });
@@ -168,7 +168,7 @@ test("a busy or unreachable engine renders a dash rather than an error", async t
   const busy = fixture(t, { memory: { ok: false, error: "the dictionary engine is busy mutating", errorCode: "engine-mutating" } });
   await settle();
   assert.equal(busy.el("memory-total").textContent, "Engine memory: \u2014");
-  assert.equal(busy.rowMemory(DICTIONARIES[0].id), "In memory: \u2014");
+  assert.equal(busy.rowMemory(DICTIONARIES[0].id), "\u2014");
 
   const unreachable = fixture(t, { memory: new Error("Could not establish connection") });
   await settle();
@@ -186,7 +186,7 @@ test("a new engine generation refreshes the readout while Advanced is shown", as
   await settle();
   assert.equal(reads(), before + 1);
   assert.equal(el("memory-total").textContent, "Engine memory: 1.00 GB across 1 dictionary");
-  assert.equal(rowMemory(DICTIONARIES[1].id), "In memory: \u2014", "a package the engine no longer holds shows no share");
+  assert.equal(rowMemory(DICTIONARIES[1].id), "\u2014", "a package the engine no longer holds shows no share");
 
   await window.pollStatus();
   await settle();

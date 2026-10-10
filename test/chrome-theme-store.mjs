@@ -165,7 +165,7 @@ try {
   await tab.evaluate(() => document.querySelector("hachidori-host").shadowRoot.querySelector(".gsm-hoshidicts-kanji-back").click());
   await tab.waitForFunction(() => !!document.querySelector("hachidori-host")?.shadowRoot?.querySelector(".nazeka-word"));
   await settings.bringToFront();
-  await settings.waitForFunction(() => [...document.querySelectorAll(".theme-store-preview")].every(image => image.complete && image.naturalWidth > 0));
+  await settings.waitForFunction(() => [...document.querySelectorAll(".theme-store-preview")].every(preview => preview.querySelector("svg")));
   const carousel = await settings.$eval(".theme-store-grid", node => ({ width: node.clientWidth, scroll: node.scrollWidth, flow: getComputedStyle(node).gridAutoFlow }));
   assert.equal(carousel.flow, "column");
   assert.ok(carousel.scroll > carousel.width, "cards scroll horizontally");
@@ -197,7 +197,7 @@ try {
   await settings.click(".theme-store-card:nth-child(3) button");
   await settings.waitForFunction(async () => (await chrome.storage.local.get("options")).options.popupTheme === "plain");
   assert.deepEqual(await storedOptions(), beforePlain, "choosing a theme writes only popupTheme");
-  assert.deepEqual(await designShown(), ["# Theme Store", "# Appearance", "Theme", "Width", "Height", "Scale",
+  assert.deepEqual(await designShown(), ["# Advanced themes", "# Appearance", "Theme", "Width", "Height", "Scale",
     "Highlight the word on the page"], "Plain shows only the core Design controls");
   assert.equal(await settings.$eval("#popup-theme-hint", node => node.checkVisibility() && node.textContent),
     "Plain uses only the settings shown here. Your other Design settings are kept for Default.");

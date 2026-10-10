@@ -173,9 +173,6 @@ test("headword and header searches find the control that moves the headword", t 
     const result = f.match("Headword and toolbar position");
     assert.ok(result, `"${words}" finds the control`);
     assert.equal(result.querySelector("small").textContent, "Design › Appearance");
-    const hint = result.querySelector("span").textContent;
-    assert.match(hint, /at the bottom when the popup opens above it/u);
-    assert.match(hint, /Top keeps them at the top/u);
     result.click();
     assert.equal(f.el("design").hidden, false);
     assert.equal(f.document.activeElement, f.el("opt-popup-toolbar"));

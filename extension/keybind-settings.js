@@ -30,7 +30,7 @@ export const KEYBIND_OPTION_LABELS = {
   hidePopupGrammarTags: "Show grammar tags",
 };
 const MODIFIER_NAMES = { meta: "Meta", ctrl: "Ctrl", alt: "Alt", shift: "Shift" };
-const SCOPE_LABELS = { popup: "While a popup is open", web: "Anywhere on the page" };
+const SCOPE_LABELS = { popup: "In popup", web: "On page" };
 
 // Yomitan's HotkeyUtil display: modifiers first, a letter key without "Key".
 export function formatKeybind(key, modifiers) {
@@ -103,8 +103,8 @@ export function createKeybindSettingsController({ document, readKeybinds, editKe
     // Only static markup. Labels and values are assigned below.
     element.innerHTML = `<div class="keybind-heading">
       <label class="keybind-enabled"><input class="keybind-enabled-input" type="checkbox"><span class="keybind-number"></span></label>
-      <div class="keybind-buttons"><button type="button" class="ghost keybind-clear">Clear</button>
-      <button type="button" class="ghost keybind-reset">Reset</button><button type="button" class="ghost keybind-remove">Remove</button></div></div>
+      <div class="keybind-buttons"><button type="button" class="ghost icon-only keybind-clear"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Clear</button>
+      <button type="button" class="ghost icon-only keybind-reset"><span class="hd-icon" data-icon="arrow-clockwise" aria-hidden="true"></span>Reset</button><button type="button" class="ghost icon-only danger keybind-remove"><span class="hd-icon" data-icon="subtract" aria-hidden="true"></span>Remove</button></div></div>
       <div class="keybind-fields">
       <label class="field"><span class="field-label">Keys</span><input class="keybind-input" type="text" readonly spellcheck="false" autocomplete="off" placeholder="Press keys"></label>
       <label class="field"><span class="field-label">Action</span><select class="keybind-action"></select></label>

@@ -479,9 +479,18 @@ describe("Settings library", () => {
     const dragTarget = await page.$(
       `#dict-list .dict-row[data-dictionary-id="${FIXTURE_ID}"]`,
     );
-    await page.setDragInterception(true);
-    await dragHandle.dragAndDrop(dragTarget);
-    await page.setDragInterception(false);
+    // Rows follow the pointer (list-reorder.js), so the drag is a real press,
+    // move and release from the grip onto the target row.
+    // The target row may be open and the selection toolbar sticks to the
+    // bottom of the window, so the target's top is brought into view first and
+    // the grip is dropped just inside it.
+    await dragTarget.evaluate(row => row.scrollIntoView({ block: "start", behavior: "instant" }));
+    const grip = await dragHandle.boundingBox();
+    const target = await dragTarget.boundingBox();
+    await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(grip.x + grip.width / 2, target.y + 10, { steps: 12 });
+    await page.mouse.up();
     const orderAfterDrag = await page.waitForFunction(async ({ fixtureId, genericId, revision }) => {
       const { dictionaryState: current } = await chrome.storage.local.get("dictionaryState");
       const order = current?.dictionaries?.map((dictionary) => dictionary.id);

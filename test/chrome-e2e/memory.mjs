@@ -151,7 +151,7 @@ describe("memory", () => {
         && afterRecycle.memory.heapBytes <= lowMemoryImported.memory.heapBytes
         && afterRecycle.memory.dictionaries[0]?.bytes === lowMemoryImported.memory.dictionaries[0].bytes
         && afterRecycle.lookup.ok === true && afterRecycle.lookup.results[0]?.term.expression === "食べる"
-        && /^In memory: \u2248 [\d.]+ (KB|MB|GB) \(entries read from disk\)$/u.test(afterRecycle.rowMemory ?? "")
+        && /^\u2248 [\d.]+ (KB|MB|GB) \(entries read from disk\)$/u.test(afterRecycle.rowMemory ?? "")
         && /across 1 dictionary$/u.test(afterRecycle.total ?? ""),
       JSON.stringify({ heapBeforeImport: lowMemoryHeapBeforeImport, imported: lowMemoryImported, recycled: recycledAfterImport, afterRecycle }),
     );

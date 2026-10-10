@@ -84,7 +84,6 @@ test("the import picker takes Yomitan ZIPs and MDX dictionaries without a switch
   const { el } = fixture(t);
   assert.equal(el("import-file").accept, ".zip,application/zip,.mdx,.mdd");
   assert.equal(el("import-file-label").textContent, "Choose dictionary files");
-  assert.match(el("import-drop-hint").textContent, /MDX dictionary with its MDD files/u);
   assert.equal(el("opt-experimental-mdxImport"), null);
 });
 

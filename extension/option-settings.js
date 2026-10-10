@@ -98,7 +98,8 @@ function renderFrequencyChoices() {
 
   const automatic = document.createElement("option");
   automatic.value = "";
-  automatic.textContent = "Any — automatic across all dictionaries";
+  automatic.textContent = "Any";
+  automatic.dataset.hint = "Automatic across all dictionaries";
   select.appendChild(automatic);
 
   const enabled = dictionaries.filter(isAvailableFrequencyDictionary);
@@ -204,7 +205,9 @@ function renderPopupImageSources() {
   if (select === document.activeElement) return;
   const source = options.popupImageSource;
   const previous = selectionValue(source);
-  select.replaceChildren(new Option("Automatic — current tab", ""));
+  const automatic = new Option("Automatic", "");
+  automatic.dataset.hint = "Current tab";
+  select.replaceChildren(automatic);
   let available = source === null;
   function addSource(value, label) {
     const encoded = selectionValue(value);
@@ -340,7 +343,7 @@ function renderKanjiChoices() {
   select.value = selectedValue;
 }
 
-// Theme Store renderer names for the Theme select, matching the Store cards.
+// Advanced theme names for the Theme select, matching their cards.
 const rendererLabel = slug => slug === "jl" ? "JL" : slug[0].toUpperCase() + slug.slice(1);
 
 function renderThemeChoices() {
@@ -355,10 +358,10 @@ function renderThemeChoices() {
       theme.append(optgroup);
     }
   }
-  let storeGroup = [...theme.children].find(group => group.label === "Theme Store");
+  let storeGroup = [...theme.children].find(group => group.label === "Advanced themes");
   if (!storeGroup && (options.experimental.themeStore || popupRenderer(options.popupTheme) !== "default")) {
     storeGroup = document.createElement("optgroup");
-    storeGroup.label = "Theme Store";
+    storeGroup.label = "Advanced themes";
     for (const slug of POPUP_RENDERER_IDS) storeGroup.append(new Option(rendererLabel(slug), slug));
     theme.append(storeGroup);
   }

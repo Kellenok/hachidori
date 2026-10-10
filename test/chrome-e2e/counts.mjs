@@ -15,6 +15,7 @@ import { answerAnkiConnect } from "../anki-connect-fake.mjs";
 import { check, diagnostics, EXTENSION, step, WORD_HIGHLIGHT_CHECKS } from "./harness.mjs";
 import { hoverForPopup, popupReader } from "./popup-reader.mjs";
 import { popup, tab } from "./reader.mjs";
+import { answerConfirmation } from "../chrome-confirm.mjs";
 import {
   browser,
   extensionId,
@@ -158,15 +159,12 @@ async function checkLookupStatistics({ settings, tab, popup }) {
     await popup.lookupStatistics("remember");
     await settings.bringToFront();
     await showSettingsSection(settings, "lookup");
-    let resetDialog = null;
-    const acceptReset = async (dialog) => { resetDialog = dialog.message(); await dialog.accept(); };
-    settings.on("dialog", acceptReset);
     await settings.click("#lookup-counts-reset");
+    const resetDialog = await answerConfirmation(settings, true);
     const resetStatus = await settings.waitForFunction(() => {
       const status = document.getElementById("lookup-counts-reset-status");
       return status.classList.contains("is-ready") || status.classList.contains("is-error") ? status.textContent : false;
     }, { polling: 100, timeout: 10_000 }).then((handle) => handle.jsonValue()).catch(error => `no outcome: ${error.message}`);
-    settings.off("dialog", acceptReset);
     const zeroed = await waitForLookupStatistics(popup, value => value?.text.includes("Looked up 0 times"));
     const afterReset = await readLookupStatistics(settings);
     const storedAfterReset = await storedState();

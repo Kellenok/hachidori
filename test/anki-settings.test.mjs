@@ -247,7 +247,7 @@ test("case-only Anki field renames stay available without rewriting saved mappin
   await tick();
   assert.equal(editor(f, "front").value, "{expression}");
   assert.equal(f.read().fields.expression, "Front");
-  assert.match(f.el("anki-status").textContent, /configuration ready/u);
+  assert.match(f.el("anki-status").textContent, /^Connected$/u);
   assert.equal(f.el("anki-status").classList.contains("is-ready"), true);
   assert.equal(f.el("anki-status").classList.contains("is-working"), false);
   assert.equal(f.el("anki-status").classList.contains("is-error"), false);
@@ -591,7 +591,7 @@ test("AnkiConnect URL commits on change, retains invalid drafts and ignores old 
   assert.equal(f.sent.length, 2);
   assert.equal(f.sent[1].url, f.read().url);
   assert.equal(f.el("anki-status").classList.contains("is-working"), true);
-  assert.doesNotMatch(f.el("anki-status").textContent, /configuration ready/u,
+  assert.doesNotMatch(f.el("anki-status").textContent, /^Connected$/u,
     "the retired endpoint's fields must not be paired with the new endpoint");
   discovery(f.sent[1], { models: ["New endpoint"] });
   await tick();

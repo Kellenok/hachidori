@@ -544,7 +544,7 @@ export function createAnkiSettingsController({
     const errors = ankiAvailability(config, currentDiscovery, resolved);
     const connected = currentDiscovery?.connected === true;
     let state = "Not connected";
-    if (connected) state = errors.length ? "Connected · configuration needs attention" : "Connected · configuration ready";
+    if (connected) state = errors.length ? "Needs attention" : "Connected";
     const message = loading ? "Checking AnkiConnect…" : [state, ...errors].join("\n");
     let tone;
     let connection = "offline";

@@ -17,7 +17,6 @@ test("Custom JavaScript is directly beneath Custom CSS with one warning", async 
   assert.equal(html.split(warning).length - 1, 1);
   assert.match(html, new RegExp(`id="custom-javascript-warning">${warning.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&")}</p>`, "u"));
   assert.equal(html.slice(css, javascript).includes("reset-design"), false);
-  assert.match(html, /Enable user scripts for Hachidori on Chrome's Extensions page/u);
 });
 
 test("custom JavaScript is a persisted Design option", () => {

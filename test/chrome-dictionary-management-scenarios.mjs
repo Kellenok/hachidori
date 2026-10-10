@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { buildTitledZip } from "./make-fixture.mjs";
+import { answerConfirmation } from "./chrome-confirm.mjs";
 
 export const REORDER_CHECKS = [
   "dictionary moves render before the engine reply and coalesce across rapid and in-flight edits",
@@ -178,15 +179,13 @@ export async function dictionaryManagementScenarios(page, check = () => {}) {
   assert.equal(await page.$eval("#dict-bulk-actions", toolbar =>
     [...toolbar.querySelectorAll("button")].some(button => button.textContent.trim() === "Remove")), true,
   "selected dictionaries must offer bulk removal");
-  let dialogs = 0;
-  const cancel = async dialog => { dialogs += 1; await dialog.dismiss(); };
-  page.once("dialog", cancel);
   await click("#dict-bulk-remove");
+  await answerConfirmation(page, false);
   assert.deepEqual((await readState()).dictionaries.map(entry => entry.id), [...prefix, alpha.id, beta.id, gamma.id]);
-  page.once("dialog", async dialog => { dialogs += 1; await dialog.accept(); });
   await click("#dict-bulk-remove");
+  await answerConfirmation(page, true);
   await waitOrder(prefix);
-  assert.equal(dialogs, 2, "one confirmation per batch, not per dictionary");
+  assert.equal(await page.$("#confirm-dialog[open]"), null, "one confirmation per batch, not per dictionary");
   assert.equal(await page.$eval("#dict-selection-count", element => element.textContent), "0 selected");
   await page.reload();
   await waitOrder(prefix);

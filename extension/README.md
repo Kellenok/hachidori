@@ -154,6 +154,11 @@ the service worker and both engine runtimes run the same code.
 - **Pages.** `settings-search.js` and `settings-dom.js` serve Settings;
   `settings-theme.js` is the classic script in its `<head>` that applies the
   saved theme before the first paint, ahead of the `settings.js` module;
+  `select-menu.js` is a module of its own that draws an open dropdown's list
+  (with optional second lines) while the native `<select>` stays the control;
+  `list-reorder.js` lets a list row be dragged from anywhere on it and drops
+  through the list's own move controls; `settings-dialogs.js` closes dialogs
+  on an outside click and opens the Theme chooser as a gallery of previews;
   `library-settings.js` (Dictionaries → Dictionaries: the rows, their order,
   selection and bulk actions, the revision-checked commit queue and removal),
   `import-settings.js` (Add dictionaries and the recommended installer),

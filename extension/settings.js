@@ -802,9 +802,7 @@ function renderEngineStatus() {
   const count = dictionaries.filter((entry) => entry.enabled !== false).length;
   const failed = Array.isArray(lastEngineStatus.failedDictionaries) ? lastEngineStatus.failedDictionaries : [];
   if (lastEngineStatus.ready && failed.length > 0) {
-    const subject = failed.length === 1 ? "1 dictionary" : `${numberFormat.format(failed.length)} dictionaries`;
-    const pronoun = failed.length === 1 ? "it" : "them";
-    setStatus(`Could not load ${subject}. Re-import or remove ${pronoun}; the other dictionaries still work.`, "error", failed);
+    setStatus(`Failed to load: ${numberFormat.format(failed.length)}. Re-import or remove them; the others still work.`, "error", failed);
     return;
   }
   if (lastEngineStatus.ready) {
@@ -814,7 +812,7 @@ function renderEngineStatus() {
         : "Ready. Enable a dictionary in Dictionaries to start reading.");
       return;
     }
-    const enabled = count === 1 ? "1 dictionary enabled" : `${numberFormat.format(count)} dictionaries enabled`;
+    const enabled = `dictionaries enabled: ${numberFormat.format(count)}`;
     setStatus(lastEngineStatus.loading ? `Ready, ${enabled}, working…` : `Ready, ${enabled}.`, "ready");
   } else {
     setStatus("Starting the engine and loading dictionaries…");

@@ -44,12 +44,13 @@ export async function checkLibraryNavigation(puppeteer, launchOptions, settingsU
         && measurements.every(row => row.gutter === "stable"
           && row.left === measurements[0].left && row.width === measurements[0].width),
       JSON.stringify(measurements));
-    // The current tab alone is semibold. Its label is wider, so unless every
-    // tab reserves that width, moving aria-current pushes the later tabs aside.
+    // The current tab is marked by colour and its underline, in the same weight
+    // as the others: a heavier current label would be wider and push the later
+    // tabs aside whenever aria-current moves.
     check(LIBRARY_TAB_GEOMETRY_CHECK,
       measurements.every(row => row.tabs.filter(tab => tab.current).length === 1
         && row.tabs.every((tab, index) => tab.labelled
-          && tab.weight === (tab.current ? "600" : "400")
+          && tab.weight === row.tabs[0].weight
           && tab.left === measurements[0].tabs[index].left
           && tab.width === measurements[0].tabs[index].width)),
       JSON.stringify(measurements.map(({ section, tabs }) => ({ section, tabs }))));

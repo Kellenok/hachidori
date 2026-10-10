@@ -8,7 +8,7 @@ import {
   clampOption, definitionBlurFrequencyDictionary, element, options, send, setSectionStatus,
   sharingLinkedAddress, WORKER_TARGET,
 } from "./settings.js";
-import { dictionaries, dictionaryLabel } from "./library-settings.js";
+import { confirmAction, dictionaries, dictionaryLabel } from "./library-settings.js";
 import {
   isAvailableFrequencyDictionary, selectedFrequencyDictionary, setOptionsStatus, writeOptions,
 } from "./option-settings.js";
@@ -105,8 +105,12 @@ function renderDefinitionBlurControls() { // NOSONAR: existing complexity, kept 
 
 // Settings → Reading → Reset lookup counts: a new, empty history generation.
 async function resetLookupCounts() {
-  if (!window.confirm("Reset lookup counts for every word? Each word starts again from zero, and its next lookup "
-    + "counts as 1. Dictionaries, settings and Anki notes are not changed, and existing backups keep the earlier counts.")) {
+  if (!await confirmAction({
+    title: "Reset lookup counts for every word?",
+    body: "Each word starts again from zero, and its next lookup counts as 1. Dictionaries, settings and Anki notes "
+      + "are not changed, and existing backups keep the earlier counts.",
+    confirm: "Reset",
+  })) {
     return;
   }
   resettingLookupCounts = true;

@@ -336,7 +336,7 @@ try {
   await extensionId(browser);
   page = await openSettings(browser, id);
   await page.waitForFunction(
-    () => document.querySelector("#engine-status")?.textContent?.includes("2 dictionaries enabled"),
+    () => document.querySelector("#engine-status")?.textContent?.includes("dictionaries enabled: 2"),
     { timeout: 90_000 },
   );
   observed = await inspect(page);

@@ -23,6 +23,24 @@ import {
 } from "./fakes.mjs";
 import { check, test } from "./harness.mjs";
 
+// Answers Settings' confirmation modal as soon as it opens, the way a stubbed
+// window.confirm used to: answer(message) gets the question and its
+// explanation and returns whether to confirm.
+const confirmAnswers = new WeakMap();
+function answerConfirmations(window, answer) {
+  if (!confirmAnswers.has(window)) {
+    const dialog = window.document.getElementById("confirm-dialog");
+    new window.MutationObserver(() => {
+      if (!dialog.open) return;
+      const message = `${window.document.getElementById("confirm-dialog-title").textContent} `
+        + window.document.getElementById("confirm-dialog-body").textContent;
+      const accepted = confirmAnswers.get(window)(message);
+      window.document.getElementById(accepted ? "confirm-dialog-accept" : "confirm-dialog-cancel").click();
+    }).observe(dialog, { attributes: true, attributeFilter: ["open"] });
+  }
+  confirmAnswers.set(window, answer);
+}
+
 async function settingsBatchImportStage() {
   const jsdom = await loadJsdom();
   if (jsdom === null) {
@@ -474,7 +492,7 @@ async function settingsConflictStage() {
   const conflictStatus = window.document.getElementById("engine-status")?.textContent ?? "";
   const checkboxFocused = window.document.activeElement?.classList.contains("dict-enabled") === true;
 
-  window.confirm = () => true;
+  answerConfirmations(window, () => true);
   window.document.querySelector("#dict-list .dict-remove")?.click();
   while (!removeStarted && Date.now() < deadline) {
     await new Promise((done) => window.setTimeout(done, 5));
@@ -916,11 +934,11 @@ async function settingsConflictStage() {
     return { ok: true };
   };
   selectAll.click();
-  window.confirm = () => false;
+  answerConfirmations(window, () => false);
   bulkRemove.click();
   if (removalCalls.length) throw new Error("cancelled bulk removal sent a request");
   let confirmations = 0;
-  window.confirm = () => { confirmations += 1; return true; };
+  answerConfirmations(window, () => { confirmations += 1; return true; });
   bulkRemove.click();
   await new Promise(done => window.setTimeout(done, 0));
   if (removalCalls.join() !== ids.alpha || !bulkRemove.disabled
@@ -975,7 +993,7 @@ async function settingsConflictStage() {
   search.dispatchEvent(new window.Event("input", { bubbles: true }));
   const resetConfirmations = [];
   let answer = false;
-  window.confirm = message => { resetConfirmations.push(message); return answer; };
+  answerConfirmations(window, message => { resetConfirmations.push(message); return answer; });
   removalCalls.length = 0;
   removeHandler = async message => {
     removalCalls.push(message.id);

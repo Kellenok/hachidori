@@ -100,7 +100,7 @@ test("several load failures render as a summary and one literal-text entry per d
   const { el, poll, entries } = fixture(t, { failedDictionaries: FAILURES });
   await poll();
   const status = el("engine-status");
-  assert.equal(status.textContent, "Could not load 3 dictionaries. Re-import or remove them; the other dictionaries still work.");
+  assert.equal(status.textContent, "Failed to load: 3. Re-import or remove them; the others still work.");
   assert.equal(status.classList.contains("is-error"), true);
 
   const list = el("engine-status-failures");
@@ -116,15 +116,15 @@ test("several load failures render as a summary and one literal-text entry per d
   assert.deepEqual([...list.children], items, "an unchanged status poll keeps the rendered entries");
 });
 
-test("one failure keeps singular wording, and a repair clears the list", async t => {
+test("a repair clears the list", async t => {
   const { window, el, poll, entries } = fixture(t, { failedDictionaries: [FAILURES[0]] });
   await poll();
-  assert.equal(el("engine-status").textContent, "Could not load 1 dictionary. Re-import or remove it; the other dictionaries still work.");
+  assert.equal(el("engine-status").textContent, "Failed to load: 1. Re-import or remove them; the others still work.");
   assert.deepEqual(entries(), [{ title: FAILURES[0].title, error: FAILURES[0].error }]);
 
   window.replies.hd_status = { ...window.replies.hd_status, failedDictionaries: [] };
   await poll();
-  assert.equal(el("engine-status").textContent, "Ready, 2 dictionaries enabled.");
+  assert.equal(el("engine-status").textContent, "Ready, dictionaries enabled: 2.");
   assert.equal(el("engine-status").classList.contains("is-error"), false);
   assert.equal(el("engine-status-failures").hidden, true);
   assert.equal(el("engine-status-failures").childElementCount, 0);

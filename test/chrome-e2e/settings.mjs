@@ -894,7 +894,8 @@ async function checkAnkiSettings(page, browser) {
     await page.click("#anki-refresh");
     await settled();
     check("Anki discovery is lazy and refresh recovers an offline connection through the real service worker",
-      lazy && failed.includes("Not connected") && (await status()).includes("Connected")
+      lazy && failed.includes("Not connected")
+        && await page.$eval("#anki-status", node => node.dataset.state) === "connected"
         && await page.$eval("#opt-anki-model", node => [...node.options].some(option => option.value === "Japanese")),
       JSON.stringify({ failed, current: await status(), calls }));
 
@@ -935,7 +936,7 @@ async function checkAnkiSettings(page, browser) {
       ["Frequency", "{frequency}"], ["Pitch", "{pitch}"], ["Audio", "{audio}"]]) await editField(field, value);
     await choose("deck", "Japanese");
     await page.reload({ waitUntil: "domcontentloaded" });
-    await page.waitForFunction(() => document.getElementById("anki-status").textContent.includes("configuration ready"));
+    await page.waitForFunction(() => document.getElementById("anki-status").textContent === "Connected");
     await saved();
     const persisted = await page.evaluate(async () => ({
       anki: (await chrome.storage.local.get("options")).options.anki,
@@ -1239,7 +1240,7 @@ async function checkAnkiSettings(page, browser) {
     await settled();
     const afterTemplateRefresh = await page.evaluate(async () => (await chrome.storage.local.get("options")).options.revision);
     await page.reload({ waitUntil: "domcontentloaded" });
-    await page.waitForFunction(() => document.getElementById("anki-status").textContent.includes("configuration ready"));
+    await page.waitForFunction(() => document.getElementById("anki-status").textContent === "Connected");
     await saved();
     const templateReload = await page.evaluate(async () => ({
       config: (await chrome.storage.local.get("options")).options.anki,

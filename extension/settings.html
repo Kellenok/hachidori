@@ -50,40 +50,44 @@
         </label>
         <output id="settings-navigation-status" class="compact-nav-status" aria-live="polite"></output>
         <nav class="settings-nav" aria-label="Settings sections">
+          <p class="nav-group">Library</p>
           <div class="nav-item">
-            <a href="#dictionaries" aria-describedby="nav-status-dictionaries">Dictionaries</a>
+            <a href="#dictionaries" aria-describedby="nav-status-dictionaries"><span class="hd-icon" data-icon="book" aria-hidden="true"></span>Dictionaries</a>
             <output class="nav-status" id="nav-status-dictionaries" aria-live="polite"></output>
           </div>
+          <p class="nav-group">Reading</p>
           <div class="nav-item">
-            <a href="#lookup" aria-describedby="nav-status-lookup">Reading</a>
+            <a href="#lookup" aria-describedby="nav-status-lookup"><span class="hd-icon" data-icon="cursor-hover" aria-hidden="true"></span>Reading</a>
             <output class="nav-status" id="nav-status-lookup" aria-live="polite"></output>
           </div>
           <div class="nav-item">
-            <a href="#design" aria-describedby="nav-status-design">Design</a>
+            <a href="#design" aria-describedby="nav-status-design"><span class="hd-icon" data-icon="paint-brush" aria-hidden="true"></span>Design</a>
             <output class="nav-status" id="nav-status-design" aria-live="polite"></output>
           </div>
           <div class="nav-item">
-            <a href="#audio" aria-describedby="nav-status-audio">Audio</a>
+            <a href="#audio" aria-describedby="nav-status-audio"><span class="hd-icon" data-icon="speaker-2" aria-hidden="true"></span>Audio</a>
             <output class="nav-status" id="nav-status-audio" aria-live="polite"></output>
           </div>
+          <p class="nav-group">Tools</p>
           <div class="nav-item">
-            <a href="#anki" aria-describedby="nav-status-anki">Anki</a>
+            <a href="#anki" aria-describedby="nav-status-anki"><span class="hd-icon" data-icon="layer-diagonal" aria-hidden="true"></span>Anki</a>
             <output class="nav-status" id="nav-status-anki" aria-live="polite"></output>
           </div>
           <div class="nav-item">
-            <a href="#keybinds" aria-describedby="nav-status-keybinds">Keybinds</a>
+            <a href="#keybinds" aria-describedby="nav-status-keybinds"><span class="hd-icon" data-icon="keyboard" aria-hidden="true"></span>Keybinds</a>
             <output class="nav-status" id="nav-status-keybinds" aria-live="polite"></output>
           </div>
           <div class="nav-item">
-            <a href="#sharing" aria-describedby="nav-status-sharing">Sharing</a>
+            <a href="#sharing" aria-describedby="nav-status-sharing"><span class="hd-icon" data-icon="share" aria-hidden="true"></span>Sharing</a>
             <output class="nav-status" id="nav-status-sharing" aria-live="polite"></output>
           </div>
+          <p class="nav-group">Data</p>
           <div class="nav-item">
-            <a href="#backup" aria-describedby="nav-status-backup">Backup &amp; restore</a>
+            <a href="#backup" aria-describedby="nav-status-backup"><span class="hd-icon" data-icon="history" aria-hidden="true"></span>Backup &amp; restore</a>
             <output class="nav-status" id="nav-status-backup" aria-live="polite"></output>
           </div>
           <div class="nav-item">
-            <a href="#advanced" aria-describedby="nav-status-advanced">Advanced</a>
+            <a href="#advanced" aria-describedby="nav-status-advanced"><span class="hd-icon" data-icon="wrench" aria-hidden="true"></span>Advanced</a>
             <output class="nav-status" id="nav-status-advanced" aria-live="polite"></output>
           </div>
         </nav>
@@ -119,69 +123,35 @@
           <a href="#lookup" data-label="Reading">Reading</a>
           <a href="#word-highlighting" data-label="Word highlighting" hidden>Word highlighting</a>
         </nav>
-        <section
-          class="card library"
-          id="dictionaries"
-          aria-labelledby="dictionaries-heading"
-          data-settings-group="Dictionaries"
-          data-settings-name="Dictionaries"
-        >
+
+        <section class="card library" id="dictionaries" aria-labelledby="dictionaries-heading" data-settings-group="Dictionaries" data-settings-name="Dictionaries">
           <div class="section-heading">
             <div class="card-head">
               <h1 id="dictionaries-heading" tabindex="-1">Dictionaries</h1>
-              <p class="hint">Your dictionaries, in the order they appear in lookups.</p>
             </div>
-            <a class="section-action" href="#add-dictionaries"
-              >Add dictionaries</a
-            >
+            <a class="section-action" href="#add-dictionaries"><span class="hd-icon" data-icon="add" aria-hidden="true"></span>Add dictionaries</a>
           </div>
           <div class="dict-controls" id="dict-controls" hidden>
             <label class="dict-search">
               <span class="field-label">Search</span>
-              <input
-                id="dict-search"
-                type="search"
-                autocomplete="off"
-                placeholder="Search by title or display name"
-              />
+              <input id="dict-search" type="search" autocomplete="off" placeholder="Search by title or display name" />
               <output class="dict-match-count" id="dict-match-count"></output>
             </label>
-            <div class="dict-selection-controls">
-              <label class="dict-select-all">
-                <input id="dict-select-visible" type="checkbox" />
-                <span>Select visible</span>
-              </label>
-              <span
-                class="dict-selection-count"
-                id="dict-selection-count"
-                aria-live="polite"
-                >0 selected</span
-              >
-            </div>
-            <div
-              class="dict-bulk-actions"
-              id="dict-bulk-actions"
-              aria-label="Bulk actions"
-              hidden
-            >
-              <button type="button" class="ghost" id="dict-bulk-enable">
-                Enable
-              </button>
-              <button type="button" class="ghost" id="dict-bulk-disable">
-                Disable
-              </button>
-              <button type="button" class="ghost" id="dict-bulk-favorite">
-                Favourite
-              </button>
-              <button type="button" class="ghost" id="dict-bulk-unfavorite">
-                Unfavourite
-              </button>
-              <button type="button" class="ghost danger" id="dict-bulk-remove">
-                Remove
-              </button>
-            </div>
+            <label class="dict-select-all">
+              <input id="dict-select-visible" type="checkbox" />
+              <span>Select visible</span>
+            </label>
           </div>
           <ol class="dict-list" id="dict-list"></ol>
+          <div class="dict-bulk-actions" id="dict-bulk-actions" role="toolbar" aria-label="Bulk actions" hidden>
+            <span class="dict-selection-count" id="dict-selection-count" aria-live="polite">0 selected</span>
+            <button type="button" class="ghost" id="dict-bulk-enable">Enable</button>
+            <button type="button" class="ghost" id="dict-bulk-disable">Disable</button>
+            <button type="button" class="ghost" id="dict-bulk-favorite">Favourite</button>
+            <button type="button" class="ghost" id="dict-bulk-unfavorite">Unfavourite</button>
+            <button type="button" class="ghost danger" id="dict-bulk-remove">Remove</button>
+            <button type="button" class="ghost icon-only" id="dict-bulk-clear" title="Clear selection" aria-label="Clear selection"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Clear selection</button>
+          </div>
           <div class="empty-state library-empty" id="dict-empty" hidden>
             <span class="empty-state-icon" aria-hidden="true">辞</span>
             <h2 id="dict-empty-heading">Build your dictionary library</h2>
@@ -192,267 +162,160 @@
             </div>
             <button class="ghost" id="empty-clear-search" type="button" hidden>Clear search</button>
           </div>
-          <p class="section-note" id="dict-reorder-help">
-            Drag to reorder, or use the arrow buttons. Open Details to rename or remove a dictionary.
-          </p>
+          <p class="section-note" id="dict-reorder-help">Drag rows to reorder.</p>
           <fieldset class="lookup-group" id="library-reset" hidden>
             <legend>Start over</legend>
-            <div class="setting-row">
-              <div class="setting-text">
-                <p class="field-hint" id="library-reset-help">Removes every imported dictionary, including disabled ones and any the search hides. Anki notes are not changed. Exported backups and earlier automatic backups still hold the removed dictionaries and can restore them.</p>
+            <div class="group-card">
+              <div class="setting-row library-reset-row">
                 <label class="check-row">
-                  <input id="library-reset-personal" type="checkbox" aria-describedby="library-reset-personal-help" />
-                  <span>Also erase the personal dictionary source</span>
+                  <input id="library-reset-personal" type="checkbox" />
+                  <span>Also erase my personal dictionary</span>
                 </label>
-                <p class="field-hint" id="library-reset-personal-help">Leave this off to keep the personal dictionary and its entries.</p>
-              </div>
-              <div class="options-actions">
-                <button type="button" class="ghost danger" id="library-remove-all" aria-describedby="library-reset-help" data-search-keywords="delete clear reset empty start over library">Remove all imported dictionaries</button>
+                <div class="options-actions">
+                  <button type="button" class="ghost danger" id="library-remove-all" data-search-keywords="delete clear reset empty start over library">Remove all dictionaries</button>
+                </div>
                 <output class="custom-dictionary-status" id="library-reset-status" aria-live="polite"></output>
               </div>
+              <p class="field-hint sharing-linked-notice setting-block" id="library-reset-linked" hidden>Remove them on the linked Hachidori.</p>
             </div>
-            <p class="field-hint sharing-linked-notice" id="library-reset-linked" hidden>The dictionaries belong to the linked Hachidori. Remove them there, or unlink in <a href="#sharing">Sharing</a> first.</p>
           </fieldset>
         </section>
 
-        <section
-          class="card"
-          id="add-dictionaries"
-          aria-labelledby="import-heading"
-          data-settings-group="Dictionaries"
-          hidden
-        >
+        <section class="card" id="add-dictionaries" aria-labelledby="import-heading" data-settings-group="Dictionaries" hidden>
           <div class="card-head">
             <h1 id="import-heading" tabindex="-1">Add dictionaries</h1>
-            <p class="hint">Yomitan ZIP files and MDX dictionaries, stored on this device.</p>
           </div>
-          <p class="field-hint sharing-linked-notice" id="sharing-import-notice" hidden>Dictionaries live on the linked Hachidori: ZIP files you import here are sent to it and installed there.</p>
-          <div
-            class="import-drop-zone"
-            id="import-drop-zone"
-            aria-describedby="import-drop-hint"
-          >
+          <p class="field-hint sharing-linked-notice" id="sharing-import-notice" hidden>Imports install on the linked Hachidori.</p>
+          <div class="import-drop-zone" id="import-drop-zone" aria-describedby="import-drop-hint">
             <div class="import-row">
               <label class="file-button">
                 <span id="import-file-label">Choose dictionary files</span>
-                <input
-                  id="import-file"
-                  type="file"
-                  accept=".zip,application/zip,.mdx,.mdd"
-                  multiple
-                />
+                <input id="import-file" type="file" accept=".zip,application/zip,.mdx,.mdd" multiple />
               </label>
-              <output
-                class="import-state"
-                id="import-state"
-                aria-live="polite"
-              ></output>
+              <output class="import-state" id="import-state" aria-live="polite"></output>
             </div>
-            <p class="import-drop-hint" id="import-drop-hint">
-              Or drag and drop Yomitan ZIP files, or an MDX dictionary with its MDD files, here.
-            </p>
+            <p class="import-drop-hint" id="import-drop-hint">Or drag and drop Yomitan ZIP files, or an MDX dictionary with its MDD files, here.</p>
           </div>
           <div id="import-progress"></div>
-          <p class="section-note">
-            Files import one at a time. Large dictionaries can take a few
-            minutes. Keep this page open until the import finishes.
-          </p>
-          <div
-            class="recommendations"
-            id="recommended-starter"
-            aria-labelledby="recommended-dictionaries-heading"
-            hidden
-          >
+          <p class="section-note">Files import one at a time. Large dictionaries can take a few minutes. Keep this page open until the import finishes.</p>
+          <div class="recommendations" id="recommended-starter" aria-labelledby="recommended-dictionaries-heading" hidden>
             <div class="recommendations-head">
-              <h2 id="recommended-dictionaries-heading">
-                Recommended dictionaries
-              </h2>
-              <p class="hint" id="recommended-dictionaries-hint"></p>
-              <p class="field-hint">Recommended installations continue if you close this window. Reopen Settings to follow their progress.</p>
+              <div>
+                <h2 id="recommended-dictionaries-heading">Recommended dictionaries</h2>
+                <p class="hint" id="recommended-dictionaries-hint"></p>
+              </div>
+              <button class="primary-button" id="install-recommended" type="button">Install recommended</button>
             </div>
-            <button
-              class="primary-button"
-              id="install-recommended"
-              type="button"
-            >
-              Install recommended
-            </button>
-            <ul
-              class="recommended-dictionary-list"
-              id="recommended-dictionary-list"
-            ></ul>
+            <ul class="recommended-dictionary-list" id="recommended-dictionary-list"></ul>
           </div>
           <p class="recommended-retry" id="recommended-retry" hidden>
             <span>Some recommended dictionaries are still missing.</span>
-            <button class="ghost" id="retry-recommended" type="button">
-              Retry missing dictionaries
-            </button>
+            <button class="ghost" id="retry-recommended" type="button">Retry missing dictionaries</button>
           </p>
         </section>
 
         <section class="card" id="updates" aria-labelledby="updates-heading" data-settings-group="Dictionaries" hidden>
           <div class="card-head">
             <h1 id="updates-heading" tabindex="-1">Updates</h1>
-            <p class="hint">For dictionaries with an update source. Other imports are local-only.</p>
           </div>
           <div class="lookup-group">
-            <div class="field">
-              <label class="field-label" for="update-schedule">Default automatic updates</label>
-              <select id="update-schedule" disabled aria-describedby="update-schedule-help">
-                <option value="off">Off</option>
-                <option value="hourly">Every hour</option>
-                <option value="daily">Every day</option>
-                <option value="weekly">Every week</option>
-                <option value="monthly">Every month</option>
-              </select>
-              <p class="field-hint" id="update-schedule-help">Scheduled updates install automatically, including disabled dictionaries. A dictionary can have its own schedule under Dictionaries → Details.</p>
-            </div>
-            <div class="setting-row">
-              <div class="setting-text">
-                <span class="field-label">Check for updates</span>
-                <p class="field-hint update-last-checked" id="update-last-checked">Never checked.</p>
+            <div class="group-card">
+              <div class="field">
+                <label class="field-label" for="update-schedule">Default automatic updates</label>
+                <select id="update-schedule" disabled aria-describedby="update-schedule-help">
+                  <option value="off">Off</option>
+                  <option value="hourly">Every hour</option>
+                  <option value="daily">Every day</option>
+                  <option value="weekly">Every week</option>
+                  <option value="monthly">Every month</option>
+                </select>
+                <p class="field-hint" id="update-schedule-help"><a href="https://github.com/bee-san/hachidori/blob/main/docs/update-schedules.md" target="_blank" rel="noopener noreferrer">How update schedules work</a></p>
               </div>
-              <div class="update-actions">
-                <button type="button" class="ghost" id="update-check-now" aria-describedby="update-check-help">
-                  Check now
-                </button>
-                <button
-                  type="button"
-                  class="primary-button"
-                  id="update-all"
-                  disabled
-                >
-                  Install updates
-                </button>
+              <div class="setting-row">
+                <div class="setting-text">
+                  <span class="field-label">Check for updates</span>
+                  <p class="field-hint update-last-checked" id="update-last-checked">Never checked.</p>
+                  <p class="field-hint" id="update-check-help">Checking does not install them.</p>
+                </div>
+                <div class="update-actions">
+                  <button type="button" class="ghost" id="update-check-now" aria-describedby="update-check-help">Check now</button>
+                  <button type="button" class="primary-button" id="update-all" disabled>Install updates</button>
+                </div>
               </div>
             </div>
-            <p class="field-hint" id="update-check-help">Check now finds updates without installing them.</p>
           </div>
-          <output
-            class="update-state"
-            id="update-state"
-            aria-live="polite"
-          ></output>
+          <output class="update-state" id="update-state" aria-live="polite"></output>
           <div id="update-schedule-conflict-actions" class="options-actions" hidden>
             <button type="button" class="ghost" id="update-schedule-retry">Retry my schedule</button>
             <button type="button" class="ghost" id="update-schedule-discard">Use current schedule</button>
           </div>
         </section>
 
-        <section
-          class="card"
-          id="dictionary-groups"
-          aria-labelledby="dictionary-groups-heading"
-          data-settings-group="Dictionaries"
-          hidden
-        >
+        <section class="card" id="dictionary-groups" aria-labelledby="dictionary-groups-heading" data-settings-group="Dictionaries" hidden>
           <div class="card-head">
             <h1 id="dictionary-groups-heading" tabindex="-1">Groups</h1>
-            <p class="hint">Ordered sets of dictionaries, available on every page.</p>
           </div>
           <form class="dict-group-create" id="dict-group-create-form">
             <label>
               <span class="field-label">New group</span>
-              <input id="dict-group-name-new" type="text" autocomplete="off" />
+              <input id="dict-group-name-new" type="text" autocomplete="off" placeholder="New group" />
             </label>
-            <button type="submit" class="ghost" id="dict-group-create">
-              Create
-            </button>
-            <output
-              class="dict-group-error"
-              id="dict-group-error"
-              aria-live="polite"
-            ></output>
+            <button type="submit" class="ghost" id="dict-group-create">Create</button>
+            <output class="dict-group-error" id="dict-group-error" aria-live="polite"></output>
           </form>
           <ol class="dict-group-list" id="dict-group-list"></ol>
-          <p class="empty-state compact" id="dict-group-empty">
-            No groups yet.
-          </p>
+          <p class="empty-state compact" id="dict-group-empty">No groups yet.</p>
         </section>
 
-        <section
-          class="card"
-          id="custom-dictionary"
-          aria-labelledby="custom-dictionary-heading"
-          data-settings-group="Dictionaries"
-          hidden
-        >
+        <section class="card" id="custom-dictionary" aria-labelledby="custom-dictionary-heading" data-settings-group="Dictionaries" hidden>
           <div class="card-head">
             <h1 id="custom-dictionary-heading" tabindex="-1">Personal dictionary</h1>
-            <p class="hint">Your entries appear first. Save source edits when you are ready.</p>
-            <p class="hint" id="custom-dictionary-off" hidden>The personal dictionary is off, so these entries are left out of lookups.</p>
+            <p class="hint" id="custom-dictionary-off" hidden>Off: entries are left out of lookups.</p>
           </div>
           <div class="options-feedback-slot"></div>
           <fieldset class="lookup-group" id="selection-notice-settings">
             <legend>Lookups</legend>
-            <label class="lookup-enable" data-search-keywords="custom dictionary highlighted selected selection pencil add word">
-              <span>Use the personal dictionary</span>
-              <input id="opt-personal-dictionary" type="checkbox" aria-describedby="personal-dictionary-help" />
-            </label>
-            <p class="field-hint" id="personal-dictionary-help">Highlighting Japanese text looks it up so you can add your own definition with the pencil. Turn this off to stop highlighted text from opening a popup and to hide the pencil; your entries are kept but left out of lookups. To look up a selection on demand, bind Scan selected text in <a href="#keybinds">Keybinds</a>.</p>
-            <div id="selection-notice-controls">
-              <label class="lookup-enable">
-                <span>Show a popup when a selection has no definition</span>
-                <input id="opt-no-result-notice" type="checkbox" aria-describedby="selection-notice-help" />
+            <div class="group-card">
+              <label class="lookup-enable" data-search-keywords="custom dictionary highlighted selected selection pencil add word">
+                <span>Use the personal dictionary</span>
+                <input id="opt-personal-dictionary" type="checkbox" aria-describedby="personal-dictionary-help" />
               </label>
-              <p class="field-hint" id="selection-notice-help">Use the pencil in the popup to add your own definition. The setup notice still appears when no dictionaries are loaded.</p>
+              <p class="field-hint" id="personal-dictionary-help">Off hides the pencil; entries are kept.</p>
+              <div id="selection-notice-controls">
+                <label class="lookup-enable">
+                  <span>Show a popup when a selection has no definition</span>
+                  <input id="opt-no-result-notice" type="checkbox" />
+                </label>
+              </div>
             </div>
           </fieldset>
-          <form
-            class="custom-dictionary-form"
-            id="custom-dictionary-form"
-          >
+          <form class="custom-dictionary-form" id="custom-dictionary-form">
             <details class="format-help">
               <summary>Source format</summary>
               <p class="editor-help">
-              Write <code>term, reading, definition</code>, one entry per line.
-              The first two commas divide the fields. Blank and
-              <code>#</code> comment lines are ignored; <code>\n</code> adds a
-              newline inside a definition. Invalid lines are listed below and
-              skipped; all valid entries are saved.
+                Write <code>term, reading, definition</code>, one entry per line.
+                The first two commas divide the fields. Blank and
+                <code>#</code> comment lines are ignored; <code>\n</code> adds a
+                newline inside a definition. Invalid lines are listed below and
+                skipped; all valid entries are saved.
               </p>
             </details>
             <label class="custom-dictionary-source-field">
               <span class="field-label">Source</span>
-              <textarea
-                id="custom-dictionary-source"
-                rows="12"
-                spellcheck="false"
-                placeholder="蜂, はち, bee&#10;辞書, じしょ, dictionary&#10;読む, よむ, to read"
-                disabled
-                aria-describedby="custom-dictionary-status custom-dictionary-errors"
-              ></textarea>
+              <textarea id="custom-dictionary-source" rows="12" spellcheck="false" placeholder="蜂, はち, bee&#10;辞書, じしょ, dictionary&#10;読む, よむ, to read" disabled aria-describedby="custom-dictionary-status custom-dictionary-errors"></textarea>
             </label>
             <div class="custom-dictionary-actions">
-              <button
-                type="submit"
-                class="primary-button"
-                id="custom-dictionary-save"
-              >
-                Save dictionary
-              </button>
-              <button type="button" class="ghost" id="custom-dictionary-reload">
-                Reload saved source
-              </button>
+              <button type="submit" class="primary-button" id="custom-dictionary-save">Save dictionary</button>
+              <button type="button" class="ghost" id="custom-dictionary-reload">Reload saved source</button>
             </div>
           </form>
-          <output
-            class="custom-dictionary-status"
-            id="custom-dictionary-status"
-            aria-live="polite"
-          ></output>
-          <ol
-            class="custom-dictionary-errors"
-            id="custom-dictionary-errors"
-            aria-label="Malformed custom dictionary lines"
-            hidden
-          ></ol>
+          <output class="custom-dictionary-status" id="custom-dictionary-status" aria-live="polite"></output>
+          <ol class="custom-dictionary-errors" id="custom-dictionary-errors" aria-label="Malformed custom dictionary lines" hidden></ol>
         </section>
 
         <section class="card" id="lookup" aria-labelledby="lookup-heading" hidden>
           <div class="card-head">
             <h1 id="lookup-heading" tabindex="-1">Reading</h1>
-            <p class="hint">Choose how Hachidori responds while you read.</p>
           </div>
           <div class="options-feedback-slot">
             <div id="options-feedback">
@@ -465,337 +328,307 @@
           </div>
           <fieldset class="lookup-group">
             <legend>Activation</legend>
-            <label class="lookup-enable">
-              <span>Enable lookups</span>
-              <input type="checkbox" id="opt-hover-enabled" />
-            </label>
-            <div class="fields">
-              <div class="field">
-                <label class="field-label" for="opt-activation-key"
-                  data-search-keywords="no key hover mouse middle back forward button press to set">Activation key or button</label>
-                <div class="activation-input-controls">
-                  <select id="opt-activation-key" aria-describedby="activation-key-hint"></select>
-                  <button id="opt-activation-record" type="button" class="ghost" aria-pressed="false"
-                    aria-describedby="activation-key-hint">Press to set</button>
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Enable lookups</span>
+                <input type="checkbox" id="opt-hover-enabled" />
+              </label>
+              <div class="fields">
+                <div class="field">
+                  <label class="field-label" for="opt-activation-key" data-search-keywords="no key hover mouse middle back forward button press to set">Activation key or button</label>
+                  <div class="activation-input-controls">
+                    <select id="opt-activation-key" aria-describedby="activation-key-hint"></select>
+                    <button id="opt-activation-record" type="button" class="ghost" aria-pressed="false" aria-describedby="activation-key-hint">Press to set</button>
+                  </div>
+                  <span class="field-hint" id="activation-key-hint">Empty means hovering looks up.</span>
                 </div>
-                <span class="field-hint" id="activation-key-hint">Hold this key or button while pointing at a word. No key looks up whenever you hover over Japanese text; child popups set to hold the key use the last key or button chosen. A mouse button used to scan does not also scroll or go back. Some keys are reserved by your browser or operating system.</span>
-              </div>
-              <label class="lookup-enable" id="opt-lookup-sticky-row">
-                <span>Keep the popup open after releasing the key or button</span>
-                <input type="checkbox" id="opt-lookup-sticky" />
-              </label>
-              <label class="field" id="opt-scan-delay-row" data-search-keywords="no key dwell rest wait">
-                <span class="field-label">Hover scan delay</span>
-                <span class="input-suffix">
-                  <input id="opt-scan-delay" type="number" min="0" max="5000" step="10" />
-                  <span class="suffix">ms</span>
-                </span>
-                <span class="field-hint">How long the pointer rests on a word before it is looked up. 0 looks it up at once; 150–250 ms skips words the pointer only passes over.</span>
-              </label>
-              <label class="field">
-                <span class="field-label">Child popups</span>
-                <select id="opt-definition-lookup-mode">
-                  <option value="inherit">Same as page lookups</option>
-                  <option value="activation">Hold the activation key</option>
-                  <option value="click">Click a word</option>
-                </select>
-                <span class="field-hint">How words in a popup's definitions open child popups. Dictionary links always open on click.</span>
-              </label>
-              <div class="field" id="opt-definition-scan-delay-row">
-                <label class="field-label" for="opt-definition-scan-delay-mode"
-                  data-search-keywords="child popup dwell rest wait">Definition hover delay</label>
-                <span class="scan-delay-controls">
-                  <select id="opt-definition-scan-delay-mode" aria-describedby="definition-scan-delay-hint">
-                    <option value="inherit">Same as page delay</option>
-                    <option value="custom">Custom</option>
-                  </select>
-                  <span class="input-suffix" id="opt-definition-scan-delay-custom">
-                    <input id="opt-definition-scan-delay" type="number" min="0" max="5000" step="10"
-                      aria-label="Custom definition hover delay" aria-describedby="definition-scan-delay-hint" />
+                <label class="lookup-enable" id="opt-lookup-sticky-row">
+                  <span>Keep the popup open after releasing the key or button</span>
+                  <input type="checkbox" id="opt-lookup-sticky" />
+                </label>
+                <label class="field" id="opt-scan-delay-row" data-search-keywords="no key dwell rest wait">
+                  <span class="field-label">Hover scan delay</span>
+                  <span class="input-suffix">
+                    <input id="opt-scan-delay" type="number" min="0" max="5000" step="10" />
                     <span class="suffix">ms</span>
                   </span>
-                </span>
-                <span class="field-hint" id="definition-scan-delay-hint">How long the pointer rests on a word in a popup's definitions before its child popup opens.</span>
+                  <span class="field-hint">0 looks up at once.</span>
+                </label>
+                <label class="field">
+                  <span class="field-label">Child popups</span>
+                  <select id="opt-definition-lookup-mode">
+                    <option value="inherit">Same as page lookups</option>
+                    <option value="activation">Hold the activation key</option>
+                    <option value="click">Click a word</option>
+                  </select>
+                </label>
+                <div class="field" id="opt-definition-scan-delay-row">
+                  <label class="field-label" for="opt-definition-scan-delay-mode" data-search-keywords="child popup dwell rest wait">Definition hover delay</label>
+                  <span class="scan-delay-controls">
+                    <select id="opt-definition-scan-delay-mode">
+                      <option value="inherit">Same as page delay</option>
+                      <option value="custom">Custom</option>
+                    </select>
+                    <span class="input-suffix" id="opt-definition-scan-delay-custom">
+                      <input id="opt-definition-scan-delay" type="number" min="0" max="5000" step="10" aria-label="Custom definition hover delay" />
+                      <span class="suffix">ms</span>
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
-            <p class="field-hint">Highlighting Japanese text also opens a popup while <a href="#custom-dictionary">Dictionaries › Personal dictionary</a> is on.</p>
           </fieldset>
           <fieldset class="lookup-group">
             <legend>Scanning</legend>
-            <label class="lookup-enable">
-              <span>Japanese text only</span>
-              <input type="checkbox" id="opt-japanese-only" />
-            </label>
-            <div class="fields">
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Japanese text only</span>
+                <input type="checkbox" id="opt-japanese-only" />
+              </label>
               <label class="field">
                 <span class="field-label">Scan length</span>
-                <input
-                  id="opt-scan-length"
-                  type="number"
-                  min="1"
-                  max="64"
-                  step="1"
-                />
-                <span class="field-hint"
-                  >Characters read forward from the cursor.</span
-                >
+                <input id="opt-scan-length" type="number" min="1" max="64" step="1" />
+                <span class="field-hint">Characters read forward from the cursor.</span>
               </label>
             </div>
           </fieldset>
           <fieldset class="lookup-group" id="cursor-exit-settings">
             <legend>Popup closing</legend>
-            <div class="fields">
+            <div class="group-card">
               <label class="field">
                 <span class="field-label">Grace period to reach the popup</span>
                 <span class="input-suffix">
                   <input id="opt-hide-delay" type="number" min="0" max="5000" step="10" />
                   <span class="suffix">ms</span>
                 </span>
-                <span class="field-hint">Time to move from a word into its popup before the popup hides.</span>
               </label>
-            </div>
-            <label class="lookup-enable">
-              <span>Hide popup on cursor exit</span>
-              <input type="checkbox" id="opt-hide-on-cursor-exit" aria-describedby="cursor-exit-help" />
-            </label>
-            <p class="field-hint" id="cursor-exit-help">When the cursor exits the popup, the popup will be hidden. Child popups close when the cursor returns to their parent.</p>
-            <div class="fields">
+              <label class="lookup-enable">
+                <span>Hide popup on cursor exit</span>
+                <input type="checkbox" id="opt-hide-on-cursor-exit" />
+              </label>
               <label class="field">
                 <span class="field-label">Delay after leaving the popup</span>
                 <span class="input-suffix">
                   <input id="opt-hide-on-cursor-exit-delay" type="number" min="0" max="5000" step="10" />
                   <span class="suffix">ms</span>
                 </span>
-                <span class="field-hint">Time outside the popup before it hides.</span>
               </label>
             </div>
           </fieldset>
           <fieldset class="lookup-group">
             <legend>Results</legend>
-            <div class="fields">
+            <div class="group-card">
               <label class="field">
                 <span class="field-label">Maximum results</span>
-                <input
-                  id="opt-max-results"
-                  type="number"
-                  min="1"
-                  max="256"
-                  step="1"
-                />
-                <span class="field-hint"
-                  >Entries kept per lookup, after ranking.</span
-                >
+                <input id="opt-max-results" type="number" min="1" max="256" step="1" />
+                <span class="field-hint">Entries kept per lookup, after ranking.</span>
               </label>
-
               <label class="field">
                 <span class="field-label">Maximum child popups</span>
                 <input id="opt-popup-nesting-depth" type="number" min="0" max="9007199254740991" step="1" />
-                <span class="field-hint">Keep definitions open while looking up definition text or following links. 0 disables child popups.</span>
+                <span class="field-hint">0 disables child popups.</span>
               </label>
-
             </div>
           </fieldset>
           <fieldset class="lookup-group">
             <legend>Frequency sorting</legend>
-            <div class="fields">
+            <div class="group-card">
               <label class="field">
                 <span class="field-label">Sort by frequency dictionary</span>
                 <select id="opt-frequency-dictionary"></select>
-                <span class="field-hint">
-                  Choosing a dictionary sets its direction from rank or occurrence
-                  metadata. You can change that direction manually.
-                </span>
+                <span class="field-hint">Choosing a dictionary sets its direction from rank or occurrence metadata. You can change that direction manually.</span>
               </label>
-
               <div class="field">
                 <label class="field-label" for="opt-frequency-order">Sort order</label>
                 <div class="frequency-order-controls">
                   <select id="opt-frequency-order" aria-describedby="frequency-order-hint">
-                    <option value="auto">Automatic &mdash; all dictionaries</option>
-                    <option value="ascending">Ascending &mdash; lowest number first</option>
-                    <option value="descending">Descending &mdash; highest number first</option>
+                    <option value="auto" data-hint="All dictionaries">Automatic</option>
+                    <option value="ascending" data-hint="Lowest number first">Ascending</option>
+                    <option value="descending" data-hint="Highest number first">Descending</option>
                     <option value="disabled">Disabled</option>
                   </select>
-                  <button id="opt-frequency-auto" type="button" class="ghost"
-                    aria-label="Auto direction from the selected dictionary mode">Auto direction</button>
+                  <button id="opt-frequency-auto" type="button" class="ghost" aria-label="Auto direction from the selected dictionary mode">Auto direction</button>
                 </div>
                 <span class="field-hint" id="frequency-order-hint"></span>
               </div>
             </div>
-            <p class="field-hint">Definition blur can use this dictionary too. How frequencies are shown in the popup is under <a href="#design">Design › Frequency labels</a>.</p>
           </fieldset>
           <fieldset class="lookup-group" id="lookup-history-settings">
             <legend>Lookup history</legend>
-            <label class="lookup-enable">
-              <span>Record and show lookup counts</span>
-              <input id="opt-lookup-counts" type="checkbox" aria-describedby="lookup-counts-help" />
-            </label>
-            <p class="field-hint" id="lookup-counts-help">See how often you look up a word. Counts stay in this browser and are included in backups; turning this off keeps your past counts.</p>
-            <div class="setting-row">
-              <p class="field-hint" id="lookup-counts-reset-help">Every word starts again from zero; your next lookup of it counts as 1. Dictionaries, settings and Anki notes are not changed. Exported backups and earlier automatic backups keep the previous counts.</p>
-              <div class="options-actions">
-                <button type="button" class="ghost danger" id="lookup-counts-reset" aria-describedby="lookup-counts-reset-help" data-search-keywords="clear delete erase zero history statistics start over">Reset lookup counts</button>
-                <output class="custom-dictionary-status" id="lookup-counts-reset-status" aria-live="polite"></output>
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Record and show lookup counts</span>
+                <input id="opt-lookup-counts" type="checkbox" aria-describedby="lookup-counts-help" />
+              </label>
+              <p class="field-hint" id="lookup-counts-help">Past counts are kept when off.</p>
+              <div class="setting-row">
+                <div class="setting-text">
+                  <span class="setting-title">Clear history</span>
+                  <p class="field-hint" id="lookup-counts-reset-help">Backups keep the previous counts.</p>
+                </div>
+                <div class="options-actions">
+                  <button type="button" class="ghost danger" id="lookup-counts-reset" aria-describedby="lookup-counts-reset-help" data-search-keywords="clear delete erase zero history statistics start over">Reset lookup counts</button>
+                  <output class="custom-dictionary-status" id="lookup-counts-reset-status" aria-live="polite"></output>
+                </div>
               </div>
+              <p class="field-hint sharing-linked-notice setting-block" id="lookup-counts-reset-linked" hidden>Reset them on the linked Hachidori.</p>
             </div>
-            <p class="field-hint sharing-linked-notice" id="lookup-counts-reset-linked" hidden>Lookup counts belong to the linked Hachidori. Reset them there, or unlink in <a href="#sharing">Sharing</a> first.</p>
           </fieldset>
           <fieldset class="lookup-group" id="definition-blur-settings">
             <legend>Definition blur</legend>
-            <p class="field-hint">Any checked condition can give you a moment to recall a word before showing its meaning.</p>
-            <label class="lookup-enable">
-              <span>Blur by lookup count</span>
-              <input id="opt-blur-count" type="checkbox" />
-            </label>
-            <label class="lookup-enable">
-              <span>Blur mature Anki cards</span>
-              <input id="opt-blur-anki" type="checkbox" />
-            </label>
-            <label class="lookup-enable">
-              <span>Blur by frequency</span>
-              <input id="opt-blur-frequency" type="checkbox" />
-            </label>
-            <details class="settings-disclosure" id="definition-blur-reveal-controls" hidden>
-              <summary>Thresholds and reveal behaviour</summary>
-              <p class="field-hint" id="definition-blur-any-help" hidden>Any one of the checked conditions is enough to blur a definition.</p>
-              <div class="fields" id="definition-blur-count-controls" hidden>
-                <label class="field">
-                  <span class="field-label">Blur when looked up</span>
-                  <select id="opt-blur-direction">
-                    <option value="atLeast">At least</option>
-                    <option value="below">Below</option>
-                  </select>
-                </label>
-                <label class="field">
-                  <span class="field-label">Threshold (lookups)</span>
-                  <input id="opt-blur-threshold" type="number" min="1" max="1000000" step="1" inputmode="numeric" />
-                </label>
-              </div>
-              <p class="field-hint" id="definition-blur-count-paused" hidden>Lookup count blur is paused. <label for="opt-lookup-counts">Turn on Record and show lookup counts above</label> to use this condition.</p>
-              <p class="field-hint" id="definition-blur-anki-help" hidden>Mature means a review card with an interval of at least 21 days. Uses the duplicate scope and dedicated Expression fields selected in <a href="#anki">Anki settings</a>. The shared index refreshes every 30 minutes; its last saved results still work when Anki is closed.</p>
-              <div class="fields" id="definition-blur-frequency-controls" hidden>
-                <label class="field">
-                  <span class="field-label">Blur threshold dictionary</span>
-                  <select id="opt-blur-frequency-dictionary"></select>
-                </label>
-                <label class="field">
-                  <span class="field-label">Blur threshold direction</span>
-                  <select id="opt-blur-frequency-order">
-                    <option value="auto">Automatic from dictionary</option>
-                    <option value="ascending">Ascending — lower values qualify</option>
-                    <option value="descending">Descending — higher values qualify</option>
-                  </select>
-                </label>
-                <label class="field">
-                  <span class="field-label">Threshold (frequency value)</span>
-                  <input id="opt-blur-frequency-threshold" type="number" min="1" max="9007199254740991"
-                    step="1" inputmode="numeric" />
-                </label>
-              </div>
-              <p class="field-hint" id="definition-blur-frequency-help" hidden></p>
-              <div class="fields">
-                <label class="field">
-                  <span class="field-label">Reveal</span>
-                  <select id="opt-blur-reveal">
-                    <option value="timed">After a delay</option>
-                    <option value="hover">On hover only</option>
-                  </select>
-                </label>
-                <label class="field" id="definition-blur-delay-control">
-                  <span class="field-label">Delay (seconds)</span>
-                  <input id="opt-blur-delay" type="number" min="1" max="3600" step="0.5" inputmode="decimal" />
-                </label>
-              </div>
-              <p class="field-hint" id="definition-blur-help" hidden>Hovering a definition or the compact summary always reveals it. Automatic pronunciation waits until the definitions are revealed.</p>
-            </details>
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Blur by lookup count</span>
+                <input id="opt-blur-count" type="checkbox" />
+              </label>
+              <label class="lookup-enable">
+                <span>Blur mature Anki cards</span>
+                <input id="opt-blur-anki" type="checkbox" />
+              </label>
+              <label class="lookup-enable">
+                <span>Blur by frequency</span>
+                <input id="opt-blur-frequency" type="checkbox" />
+              </label>
+              <details class="settings-disclosure" id="definition-blur-reveal-controls" hidden>
+                <summary>Thresholds and reveal behaviour</summary>
+                <p class="field-hint" id="definition-blur-any-help" hidden></p>
+                <div class="fields" id="definition-blur-count-controls" hidden>
+                  <label class="field">
+                    <span class="field-label">Blur when looked up</span>
+                    <select id="opt-blur-direction">
+                      <option value="atLeast">At least</option>
+                      <option value="below">Below</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Threshold (lookups)</span>
+                    <input id="opt-blur-threshold" type="number" min="1" max="1000000" step="1" inputmode="numeric" />
+                  </label>
+                </div>
+                <p class="field-hint" id="definition-blur-count-paused" hidden>Needs Record and show lookup counts.</p>
+                <p class="field-hint" id="definition-blur-anki-help" hidden>Mature means an interval of 21+ days.</p>
+                <div class="fields" id="definition-blur-frequency-controls" hidden>
+                  <label class="field">
+                    <span class="field-label">Blur threshold dictionary</span>
+                    <select id="opt-blur-frequency-dictionary"></select>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Blur threshold direction</span>
+                    <select id="opt-blur-frequency-order">
+                      <option value="auto" data-hint="From the dictionary">Automatic</option>
+                      <option value="ascending" data-hint="Lower values qualify">Ascending</option>
+                      <option value="descending" data-hint="Higher values qualify">Descending</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field-label">Threshold (frequency value)</span>
+                    <input id="opt-blur-frequency-threshold" type="number" min="1" max="9007199254740991" step="1" inputmode="numeric" />
+                  </label>
+                </div>
+                <p class="field-hint" id="definition-blur-frequency-help" hidden></p>
+                <div class="fields">
+                  <label class="field">
+                    <span class="field-label">Reveal</span>
+                    <select id="opt-blur-reveal">
+                      <option value="timed">After a delay</option>
+                      <option value="hover">On hover only</option>
+                    </select>
+                  </label>
+                  <label class="field" id="definition-blur-delay-control">
+                    <span class="field-label">Delay (seconds)</span>
+                    <input id="opt-blur-delay" type="number" min="1" max="3600" step="0.5" inputmode="decimal" />
+                  </label>
+                </div>
+                <p class="field-hint" id="definition-blur-help" hidden></p>
+              </details>
+            </div>
           </fieldset>
           <div id="settings-local-file-access" hidden></div>
         </section>
 
-        <section
-          class="card"
-          id="word-highlighting"
-          aria-labelledby="word-highlighting-heading"
-          data-settings-group="Reading"
-          data-settings-name="Word highlighting"
-          data-settings-gated
-          hidden
-        >
+        <section class="card" id="word-highlighting" aria-labelledby="word-highlighting-heading" data-settings-group="Reading" data-settings-name="Word highlighting" data-settings-gated hidden>
           <div class="card-head">
-            <h1 id="word-highlighting-heading" tabindex="-1"
-              data-search-keywords="Anki status unknown learning known mature ignored ignore marks underline colour Migaku">Word highlighting</h1>
-            <p class="hint">Mark the Japanese words on every page by their status in Anki.</p>
+            <h1 id="word-highlighting-heading" tabindex="-1" data-search-keywords="Anki status unknown learning known mature ignored ignore marks underline colour Migaku">Word highlighting</h1>
           </div>
           <div class="options-feedback-slot"></div>
           <fieldset class="lookup-group">
             <legend>Highlighting</legend>
-            <label class="lookup-enable">
-              <span>Highlight words by Anki status</span>
-              <input type="checkbox" id="opt-word-highlight" aria-describedby="word-highlight-help" />
-            </label>
-            <p class="field-hint" id="word-highlight-help">A word takes the status of the card for the first result its popup shows, so 食べなかった is marked by a card for 食べる. Your dictionaries split each page into words in this browser, and the status comes from the Anki index Hachidori keeps for the first Template in <a href="#anki">Anki settings</a>, which needs an {expression} field: opening a page never contacts Anki. Particles and other function words are left unmarked, as is text in text boxes. Mark as known and Ignore in the popup set a word's status yourself, over its Anki status and without adding anything to Anki; in <a href="#keybinds">Keybinds</a> they are Mark word as known and Ignore word. To show or hide the marks on one page, bind Toggle word highlights.</p>
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Highlight words by Anki status</span>
+                <input type="checkbox" id="opt-word-highlight" aria-describedby="word-highlight-help" />
+              </label>
+              <p class="field-hint" id="word-highlight-help">Needs a Template with an {expression} field.</p>
+            </div>
           </fieldset>
           <fieldset class="lookup-group">
             <legend>Statuses</legend>
-            <label class="lookup-enable">
-              <span>Mark unknown words</span>
-              <input type="checkbox" id="opt-word-highlight-unknown" aria-describedby="word-highlight-unknown-help" />
-            </label>
-            <p class="field-hint" id="word-highlight-unknown-help">No card in Anki. A solid line, red in most themes.</p>
-            <label class="lookup-enable">
-              <span>Mark learning words</span>
-              <input type="checkbox" id="opt-word-highlight-learning" aria-describedby="word-highlight-learning-help" />
-            </label>
-            <p class="field-hint" id="word-highlight-learning-help">A card that is not mature yet. A dashed line, orange in most themes.</p>
-            <label class="lookup-enable">
-              <span>Mark known words</span>
-              <input type="checkbox" id="opt-word-highlight-known" aria-describedby="word-highlight-known-help" />
-            </label>
-            <p class="field-hint" id="word-highlight-known-help">A mature card, reviewed at an interval of 21 days or more, or a word marked as known in the popup. A dotted line, green in most themes.</p>
-            <label class="lookup-enable">
-              <span>Mark ignored words</span>
-              <input type="checkbox" id="opt-word-highlight-ignored" aria-describedby="word-highlight-ignored-help" />
-            </label>
-            <p class="field-hint" id="word-highlight-ignored-help">A word set to Ignore in the popup, such as a name you will never mine. A double line, grey in most themes.</p>
+            <div class="group-card">
+              <label class="lookup-enable">
+                <span>Mark unknown words</span>
+                <input type="checkbox" id="opt-word-highlight-unknown" aria-describedby="word-highlight-unknown-help" />
+              </label>
+              <p class="field-hint" id="word-highlight-unknown-help">No card in Anki.</p>
+              <label class="lookup-enable">
+                <span>Mark learning words</span>
+                <input type="checkbox" id="opt-word-highlight-learning" aria-describedby="word-highlight-learning-help" />
+              </label>
+              <p class="field-hint" id="word-highlight-learning-help">A card that is not mature yet.</p>
+              <label class="lookup-enable">
+                <span>Mark known words</span>
+                <input type="checkbox" id="opt-word-highlight-known" aria-describedby="word-highlight-known-help" />
+              </label>
+              <p class="field-hint" id="word-highlight-known-help">A mature card, or marked known.</p>
+              <label class="lookup-enable">
+                <span>Mark ignored words</span>
+                <input type="checkbox" id="opt-word-highlight-ignored" aria-describedby="word-highlight-ignored-help" />
+              </label>
+              <p class="field-hint" id="word-highlight-ignored-help">A word set to Ignore.</p>
+            </div>
           </fieldset>
           <fieldset class="lookup-group">
             <legend>Appearance</legend>
-            <div class="fields">
+            <div class="group-card">
               <label class="field">
                 <span class="field-label">Mark style</span>
-                <select id="opt-word-highlight-style" aria-describedby="word-highlight-style-help">
+                <select id="opt-word-highlight-style">
                   <option value="underline">Underline</option>
                   <option value="color">Text colour</option>
                   <option value="background">Background</option>
                 </select>
               </label>
             </div>
-            <p class="field-hint" id="word-highlight-style-help">The colours follow the popup theme chosen in <a href="#design">Design</a>, darkened or lightened until they stand out on the page. Text colour and Background tell the statuses apart by colour alone; under a Windows contrast theme every status keeps its own line, and an ignored word is marked without one.</p>
           </fieldset>
         </section>
 
         <section class="card" id="design" aria-labelledby="design-heading" hidden>
           <div class="card-head">
             <h1 id="design-heading" tabindex="-1">Design</h1>
-            <p class="hint">Appearance and content, with a live preview.</p>
           </div>
           <div class="options-feedback-slot"></div>
           <div class="design-layout">
             <div class="design-controls">
-              <fieldset id="theme-store" class="lookup-group" hidden>
-                <legend>Theme Store</legend>
-                <p class="hint">Choose a bundled popup layout. More themes can ship with future Hachidori releases.</p>
-                <div class="theme-store-carousel">
-                  <button id="theme-store-previous" type="button" class="ghost theme-store-scroll" aria-label="Previous themes" disabled><span class="hd-icon" data-icon="arrow-right" aria-hidden="true"></span></button>
-                  <button id="theme-store-next" type="button" class="ghost theme-store-scroll" aria-label="Next themes" disabled><span class="hd-icon" data-icon="arrow-right" aria-hidden="true"></span></button>
-                  <section class="theme-store-grid" aria-label="Popup themes"></section>
+              <dialog class="settings-dialog theme-gallery" id="theme-gallery" aria-labelledby="theme-gallery-title">
+                <div class="theme-gallery-head">
+                  <h2 id="theme-gallery-title">Themes</h2>
+                  <button id="theme-gallery-close" type="button" class="ghost icon-only" title="Close"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Close</button>
                 </div>
-                <p><a href="https://github.com/bee-san/hachidori-themes" target="_blank" rel="noopener noreferrer">Themes on GitHub</a></p>
-                <output class="theme-store-status" aria-live="polite"></output>
-              </fieldset>
+                <div class="theme-gallery-body">
+                  <div id="theme-gallery-palettes" class="theme-gallery-palettes"></div>
+                  <fieldset id="theme-store" class="lookup-group" hidden>
+                    <legend>Advanced themes <a class="group-link" href="https://github.com/bee-san/hachidori-themes" target="_blank" rel="noopener noreferrer" aria-label="Advanced themes on GitHub" title="Advanced themes on GitHub"><span class="hd-icon" data-icon="open" aria-hidden="true"></span></a></legend>
+                    <div class="theme-store-carousel">
+                      <button id="theme-store-previous" type="button" class="ghost theme-store-scroll" aria-label="Previous themes" disabled><span class="hd-icon" data-icon="arrow-right" aria-hidden="true"></span></button>
+                      <button id="theme-store-next" type="button" class="ghost theme-store-scroll" aria-label="Next themes" disabled><span class="hd-icon" data-icon="arrow-right" aria-hidden="true"></span></button>
+                      <section class="theme-store-grid" aria-label="Popup themes"></section>
+                    </div>
+                    <output class="theme-store-status" aria-live="polite"></output>
+                  </fieldset>
+                </div>
+              </dialog>
               <fieldset class="lookup-group">
                 <legend>Appearance</legend>
-                <div class="fields">
+                <div class="group-card">
                   <label class="field">
                     <span class="field-label">Theme</span>
                     <select id="opt-popup-theme" aria-describedby="popup-theme-hint"></select>
@@ -807,7 +640,6 @@
                       <input id="opt-popup-opacity" type="number" min="0" max="100" step="1" />
                       <span class="suffix">%</span>
                     </span>
-                    <span class="field-hint">Text stays opaque.</span>
                   </label>
                   <label class="field">
                     <span class="field-label">Width</span>
@@ -823,33 +655,30 @@
                       <span class="suffix">px</span>
                     </span>
                   </label>
+                  <label class="field">
+                    <span class="field-label">Scale</span>
+                    <span class="input-suffix">
+                      <input id="opt-popup-scale" type="number" min="25" max="500" step="1" />
+                      <span class="suffix">%</span>
+                    </span>
+                  </label>
+                  <label class="field" data-design-setting="popupToolbarPosition" data-search-keywords="header headword top above">
+                    <span class="field-label">Headword and toolbar position</span>
+                    <select id="opt-popup-toolbar">
+                      <option value="auto">Automatic</option>
+                      <option value="top">Top</option>
+                      <option value="bottom">Bottom</option>
+                    </select>
+                  </label>
+                  <label class="lookup-enable">
+                    <span>Highlight the word on the page</span>
+                    <input id="opt-source-highlight" type="checkbox" />
+                  </label>
                 </div>
-                <label class="field">
-                  <span class="field-label">Scale</span>
-                  <span class="input-suffix">
-                    <input id="opt-popup-scale" type="number" min="25" max="500" step="1" />
-                    <span class="suffix">%</span>
-                  </span>
-                  <span class="field-hint">Scale the whole popup, including text and controls. 100% is the default.</span>
-                </label>
-                <p class="field-hint">Popups shrink to fit smaller windows.</p>
-                <label class="field" data-design-setting="popupToolbarPosition" data-search-keywords="header">
-                  <span class="field-label">Headword and toolbar position</span>
-                  <select id="opt-popup-toolbar">
-                    <option value="auto">Automatic</option>
-                    <option value="top">Top</option>
-                    <option value="bottom">Bottom</option>
-                  </select>
-                  <span class="field-hint">Automatic puts the headword and buttons on the edge nearest the word: at the bottom when the popup opens above it. Top keeps them at the top, as in Yomitan.</span>
-                </label>
-                <label class="lookup-enable">
-                  <span>Highlight the word on the page</span>
-                  <input id="opt-source-highlight" type="checkbox" />
-                </label>
               </fieldset>
               <fieldset class="lookup-group" data-design-group>
                 <legend>Definitions</legend>
-                <div class="fields">
+                <div class="group-card">
                   <label class="field" data-design-setting="popupColumns">
                     <span class="field-label">Definition columns</span>
                     <select id="opt-popup-columns">
@@ -858,7 +687,6 @@
                       <option value="3">3 columns</option>
                       <option value="4">4 columns</option>
                     </select>
-                    <span class="field-hint">Arrange definition cards side by side.</span>
                   </label>
                   <label class="field" data-design-setting="glossaryLayoutMode">
                     <span class="field-label">Compact glossaries</span>
@@ -866,13 +694,11 @@
                       <option value="default">Default</option>
                       <option value="compact">Compact popup</option>
                     </select>
-                    <span class="field-hint">Puts the glosses of each sense on one line, separated by |, as in Yomitan. Examples, notes and tables keep their own lines.</span>
+                    <span class="field-hint">One line per sense, as in Yomitan.</span>
                   </label>
-
                   <label class="field" data-design-setting="popupImageSource">
                     <span class="field-label">Image source</span>
                     <select id="opt-image-source"></select>
-                    <span class="field-hint">Automatic uses the definition's dictionary. A group tries its enabled dictionaries in order for each image.</span>
                   </label>
                   <label class="field" data-design-setting="imageHoverPreview">
                     <span class="field-label">Image hover preview</span>
@@ -881,94 +707,91 @@
                       <option value="large">Large images only</option>
                       <option value="all">All images</option>
                     </select>
-                    <span class="field-hint">Enlarges a dictionary image on hover or keyboard focus. Large images only skips small inline glyphs such as image brackets and labels.</span>
                   </label>
                   <label class="field" data-design-setting="kanjiClickDictionary">
                     <span class="field-label">Clicked-kanji dictionary</span>
                     <select id="opt-kanji-dictionary"></select>
-                    <span class="field-hint">Term dictionaries also work when they contain a single-kanji entry. A group shows each of its dictionaries with an entry as its own tab, in group order.</span>
                   </label>
                 </div>
               </fieldset>
               <fieldset class="lookup-group" data-design-group>
                 <legend>Frequency labels</legend>
-                <label class="lookup-enable" data-design-setting="showFrequencyDictionaryNames">
-                  <span>Show frequency dictionary names</span>
-                  <input id="opt-frequency-names" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="compactFrequencyNumbers">
-                  <span>Abbreviate large numbers (51.5k)</span>
-                  <input id="opt-frequency-compact" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="averageFrequency">
-                  <span>Show frequency averages</span>
-                  <input id="opt-average-frequency" type="checkbox" />
-                </label>
-                <p class="field-hint" data-design-setting="averageFrequency">Harmonic mean of each dictionary's first value, as in Yomitan. Ranks and occurrence counts stay separate.</p>
-                <p class="field-hint">The sorting and blur dictionaries are under <a href="#lookup">Reading</a>.</p>
+                <div class="group-card">
+                  <label class="lookup-enable" data-design-setting="showFrequencyDictionaryNames">
+                    <span>Show frequency dictionary names</span>
+                    <input id="opt-frequency-names" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="compactFrequencyNumbers">
+                    <span>Abbreviate large numbers (51.5k)</span>
+                    <input id="opt-frequency-compact" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="averageFrequency">
+                    <span>Show frequency averages</span>
+                    <input id="opt-average-frequency" type="checkbox" />
+                  </label>
+                  <p class="field-hint" data-design-setting="averageFrequency">Harmonic mean, as in Yomitan.</p>
+                </div>
               </fieldset>
               <fieldset class="lookup-group" data-design-group>
                 <legend>Pitch accent</legend>
-                <label class="lookup-enable" data-design-setting="showPitchAccentFurigana">
-                  <span>Show pitch in furigana</span>
-                  <input id="opt-pitch-furigana" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="showPitchAccentColors">
-                  <span>Show pitch accent colours</span>
-                  <input id="opt-pitch-colors" type="checkbox" />
-                </label>
-                <p class="field-hint" data-design-setting="showPitchAccentColors">Colours the headword and pitch lines by accent group, as jp-mining-note does: <span lang="ja">平板</span> blue, <span lang="ja">頭高</span> red, <span lang="ja">中高</span> orange, <span lang="ja">尾高</span> green, <span lang="ja">起伏</span> purple.</p>
-                <div class="fields">
+                <div class="group-card">
+                  <label class="lookup-enable" data-design-setting="showPitchAccentFurigana">
+                    <span>Show pitch in furigana</span>
+                    <input id="opt-pitch-furigana" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentColors">
+                    <span>Show pitch accent colours</span>
+                    <input id="opt-pitch-colors" type="checkbox" />
+                  </label>
                   <label class="field" data-design-setting="pitchAccentFuriganaDictionary">
                     <span class="field-label">Pitch accent dictionary</span>
                     <select id="opt-pitch-dictionary"></select>
-                    <span class="field-hint">Used by the furigana and colours. Falls back to the first available pitch pattern.</span>
                   </label>
                   <label class="field" data-design-setting="pitchAccentFuriganaStyle">
                     <span class="field-label">Furigana pitch style</span>
                     <select id="opt-pitch-furigana-style">
-                      <option value="contour">Contour (over high, under low)</option>
-                      <option value="overline">Overline, like the pitch list (Yomitan)</option>
+                      <option value="contour" data-hint="Over high, under low">Contour</option>
+                      <option value="overline" data-hint="Like the pitch list, as in Yomitan">Overline</option>
                     </select>
-                    <span class="field-hint">Overline draws the headword's pitch as the pitch accents below it do: a line over high morae and a hook where the pitch drops.</span>
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentBadge">
+                    <span>Show pitch badges</span>
+                    <input id="opt-pitch-badge" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentDictionaryNames">
+                    <span>Show pitch dictionary names</span>
+                    <input id="opt-pitch-names" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentText">
+                    <span>Show pitch accent text</span>
+                    <input id="opt-pitch-text" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentPosition">
+                    <span>Show pitch accent position</span>
+                    <input id="opt-pitch-position" type="checkbox" />
+                  </label>
+                  <label class="lookup-enable" data-design-setting="showPitchAccentGraph">
+                    <span>Show pitch accent graph</span>
+                    <input id="opt-pitch-graph" type="checkbox" />
                   </label>
                 </div>
-                <label class="lookup-enable" data-design-setting="showPitchAccentBadge">
-                  <span>Show pitch badges</span>
-                  <input id="opt-pitch-badge" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="showPitchAccentDictionaryNames">
-                  <span>Show pitch dictionary names</span>
-                  <input id="opt-pitch-names" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="showPitchAccentText">
-                  <span>Show pitch accent text</span>
-                  <input id="opt-pitch-text" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="showPitchAccentPosition">
-                  <span>Show pitch accent position</span>
-                  <input id="opt-pitch-position" type="checkbox" />
-                </label>
-                <label class="lookup-enable" data-design-setting="showPitchAccentGraph">
-                  <span>Show pitch accent graph</span>
-                  <input id="opt-pitch-graph" type="checkbox" />
-                </label>
               </fieldset>
               <fieldset class="lookup-group" data-design-group>
                 <legend>Tags</legend>
-                <label class="lookup-enable" data-design-setting="hidePopupGrammarTags">
-                  <span>Show grammar tags</span>
-                  <input id="opt-grammar-tags" type="checkbox" />
-                </label>
-                <p class="field-hint" data-design-setting="hidePopupGrammarTags">Definition tags and phonetic transcriptions remain visible.</p>
+                <div class="group-card">
+                  <label class="lookup-enable" data-design-setting="hidePopupGrammarTags">
+                    <span>Show grammar tags</span>
+                    <input id="opt-grammar-tags" type="checkbox" />
+                  </label>
+                </div>
               </fieldset>
               <fieldset class="lookup-group" data-design-group>
                 <legend>Compact summary</legend>
-                <label class="lookup-enable" data-design-setting="showCompactDefinitionSummary">
-                  <span>Show brief definitions beside the headword</span>
-                  <input id="opt-compact-summary" type="checkbox" />
-                </label>
-                <div class="fields">
+                <div class="group-card">
+                  <label class="lookup-enable" data-design-setting="showCompactDefinitionSummary">
+                    <span>Show brief definitions beside the headword</span>
+                    <input id="opt-compact-summary" type="checkbox" />
+                  </label>
                   <label class="field" data-design-setting="compactDefinitionSummaryCount">
                     <span class="field-label">Snippets</span>
                     <select id="opt-summary-count">
@@ -979,82 +802,82 @@
                       <option value="5">5 snippets</option>
                       <option value="6">6 snippets</option>
                     </select>
-                    <span class="field-hint">Full definitions stay available below.</span>
                   </label>
                   <label class="field" data-design-setting="compactDefinitionSummaryDictionary">
                     <span class="field-label">Summary dictionary</span>
                     <select id="opt-summary-dictionary"></select>
-                    <span class="field-hint">Falls back to the first available definition in the current tab.</span>
                   </label>
                 </div>
               </fieldset>
               <fieldset class="lookup-group" id="custom-buttons-settings" data-design-setting="customButtons">
                 <legend>Custom buttons</legend>
-                <p id="custom-buttons-overlay-help" class="section-note" hidden>Link buttons open in your system browser from a real lookup popup. The live preview cannot launch links in this overlay.</p>
-                <p class="field-hint">Add link buttons or Anki buttons that use a chosen Template. Buttons appear in this order after the built-in actions.</p>
-                <ol id="custom-button-list" class="custom-button-list"></ol>
-                <p id="custom-button-empty" class="field-hint">No custom buttons yet.</p>
-                <form id="custom-button-form" class="custom-button-form" novalidate>
-                  <div class="fields">
-                    <label class="field">
-                      <span class="field-label">Button name</span>
-                      <input id="opt-custom-button-name" type="text" autocomplete="off" placeholder="Search Jisho"
-                        aria-describedby="custom-buttons-status" />
-                    </label>
-                    <label class="field">
-                      <span class="field-label">Action</span>
-                      <select id="opt-custom-button-type">
-                        <option value="link">Open a link</option>
-                        <option value="anki">Send to Anki</option>
-                      </select>
-                    </label>
-                    <label class="field" id="custom-button-link-field">
-                      <span class="field-label">URL template</span>
-                      <input id="opt-custom-button-url" type="text" spellcheck="false" autocomplete="off"
-                        placeholder="https://jisho.org/search/%w" aria-describedby="custom-button-url-help custom-buttons-status" />
-                      <span id="custom-button-url-help" class="field-hint">Use %w for the word, %r for its reading and %s for the sentence.</span>
-                    </label>
-                    <label class="field" id="custom-button-anki-field" hidden>
-                      <span class="field-label">Template</span>
-                      <select id="opt-custom-button-template" aria-describedby="custom-buttons-status"></select>
-                      <span class="field-hint">This button uses that Template’s deck, note type, fields and duplicate handling.</span>
-                    </label>
+                <p id="custom-buttons-overlay-help" class="group-desc" hidden>Links open from a real popup, not this preview.</p>
+                <div class="group-card">
+                  <ol id="custom-button-list" class="custom-button-list"></ol>
+                  <div class="setting-row row-actions custom-button-add-row">
+                    <p id="custom-button-empty" class="field-hint">No custom buttons yet.</p>
+                    <button id="custom-button-new" type="button" class="ghost"><span class="hd-icon" data-icon="add" aria-hidden="true"></span>Add button</button>
                   </div>
-                  <div class="custom-dictionary-actions">
-                    <button id="custom-button-submit" type="submit" class="ghost">Add button</button>
-                    <button id="custom-button-cancel" type="button" class="ghost" hidden>Cancel</button>
-                  </div>
-                  <output id="custom-buttons-status" class="is-error" aria-live="polite"></output>
-                </form>
+                  <dialog class="settings-dialog" id="custom-button-dialog" aria-labelledby="custom-button-dialog-title">
+                    <form id="custom-button-form" class="custom-button-form" novalidate>
+                      <h2 id="custom-button-dialog-title">New button</h2>
+                      <label class="field">
+                        <span class="field-label">Button name</span>
+                        <input id="opt-custom-button-name" type="text" autocomplete="off" placeholder="Search Jisho" aria-describedby="custom-buttons-status" />
+                      </label>
+                      <label class="field">
+                        <span class="field-label">Action</span>
+                        <select id="opt-custom-button-type">
+                          <option value="link">Open a link</option>
+                          <option value="anki">Send to Anki</option>
+                        </select>
+                      </label>
+                      <label class="field" id="custom-button-link-field">
+                        <span class="field-label">URL template</span>
+                        <input id="opt-custom-button-url" type="text" spellcheck="false" autocomplete="off" placeholder="https://jisho.org/search/%w" aria-describedby="custom-button-url-help custom-buttons-status" />
+                        <span id="custom-button-url-help" class="field-hint">%w word, %r reading, %s sentence.</span>
+                      </label>
+                      <label class="field" id="custom-button-anki-field" hidden>
+                        <span class="field-label">Template</span>
+                        <select id="opt-custom-button-template" aria-describedby="custom-buttons-status"></select>
+                      </label>
+                      <output id="custom-buttons-status" class="is-error" aria-live="polite"></output>
+                      <div class="dialog-actions">
+                        <button id="custom-button-cancel" type="button" class="ghost">Cancel</button>
+                        <button id="custom-button-submit" type="submit" class="primary-button">Add button</button>
+                      </div>
+                    </form>
+                  </dialog>
+                </div>
               </fieldset>
-              <details class="settings-disclosure custom-css-disclosure">
-                <summary>Custom CSS</summary>
-                <label class="field-label" for="opt-custom-popup-css">Popup stylesheet</label>
-                <p class="field-hint" id="custom-css-help">Applied after built-in and dictionary styles, inside the popup only. Changes preview as you type.</p>
-                <textarea id="opt-custom-popup-css" rows="8" spellcheck="false" autocapitalize="off"
-                  aria-describedby="custom-css-help custom-css-count"
-                  placeholder=".gloss-image {&#10;  border-radius: 8px;&#10;}"></textarea>
-                <div class="custom-css-footer">
-                  <span id="custom-css-count" class="field-hint">0 characters</span>
-                  <button id="reset-custom-css" type="button" class="ghost">Reset custom CSS</button>
-                </div>
-                <p class="field-hint">Invalid rules are ignored by the browser. Styles using URLs can request external resources.</p>
-                <div id="custom-javascript">
-                  <label class="field-label" for="opt-custom-popup-javascript">Custom JavaScript</label>
-                  <p class="field-hint" id="custom-javascript-warning">Do not paste Javascript here you do not understand, it is a security risk.</p>
-                  <p class="field-hint">Enable user scripts for Hachidori on Chrome's Extensions page before using this.</p>
-                  <textarea id="opt-custom-popup-javascript" rows="8" spellcheck="false" autocapitalize="off"
-                    aria-describedby="custom-javascript-warning custom-javascript-count"></textarea>
-                  <div class="custom-css-footer">
-                    <span id="custom-javascript-count" class="field-hint">0 characters</span>
-                    <button id="reset-custom-javascript" type="button" class="ghost">Reset custom JavaScript</button>
-                  </div>
-                </div>
-              </details>
               <div class="lookup-group">
-                <div class="setting-row">
-                  <p class="field-hint" id="reset-design-help">Resets every Design setting, including ones this theme hides, and switches back to the Default theme. Reading and your library stay unchanged.</p>
-                  <button id="reset-design" type="button" class="ghost" aria-describedby="reset-design-help">Reset Design to defaults</button>
+                <div class="group-card">
+                  <details class="settings-disclosure custom-css-disclosure">
+                    <summary>Custom CSS</summary>
+                    <label class="field-label" for="opt-custom-popup-css">Popup stylesheet</label>
+                    <textarea id="opt-custom-popup-css" rows="8" spellcheck="false" autocapitalize="off" aria-describedby="custom-css-count" placeholder=".gloss-image {&#10;  border-radius: 8px;&#10;}"></textarea>
+                    <div class="custom-css-footer">
+                      <span id="custom-css-count" class="field-hint">0 characters</span>
+                      <button id="reset-custom-css" type="button" class="ghost">Reset custom CSS</button>
+                    </div>
+                    <div id="custom-javascript">
+                      <label class="field-label" for="opt-custom-popup-javascript">Custom JavaScript</label>
+                      <p class="field-hint" id="custom-javascript-warning">Do not paste Javascript here you do not understand, it is a security risk.</p>
+                      <p class="field-hint">Needs user scripts enabled in Chrome.</p>
+                      <textarea id="opt-custom-popup-javascript" rows="8" spellcheck="false" autocapitalize="off" aria-describedby="custom-javascript-warning custom-javascript-count"></textarea>
+                      <div class="custom-css-footer">
+                        <span id="custom-javascript-count" class="field-hint">0 characters</span>
+                        <button id="reset-custom-javascript" type="button" class="ghost">Reset custom JavaScript</button>
+                      </div>
+                    </div>
+                  </details>
+                  <div class="setting-row">
+                    <div class="setting-text">
+                      <span class="setting-title">Defaults</span>
+                      <p class="field-hint" id="reset-design-help">Also resets settings this theme hides.</p>
+                    </div>
+                    <button id="reset-design" type="button" class="ghost" aria-describedby="reset-design-help">Reset Design to defaults</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1068,277 +891,296 @@
                   </select>
                 </label>
               </div>
-              <p class="field-hint">Try your popup over a game scene. These are sample entries; click a kanji to try its view. Notes are not saved.</p>
               <div class="preview-viewport" id="preview-viewport">
                 <div id="preview-canvas"></div>
               </div>
             </section>
           </div>
         </section>
+
         <section class="card" id="audio" aria-labelledby="audio-heading" hidden>
           <div class="card-head">
             <h1 id="audio-heading" tabindex="-1" data-search-keywords="voice pronunciation text to speech TTS source provider URL">Audio</h1>
-            <p class="hint">Pronunciations in the popup and in Anki notes.</p>
           </div>
           <div class="options-feedback-slot"></div>
           <div class="lookup-group">
-            <label class="lookup-enable"><span>Automatically play the first lookup result</span><input id="opt-audio-autoplay" type="checkbox"></label>
-            <label class="lookup-enable">
-              <span>Show the audio button</span>
-              <input id="opt-popup-audio-button" type="checkbox" aria-describedby="popup-audio-button-help" />
-            </label>
-            <p class="field-hint" id="popup-audio-button-help">Autoplay and audio keybinds still work when it's hidden.</p>
+            <div class="group-card">
+              <label class="lookup-enable"><span>Automatically play the first lookup result</span><input id="opt-audio-autoplay" type="checkbox"></label>
+              <label class="lookup-enable">
+                <span>Show the audio button</span>
+                <input id="opt-popup-audio-button" type="checkbox" />
+              </label>
+            </div>
           </div>
           <fieldset class="lookup-group" id="audio-sources">
             <legend>Sources</legend>
-            <p class="field-hint">Tried from top to bottom until one has a pronunciation.</p>
-            <p id="audio-mining-help" class="section-note" hidden>Browser speech can play in this overlay, but cannot be recorded into Anki. Add a downloadable pronunciation source to fill <code>{audio}</code> fields.</p>
-            <ol id="audio-source-list" class="audio-source-list"></ol>
-            <p id="audio-source-empty" class="hint" hidden>No audio sources. Add one to configure pronunciation.</p>
-            <div class="setting-row">
-              <button id="audio-source-add" type="button" class="ghost">Add source</button>
-            </div>
-            <div class="setting-row">
-              <div class="setting-text">
-                <span class="field-label">Local Audio Server add-on</span>
-                <p class="field-hint">Offline pronunciations from the Local Audio Server for Yomichan Anki add-on, at 127.0.0.1:5050.</p>
-                <output id="anki-audio-status" class="field-hint anki-audio-status" aria-live="polite" aria-atomic="true"></output>
+            <p class="group-desc">Tried from top to bottom.</p>
+            <p id="audio-mining-help" class="group-desc" hidden>Browser speech cannot go into Anki.</p>
+            <div class="group-card">
+              <ol id="audio-source-list" class="audio-source-list"></ol>
+              <p id="audio-source-empty" class="hint setting-block" hidden>No audio sources yet.</p>
+              <div class="setting-row row-actions">
+                <button id="audio-source-add" type="button" class="ghost"><span class="hd-icon" data-icon="add" aria-hidden="true"></span>Add source</button>
               </div>
-              <div class="options-actions">
-                <span id="anki-audio-pill" class="anki-status-pill" data-state="offline">Not detected</span>
-                <button id="anki-audio-check" type="button" class="ghost">Detect local audio</button>
-                <button id="anki-audio-add" type="button" class="ghost" hidden>Add detected audio source</button>
+              <div class="setting-row">
+                <div class="setting-text">
+                  <span class="field-label">Local Audio Server add-on</span>
+                  <p class="field-hint">Offline source at 127.0.0.1:5050.</p>
+                  <output id="anki-audio-status" class="field-hint anki-audio-status" aria-live="polite" aria-atomic="true"></output>
+                </div>
+                <div class="options-actions">
+                  <span id="anki-audio-pill" class="anki-status-pill" data-state="offline">Not detected</span>
+                  <button id="anki-audio-check" type="button" class="ghost">Detect local audio</button>
+                  <button id="anki-audio-add" type="button" class="ghost" hidden>Add detected audio source</button>
+                </div>
               </div>
+              <details class="settings-disclosure">
+                <summary>Help</summary>
+                <p class="field-hint">Placeholders: {term}, {reading}, {language}.</p>
+                <p class="field-hint">Shift-click the popup audio button to choose.</p>
+                <p class="field-hint">Remote URLs need HTTPS.</p>
+              </details>
             </div>
-            <details class="settings-disclosure">
-              <summary>Help</summary>
-              <p class="field-hint">URL templates accept <code>{term}</code>, <code>{expression}</code>, <code>{reading}</code> and <code>{language}</code>, URL-encoded. Yomitan JSON sources return an <code>audioSourceList</code>.</p>
-              <p class="field-hint">Shift-click or right-click the popup's audio button to choose a pronunciation.</p>
-              <p class="field-hint">Sources receive the word and reading. Remote URLs need HTTPS; localhost may use HTTP. Some system voices are online.</p>
-            </details>
           </fieldset>
         </section>
+
         <section class="card" id="anki" aria-labelledby="anki-heading" hidden>
           <div class="card-head">
             <h1 id="anki-heading" tabindex="-1" data-search-keywords="deck note type field mapping marker combobox Template templates tags API key flashcards AnkiConnect URL endpoint">Anki</h1>
-            <p class="hint">Add notes to Anki from the popup through AnkiConnect, which Hachidori sets up from your note types.</p>
           </div>
           <div class="options-feedback-slot"></div>
-          <div class="anki-panel anki-card anki-connection-card">
-            <div class="anki-setting-row">
-              <div class="anki-setting-col anki-connection-fields">
-                <label class="field-label" for="opt-anki-url">AnkiConnect link</label>
-                <div class="anki-url-row">
-                  <input id="opt-anki-url" type="url" spellcheck="false" autocomplete="off" placeholder="http://127.0.0.1:8765" aria-describedby="anki-url-help anki-url-error">
-                  <button id="anki-api-key-toggle" type="button" class="ghost anki-icon-button" title="Configure optional API key" aria-controls="anki-api-key-panel" aria-expanded="false"><span class="hd-icon" data-icon="key" aria-hidden="true"></span><span class="anki-icon-button-label">API key</span></button>
+          <fieldset class="lookup-group anki-connection">
+            <legend>Connection</legend>
+            <div class="group-card">
+              <div class="field anki-url-field">
+                <div class="field-text">
+                  <label class="field-label" for="opt-anki-url">AnkiConnect</label>
+                  <output id="anki-status" class="operational-status anki-status-pill" data-state="offline" aria-live="polite" aria-atomic="true">Open Anki to discover your decks and note types.</output>
                 </div>
-                <span id="anki-url-help" class="field-hint">The address where AnkiConnect is running. Shared by every Template.</span>
+                <div class="inline-controls">
+                  <input id="opt-anki-url" type="url" spellcheck="false" autocomplete="off" placeholder="http://127.0.0.1:8765" aria-describedby="anki-url-error">
+                  <button id="anki-api-key-toggle" type="button" class="ghost icon-only" title="API key" aria-controls="anki-api-key-panel" aria-expanded="false"><span class="hd-icon" data-icon="settings" aria-hidden="true"></span>API key</button>
+                  <button id="anki-refresh" type="button" class="ghost icon-only" title="Refresh connection"><span class="hd-icon" data-icon="arrow-clockwise" aria-hidden="true"></span>Refresh connection</button>
+                </div>
                 <output id="anki-url-error" class="field-hint is-error" aria-live="polite"></output>
-                <div id="anki-api-key-panel" class="anki-api-key-panel" hidden>
-                  <label class="field" for="opt-anki-api-key"><span class="field-label">AnkiConnect API key (optional)</span><input id="opt-anki-api-key" type="password" autocomplete="off"><span class="field-hint">Leave blank unless you configured an API key in AnkiConnect. Shared by every Template and stored locally in this browser.</span></label>
+              </div>
+              <div class="field" id="anki-api-key-panel" hidden>
+                <label class="field-label" for="opt-anki-api-key">API key</label>
+                <input id="opt-anki-api-key" type="password" autocomplete="off">
+              </div>
+              <div class="setting-row">
+                <div class="setting-text">
+                  <span class="field-label">Existing setup</span>
+                  <p class="field-hint">Needs the <a href="https://ankiweb.net/shared/info/2055492159" target="_blank" rel="noopener noreferrer">AnkiConnect add-on</a>.</p>
+                  <output id="anki-setup-status" class="operational-status" aria-live="polite" aria-atomic="true" hidden></output>
                 </div>
-              </div>
-              <div class="anki-connection-actions">
-                <output id="anki-status" class="operational-status anki-status-pill" data-state="offline" aria-live="polite" aria-atomic="true">Open Anki to discover your decks and note types.</output>
-                <button id="anki-refresh" type="button" class="ghost anki-icon-button" title="Refresh connection"><span class="hd-icon" data-icon="arrow-clockwise" aria-hidden="true"></span><span class="anki-icon-button-label">Refresh connection</span></button>
+                <button id="anki-find-setup" type="button" class="ghost">Find existing setup</button>
               </div>
             </div>
-            <div class="anki-setting-row anki-setup-row">
-              <div class="anki-setting-col">
-                <span class="field-label">Automatic setup detection</span>
-                <span class="field-hint">Find your most-used Kiku, Lapis or Senren setup, or check your saved mapping. Requires the <a href="https://ankiweb.net/shared/info/2055492159" target="_blank" rel="noopener noreferrer">AnkiConnect add-on</a> in Anki.</span>
-                <output id="anki-setup-status" class="operational-status" aria-live="polite" aria-atomic="true" hidden></output>
-              </div>
-              <button id="anki-find-setup" type="button" class="ghost">Find existing setup</button>
-            </div>
-          </div>
-          <fieldset class="lookup-group anki-panel anki-card anki-template-manager" id="anki-template-manager">
+          </fieldset>
+
+          <fieldset class="lookup-group anki-templates-group" id="anki-template-manager">
             <legend>Templates</legend>
-            <p class="field-hint">The first Template powers the built-in Anki button.</p>
-            <div class="anki-template-strip">
+            <p class="group-desc">The first Template is the built-in button.</p>
+            <div class="anki-tabs">
               <div id="anki-template-pills" class="anki-template-pills"></div>
               <button id="anki-template-add" type="button" class="ghost anki-template-new"><span class="hd-icon" data-icon="add" aria-hidden="true"></span>New Template</button>
             </div>
-            <div class="anki-template-editor">
-              <label class="field anki-template-name">
-                <span class="field-label">Template name</span>
-                <input id="opt-anki-template-name" type="text" autocomplete="off" aria-describedby="anki-template-status">
-                <span class="field-hint">Custom Anki buttons choose Templates by this name.</span>
-              </label>
-              <div class="anki-template-actions">
+            <div class="anki-template-order" role="group" aria-label="Template order controls">
+              <button id="anki-template-previous" type="button" aria-label="Previous Template"></button>
+              <label><span>Template order</span><select id="anki-template-select"></select></label>
+              <button id="anki-template-next" type="button" aria-label="Next Template"></button>
+              <span id="anki-template-position" aria-live="polite"></span>
+              <span id="anki-template-role" hidden>Built-in button</span>
+            </div>
+            <div class="group-card">
+              <div class="field anki-name-field">
+                <label class="field-label" for="opt-anki-template-name">Name</label>
+                <div class="inline-controls">
+                  <input id="opt-anki-template-name" type="text" autocomplete="off" aria-describedby="anki-template-status">
+                  <button id="anki-template-up" type="button" class="ghost icon-only" title="Move earlier"><span class="hd-icon" data-icon="arrow-up" aria-hidden="true"></span>Move earlier</button>
+                  <button id="anki-template-down" type="button" class="ghost icon-only" title="Move later"><span class="hd-icon" data-icon="arrow-down" aria-hidden="true"></span>Move later</button>
+                  <button id="anki-template-duplicate" type="button" class="ghost icon-only" title="Duplicate"><span class="hd-icon" data-icon="document-add" aria-hidden="true"></span>Duplicate</button>
+                  <button id="anki-template-delete" type="button" class="ghost icon-only danger" title="Delete"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Delete</button>
+                </div>
+                <output id="anki-template-status" class="field-hint is-error" aria-live="polite"></output>
+              </div>
+              <div class="setting-row" id="anki-template-builtin-row">
+                <div class="setting-text">
+                  <span class="field-label">Built-in button</span>
+                  <p class="field-hint">The popup's own Anki button uses it.</p>
+                </div>
                 <button id="anki-template-set-builtin" type="button" class="ghost">Set built-in</button>
-                <button id="anki-template-duplicate" type="button" class="ghost"><span class="hd-icon" data-icon="document-add" aria-hidden="true"></span>Duplicate</button>
-                <button id="anki-template-delete" type="button" class="ghost danger"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Delete</button>
               </div>
-              <output id="anki-template-status" class="is-error" aria-live="polite"></output>
-            </div>
-            <div class="anki-template-navigation" aria-label="Template order controls">
-              <button id="anki-template-previous" type="button" class="ghost" aria-label="Previous Template"><span aria-hidden="true">‹</span></button>
-              <label class="anki-template-picker"><span class="field-label">Template order</span><select id="anki-template-select"></select></label>
-              <button id="anki-template-next" type="button" class="ghost" aria-label="Next Template"><span aria-hidden="true">›</span></button>
-              <span id="anki-template-position" class="anki-template-position" aria-live="polite"></span>
-              <span id="anki-template-role" class="anki-template-role">Built-in button</span>
-              <button id="anki-template-up" type="button" class="ghost"><span class="hd-icon" data-icon="arrow-up" aria-hidden="true"></span>Move up</button>
-              <button id="anki-template-down" type="button" class="ghost"><span class="hd-icon" data-icon="arrow-down" aria-hidden="true"></span>Move down</button>
-            </div>
-            <div class="anki-destination">
-              <h2>Destination</h2>
-              <div class="anki-destination-grid">
-                <label class="anki-setting-col"><span class="field-label">Deck</span><select id="opt-anki-deck"></select></label>
-                <label class="anki-setting-col"><span class="field-label">Note type</span><select id="opt-anki-model"></select><span class="field-hint">Kiku, Lapis and Senren fill their matching fields automatically.</span></label>
-                <label class="anki-setting-col"><span class="field-label">Tags</span><input id="opt-anki-tags" type="text" spellcheck="false"><span class="field-hint">Separate tags with spaces.</span></label>
-              </div>
-            </div>
-            <div>
+              <label class="field">
+                <span class="field-label">Deck</span>
+                <select id="opt-anki-deck"></select>
+              </label>
+              <label class="field">
+                <span class="field-label">Note type</span>
+                <select id="opt-anki-model"></select>
+              </label>
+              <label class="field">
+                <span class="field-label">Tags</span>
+                <input id="opt-anki-tags" type="text" spellcheck="false">
+              </label>
               <label class="lookup-enable">
                 <span>Screenshot page during card creation</span>
                 <input id="opt-anki-screenshot" type="checkbox" aria-describedby="anki-screenshot-help">
               </label>
-              <p id="anki-screenshot-help" class="field-hint">Appends the visible browser page to fields using <code>{screenshot}</code>.</p>
-            </div>
-            <div class="anki-setting-row anki-duplicate-row">
-              <div class="anki-setting-col">
+              <p id="anki-screenshot-help" class="field-hint"></p>
+              <div class="field">
                 <span class="field-label">Duplicate checking</span>
-                <span class="field-hint">Choose where to check for an existing note and what to do when one is found.</span>
-              </div>
-              <div class="anki-duplicate-controls">
-                <label class="anki-setting-col"><span class="field-label">Check within</span><select id="opt-anki-duplicate-scope"><option value="model">Configured note type</option><option value="deck">Configured deck and subdecks</option><option value="all">All of Anki</option></select></label>
-                <label class="anki-setting-col"><span class="field-label">When found</span><select id="opt-anki-duplicate-behavior"><option value="prevent">Prevent</option><option value="new">Add anyway</option><option value="overwrite">Overwrite</option></select></label>
+                <div class="inline-controls anki-duplicate-controls">
+                  <select id="opt-anki-duplicate-scope" aria-label="Check within"><option value="model">Configured note type</option><option value="deck">Configured deck and subdecks</option><option value="all">All of Anki</option></select>
+                  <select id="opt-anki-duplicate-behavior" aria-label="When found"><option value="prevent">Prevent</option><option value="new">Add anyway</option><option value="overwrite">Overwrite</option></select>
+                </div>
               </div>
             </div>
           </fieldset>
-          <section class="lookup-group anki-panel anki-card" id="anki-field-mapping" aria-labelledby="anki-field-mapping-title">
-            <div class="anki-mapping-header">
-              <div class="anki-setting-col">
-                <h2 id="anki-field-mapping-title">Field mapping</h2>
-                <p class="field-hint">Fields mapped in exact Anki model order.</p>
+
+          <section class="lookup-group anki-mapping" id="anki-field-mapping" aria-labelledby="anki-field-mapping-title">
+            <h2 id="anki-field-mapping-title" class="group-title">Field mapping</h2>
+            <div class="group-card">
+              <div class="table-toolbar">
+                <input id="anki-field-filter" type="search" autocomplete="off" placeholder="Filter fields…" aria-label="Filter fields by name">
+                <output id="anki-field-count" class="field-hint" aria-live="polite">Showing 0 fields</output>
+                <span class="table-toolbar-spacer"></span>
+                <select id="anki-preset" aria-label="Preset"><option value="automatic">Automatic suggestions</option><option value="kiku">Kiku</option><option value="lapis">Lapis</option><option value="senren">Senren</option></select>
+                <button id="anki-apply-preset" type="button" class="ghost">Apply preset</button>
               </div>
-              <div class="anki-preset-tools">
-                <label class="anki-preset"><span class="field-label">Preset</span><select id="anki-preset"><option value="automatic">Automatic suggestions</option><option value="kiku">Kiku</option><option value="lapis">Lapis</option><option value="senren">Senren</option></select></label>
-                <button id="anki-apply-preset" class="ghost" type="button"><span class="hd-icon" data-icon="arrow-sync" aria-hidden="true"></span>Apply preset</button>
-              </div>
+              <div class="anki-mapping-columns" aria-hidden="true"><span>Field</span><span>Markers and text</span><span>On overwrite</span></div>
+              <div id="anki-templates" class="anki-templates"></div>
+              <details class="anki-marker-reference settings-disclosure"><summary>Dictionary-specific markers</summary><p class="field-hint">Use the marker shown in a dictionary's Details.</p></details>
             </div>
-            <div class="anki-field-filter-bar">
-              <input id="anki-field-filter" type="search" autocomplete="off" placeholder="Filter fields by name…" aria-label="Filter fields by name">
-              <output id="anki-field-count" class="field-hint" aria-live="polite">Showing 0 fields</output>
-            </div>
-            <div class="anki-mapping-columns" aria-hidden="true"><span>Field name</span><span>Markers &amp; text</span><span>On overwrite</span></div>
-            <div id="anki-templates" class="anki-templates"></div>
-            <details class="anki-marker-reference"><summary>Dictionary-specific markers</summary><p class="field-hint">Replace <code>DICTIONARY</code> in <code>{single-glossary-DICTIONARY}</code>, <code>{single-frequency-DICTIONARY}</code> or <code>{single-frequency-number-DICTIONARY}</code> with the dictionary marker shown in its Details. Single-glossary variants also support <code>-brief</code>, <code>-no-dictionary</code>, <code>-plain</code> and <code>-plain-no-dictionary</code>. Empty, colliding or shadowed names can use <code>{single-glossary-id--PACKAGE-ID}</code>, where <code>PACKAGE-ID</code> is the dictionary's 32-character lowercase hexadecimal ID.</p></details>
           </section>
         </section>
+
         <section class="card" id="keybinds" aria-labelledby="keybinds-heading" hidden>
           <div class="card-head">
             <h1 id="keybinds-heading" tabindex="-1" data-search-keywords="keyboard shortcuts hotkeys keys Yomitan mouse wheel scroll">Keybinds</h1>
-            <p class="hint">Keyboard shortcuts for the lookup popup and page.</p>
           </div>
           <div class="options-feedback-slot"></div>
-          <div class="lookup-group" id="keybind-settings">
-            <p class="section-note">Select a Keys field and press the combination to use. To use the mouse wheel, hold a modifier key and scroll over the selected field; wheel keybinds act on the popup under the pointer. Popup keybinds act on the current entry: the first one, or the last one you moved to or clicked.</p>
-            <div class="keybind-table">
-              <div class="keybind-columns" aria-hidden="true"><span>Keys</span><span>Action</span><span>Where</span></div>
+          <fieldset class="lookup-group" id="keybind-settings">
+            <legend>Popup and page</legend>
+            <p class="group-desc">Click Keys, then press the combination.</p>
+            <div class="group-card">
               <ol id="keybind-list" class="keybind-list"></ol>
+              <p id="keybind-empty" class="hint setting-block" hidden>No keybinds. Add one or reset to the defaults.</p>
+              <div class="setting-row row-actions">
+                <button id="keybind-add" type="button" class="ghost"><span class="hd-icon" data-icon="add" aria-hidden="true"></span>Add keybind</button>
+                <button id="keybind-reset-all" type="button" class="ghost">Reset keybinds to defaults</button>
+              </div>
             </div>
-            <p id="keybind-empty" class="hint" hidden>No keybinds. Add one or reset to the defaults.</p>
-            <div class="keybind-list-actions setting-row">
-              <button id="keybind-add" type="button" class="ghost">Add keybind</button>
-              <button id="keybind-reset-all" type="button" class="ghost">Reset keybinds to defaults</button>
-            </div>
-          </div>
+          </fieldset>
           <fieldset class="lookup-group" id="browser-shortcuts">
             <legend>Browser shortcuts</legend>
-            <p id="browser-shortcuts-overlay-help" class="section-note" hidden>Page and popup keybinds above still work. Electron does not expose Chrome’s browser shortcut manager.</p>
-            <p class="field-hint">Chrome runs these on any page. Popup actions need an open popup. Change them in Chrome's extension shortcuts.</p>
-            <ul id="browser-shortcut-list" class="browser-shortcut-list"></ul>
-            <div class="setting-row">
-              <button id="browser-shortcuts-open" type="button" class="ghost">Change in Chrome</button>
+            <p id="browser-shortcuts-overlay-help" class="group-desc" hidden>Not available in this overlay.</p>
+            <div class="group-card">
+              <ul id="browser-shortcut-list" class="browser-shortcut-list"></ul>
+              <div class="setting-row row-actions">
+                <button id="browser-shortcuts-open" type="button" class="ghost"><span class="hd-icon" data-icon="open" aria-hidden="true"></span>Change in Chrome</button>
+              </div>
             </div>
           </fieldset>
         </section>
+
         <section class="card" id="sharing" aria-labelledby="sharing-heading" hidden>
           <div class="card-head">
             <h1 id="sharing-heading" tabindex="-1" data-search-keywords="share link other browser computer Tailscale network relay Anki add-on addon port address">Sharing</h1>
-            <p class="hint">Use one Hachidori from all your browsers, on this computer and on your other computers. Anki carries the connection.</p>
           </div>
           <output id="sharing-status" class="operational-status" aria-live="polite" aria-atomic="true"></output>
-          <p id="sharing-overlay-preferences" class="section-note" hidden>Lookup activation, source highlighting and popup size/layout are saved locally for this overlay while linked. Other settings are saved on the shared Hachidori.</p>
+          <p id="sharing-overlay-preferences" class="section-note" hidden>Popup layout stays local to this overlay.</p>
           <fieldset class="lookup-group" id="sharing-host">
             <legend>Share this Hachidori</legend>
-            <p class="field-hint">Your other browsers then use this Hachidori’s dictionaries, personal entries, lookup counts and settings instead of their own. Anki carries the connection: install the Hachidori Relay add-on once and keep Anki open.</p>
-            <div class="sharing-actions setting-row" id="sharing-addon">
-              <button id="sharing-addon-download" type="button" class="ghost">Download the Anki add-on</button>
-              <span class="field-hint">Then double-click the file to install it and restart Anki.</span>
-            </div>
-            <label class="lookup-enable"><span>Share this Hachidori</span><input id="sharing-host-enabled" type="checkbox" disabled></label>
-            <output id="sharing-host-clients" class="field-hint" aria-live="polite"></output>
-            <label class="lookup-enable"><span>Also with my other computers</span><input id="sharing-host-network" type="checkbox" disabled></label>
-            <p class="field-hint">Over Tailscale or your home network. Anyone on that network could reach it, so leave it off on public Wi-Fi.</p>
-            <div class="setting-block" id="sharing-host-addresses" hidden>
-              <p class="field-hint" id="sharing-host-addresses-note"></p>
-              <ul id="sharing-host-address-list" class="sharing-addresses"></ul>
-            </div>
-            <details class="settings-disclosure">
-              <summary>Advanced</summary>
-              <div class="fields">
-                <label class="field"><span class="field-label">Port</span><input id="sharing-host-port" type="number" min="1" max="65535" step="1" value="8771"><span class="field-hint">Change it only if you changed the add-on’s port in Anki (Tools → Add-ons → Hachidori Relay → Config).</span></label>
+            <p class="group-desc"><a href="https://github.com/bee-san/hachidori/blob/main/docs/sharing.md" target="_blank" rel="noopener noreferrer">How sharing works</a></p>
+            <div class="group-card">
+              <div class="setting-row" id="sharing-addon">
+                <div class="setting-text">
+                  <span class="field-label">Hachidori Relay add-on</span>
+                  <p class="field-hint">Open the file, then restart Anki.</p>
+                </div>
+                <button id="sharing-addon-download" type="button" class="ghost">Download the Anki add-on</button>
               </div>
-            </details>
+              <label class="lookup-enable"><span>Share this Hachidori</span><input id="sharing-host-enabled" type="checkbox" disabled></label>
+              <output id="sharing-host-clients" class="field-hint" aria-live="polite"></output>
+              <label class="lookup-enable"><span>Also with my other computers</span><input id="sharing-host-network" type="checkbox" disabled></label>
+              <p class="field-hint">Anyone on that network can reach it.</p>
+              <div class="setting-block" id="sharing-host-addresses" hidden>
+                <p class="field-hint" id="sharing-host-addresses-note"></p>
+                <ul id="sharing-host-address-list" class="sharing-addresses"></ul>
+              </div>
+              <details class="settings-disclosure">
+                <summary>Advanced</summary>
+                <label class="field"><span class="field-label">Port</span><input id="sharing-host-port" type="number" min="1" max="65535" step="1" value="8771"><span class="field-hint">Only if you changed the add-on’s port.</span></label>
+              </details>
+            </div>
           </fieldset>
           <fieldset class="lookup-group" id="sharing-client">
             <legend>Use another Hachidori</legend>
-            <p class="field-hint">This browser then uses that Hachidori’s dictionaries, personal entries, lookup counts and settings. Nothing is copied, and unlinking brings this browser’s own state back.</p>
-            <div class="setting-block" id="sharing-client-nearby">
-              <output id="sharing-client-found" class="field-hint" aria-live="polite"></output>
-              <div class="sharing-actions">
-                <button id="sharing-client-use" type="button" class="primary-button" hidden>Use it</button>
-                <button id="sharing-client-find" type="button" class="ghost">Look again</button>
+            <div class="group-card">
+              <div class="setting-row" id="sharing-client-nearby">
+                <div class="setting-text">
+                  <span class="field-label">On this computer</span>
+                  <output id="sharing-client-found" class="field-hint" aria-live="polite"></output>
+                </div>
+                <div class="sharing-actions">
+                  <button id="sharing-client-use" type="button" class="primary-button" hidden>Use it</button>
+                  <button id="sharing-client-find" type="button" class="ghost">Look again</button>
+                </div>
               </div>
-            </div>
-            <div class="fields" id="sharing-client-remote">
-              <label class="field"><span class="field-label">On another computer</span><input id="sharing-client-address" type="text" spellcheck="false" autocomplete="off" placeholder="100.101.102.103"><span class="field-hint">The address shown under Sharing on that computer.</span></label>
-            </div>
-            <div class="sharing-actions setting-row">
-              <button id="sharing-client-link" type="button" class="ghost">Link</button>
-              <button id="sharing-client-unlink" type="button" class="ghost" hidden>Unlink</button>
+              <div class="field" id="sharing-client-remote">
+                <label class="field-label" for="sharing-client-address">On another computer</label>
+                <div class="inline-controls">
+                  <input id="sharing-client-address" type="text" spellcheck="false" autocomplete="off" placeholder="100.101.102.103">
+                  <button id="sharing-client-link" type="button" class="ghost">Link</button>
+                </div>
+              </div>
+              <div class="setting-row sharing-unlink-row">
+                <div class="setting-text"><span class="field-label">Linked Hachidori</span></div>
+                <button id="sharing-client-unlink" type="button" class="ghost" hidden>Unlink</button>
+              </div>
             </div>
           </fieldset>
         </section>
+
         <section class="card" id="backup" aria-labelledby="backup-heading" hidden>
           <div class="card-head">
             <h1 id="backup-heading" tabindex="-1">Backup &amp; restore</h1>
-            <p class="hint">A complete copy of this browser’s Hachidori data.</p>
           </div>
           <div class="options-feedback-slot"></div>
-          <p class="field-hint sharing-linked-notice" id="sharing-backup-notice" hidden>Backups are made and restored on the linked Hachidori. Open <a href="#sharing">Sharing</a> to unlink and use this browser’s own data again.</p>
+          <p class="field-hint sharing-linked-notice" id="sharing-backup-notice" hidden>Backups use the linked Hachidori.</p>
           <div class="lookup-group" id="backup-files">
-            <div class="setting-row">
-              <div class="setting-text">
-                <h2>Save a backup</h2>
-                <p class="field-hint">Includes every dictionary, media and styles, your personal source, groups, and all saved settings. The archive is not encrypted. Keep it private: it includes custom URLs and your AnkiConnect API key, if configured. Unsaved edits are not included.</p>
+            <div class="group-card">
+              <div class="setting-row">
+                <div class="setting-text">
+                  <h2>Save a backup</h2>
+                  <p class="field-hint">Not encrypted: includes custom URLs and API key.</p>
+                </div>
+                <button id="backup-export" class="ghost" type="button">Export backup</button>
               </div>
-              <button id="backup-export" class="ghost" type="button">Export backup</button>
-            </div>
-            <div class="setting-row">
-              <div class="setting-text">
-                <h2>Restore a backup</h2>
-                <p class="field-hint">Choose a Hachidori backup ZIP. You can review its contents before replacing anything.</p>
+              <div class="setting-row">
+                <div class="setting-text">
+                  <h2>Restore a backup</h2>
+                </div>
+                <label class="file-button ghost"><span>Choose backup</span><input id="backup-file" type="file" accept=".zip,application/zip"></label>
               </div>
-              <label class="file-button"><span>Choose backup</span><input id="backup-file" type="file" accept=".zip,application/zip"></label>
             </div>
           </div>
           <fieldset id="automatic-backups" class="lookup-group">
             <legend>Automatic backups</legend>
-            <p class="field-hint">Hachidori takes one snapshot a day and keeps the newest ones on this device. They contain the same saved settings and personal data as an export, including your AnkiConnect API key if configured.</p>
-            <label class="field">
-              <span class="field-label">Days kept</span>
-              <span class="input-suffix">
-                <input id="opt-automatic-backup-days" type="number" min="1" max="30" step="1" inputmode="numeric" />
-                <span class="suffix">days</span>
-              </span>
-              <span class="field-hint">Older snapshots are removed when the next daily snapshot is taken.</span>
-            </label>
-            <p id="automatic-backup-status" class="section-note" aria-live="polite"></p>
-            <ul id="automatic-backup-list" class="automatic-backup-list"></ul>
+            <p class="group-desc">One snapshot a day, kept on this device.</p>
+            <div class="group-card">
+              <label class="field">
+                <span class="field-label">Days kept</span>
+                <span class="input-suffix">
+                  <input id="opt-automatic-backup-days" type="number" min="1" max="30" step="1" inputmode="numeric" />
+                  <span class="suffix">days</span>
+                </span>
+              </label>
+              <p id="automatic-backup-status" class="section-note setting-block" aria-live="polite"></p>
+              <ul id="automatic-backup-list" class="automatic-backup-list"></ul>
+            </div>
           </fieldset>
           <template id="automatic-backup-template">
             <li class="automatic-backup-row">
@@ -1363,65 +1205,74 @@
             </div>
           </div>
         </section>
+
         <section class="card" id="advanced" aria-labelledby="advanced-heading" hidden>
           <div class="card-head">
             <h1 id="advanced-heading" tabindex="-1" data-search-keywords="experimental beta labs flags preview">Advanced</h1>
-            <p class="hint">Memory use, features that are still changing, and debug info for bug reports.</p>
           </div>
           <div class="options-feedback-slot"></div>
           <fieldset class="lookup-group" id="memory-settings">
             <legend data-search-keywords="ram memory heap low memory mode">Memory</legend>
-            <div class="setting-block">
-              <p id="memory-total" class="section-note" aria-live="polite">Engine memory: —</p>
-              <p id="memory-extension-total" class="section-note" aria-live="polite">Extension total: —</p>
-              <p id="memory-indexes" class="section-note" aria-live="polite"></p>
-            </div>
-            <p class="field-hint">On direct OPFS storage, entries and images are read from disk when needed by default. With Use less ram by default or Low memory mode, Automatic hash indexes also read a large library's bigger indexes from disk. Each dictionary's share is under its Details in Dictionaries. <a href="https://github.com/bee-san/hachidori/blob/main/docs/memory.md" target="_blank" rel="noopener noreferrer">How Hachidori uses memory</a></p>
-            <div class="field" id="dictionary-entry-storage">
-              <label class="field-label" for="opt-dictionary-entry-storage">Dictionary entries</label>
-              <select id="opt-dictionary-entry-storage" aria-describedby="opt-dictionary-entry-storage-help">
-                <option value="auto">Automatic (read from disk on direct OPFS)</option>
-                <option value="paged">Read from disk</option>
-                <option value="resident">Keep in memory</option>
-              </select>
-              <p class="field-hint" id="opt-dictionary-entry-storage-help">Reading entries from disk uses less engine memory and may make lookups slightly slower. Keeping entries in memory favours lookup speed. Changing this restarts the idle engine; import threading stays the same. Low memory mode always reads entries from disk.</p>
-            </div>
-            <div class="field" id="dictionary-index-storage">
-              <label class="field-label" for="opt-dictionary-index-storage">Dictionary hash indexes</label>
-              <select id="opt-dictionary-index-storage" aria-describedby="opt-dictionary-index-storage-help">
-                <option value="auto">Automatic</option>
-                <option value="paged">Read from disk</option>
-                <option value="resident">Keep in memory</option>
-              </select>
-              <p class="field-hint" id="opt-dictionary-index-storage-help">Automatic follows Use less ram by default in normal mode and uses a shared 32 MiB budget in Low memory mode. Reading indexes from disk saves memory in large libraries and makes lookups slightly slower. All dictionaries remain available. Changing this restarts the idle engine.</p>
-            </div>
-            <div id="use-less-ram-by-default">
-              <label class="lookup-enable" for="opt-use-less-ram-by-default">
-                <span>Use less ram by default</span>
-                <input type="checkbox" id="opt-use-less-ram-by-default" aria-describedby="opt-use-less-ram-by-default-help" />
+            <p class="group-desc"><a href="https://github.com/bee-san/hachidori/blob/main/docs/memory.md" target="_blank" rel="noopener noreferrer">How Hachidori uses memory</a></p>
+            <div class="group-card">
+              <div class="setting-block memory-stats">
+                <p id="memory-total" class="section-note" aria-live="polite">Engine memory: —</p>
+                <p id="memory-extension-total" class="section-note" aria-live="polite">Extension total: —</p>
+                <p id="memory-indexes" class="section-note" aria-live="polite"></p>
+              </div>
+              <div class="field" id="dictionary-entry-storage">
+                <label class="field-label" for="opt-dictionary-entry-storage">Dictionary entries</label>
+                <select id="opt-dictionary-entry-storage" aria-describedby="opt-dictionary-entry-storage-help">
+                  <option value="auto" data-hint="Read from disk on direct OPFS">Automatic</option>
+                  <option value="paged">Read from disk</option>
+                  <option value="resident">Keep in memory</option>
+                </select>
+                <p class="field-hint" id="opt-dictionary-entry-storage-help">Changing this restarts the idle engine.</p>
+              </div>
+              <div class="field" id="dictionary-index-storage">
+                <label class="field-label" for="opt-dictionary-index-storage">Dictionary hash indexes</label>
+                <select id="opt-dictionary-index-storage" aria-describedby="opt-dictionary-index-storage-help">
+                  <option value="auto">Automatic</option>
+                  <option value="paged">Read from disk</option>
+                  <option value="resident">Keep in memory</option>
+                </select>
+                <p class="field-hint" id="opt-dictionary-index-storage-help">Changing this restarts the idle engine.</p>
+              </div>
+              <div id="use-less-ram-by-default">
+                <label class="lookup-enable" for="opt-use-less-ram-by-default">
+                  <span>Use less ram by default</span>
+                  <input type="checkbox" id="opt-use-less-ram-by-default" aria-describedby="opt-use-less-ram-by-default-help" />
+                </label>
+                <p class="field-hint" id="opt-use-less-ram-by-default-help">Changing this restarts the idle engine.</p>
+              </div>
+              <label class="lookup-enable" id="low-memory-mode">
+                <span>Low memory mode</span>
+                <input type="checkbox" id="opt-low-memory-mode" aria-describedby="opt-low-memory-mode-help" />
               </label>
-              <p class="field-hint" id="opt-use-less-ram-by-default-help">With Automatic hash storage, keeps small indexes in memory within one shared 65 MiB budget and reads the rest from disk. Off, Automatic keeps every hash index in memory. Lookups may be slightly slower while this is on. Changing this restarts the idle engine; import threading stays the same. Low memory mode uses its smaller 32 MiB budget.</p>
+              <p class="field-hint" id="opt-low-memory-mode-help">Slower imports; entries read from disk.</p>
+              <p class="hint field-hint" id="low-memory-mode-unavailable" hidden>Needs the threaded engine.</p>
             </div>
-            <label class="lookup-enable" id="low-memory-mode">
-              <span>Low memory mode</span>
-              <input type="checkbox" id="opt-low-memory-mode" aria-describedby="opt-low-memory-mode-help" />
-            </label>
-            <p class="field-hint" id="opt-low-memory-mode-help">Imports on one thread to reduce peak memory and restarts the idle engine after dictionary changes to return unused memory. Imports are slower and dictionaries reload briefly after a change. Entries are always read from disk while this is on.</p>
-            <p class="hint" id="low-memory-mode-unavailable" hidden>Low memory mode needs the threaded engine, which this browser does not run.</p>
           </fieldset>
           <fieldset class="lookup-group" id="experimental-settings">
             <legend>Experimental features</legend>
-            <p class="section-note">All experimental features are off by default and may change or be removed in a later version. Turning one off hides it but keeps its settings for the next time you turn it on.</p>
-            <ul id="experimental-features" class="experimental-list"></ul>
-            <p id="experimental-empty" class="hint" hidden>No experimental features are available in this version.</p>
+            <p class="group-desc">Off by default. Turning one off keeps its settings.</p>
+            <div class="group-card">
+              <ul id="experimental-features" class="experimental-list"></ul>
+              <p id="experimental-empty" class="hint setting-block" hidden>No experimental features right now.</p>
+            </div>
           </fieldset>
           <fieldset class="lookup-group" id="debug-info-settings">
             <legend data-search-keywords="debug diagnostics bug report troubleshooting support logs version">Troubleshooting</legend>
-            <div class="setting-row">
-              <p class="field-hint" id="debug-info-help">Downloads a JSON file to attach to a bug report: the Hachidori version and install, browser and system, engine status, memory use and recent warnings and errors, installed dictionaries, Anki and sharing status, every setting, and what Hachidori stores in this browser. Your AnkiConnect API key is removed, and your personal dictionary entries, lookup history and Anki notes are left out.</p>
-              <div class="options-actions">
-                <button type="button" class="ghost" id="debug-info-download" aria-describedby="debug-info-help">Get debug info</button>
-                <output class="custom-dictionary-status" id="debug-info-status" aria-live="polite"></output>
+            <div class="group-card">
+              <div class="setting-row">
+                <div class="setting-text">
+                  <span class="setting-title">Debug info</span>
+                  <p class="field-hint" id="debug-info-help">Leaves out your API key and personal entries.</p>
+                </div>
+                <div class="options-actions">
+                  <button type="button" class="ghost" id="debug-info-download" aria-describedby="debug-info-help">Get debug info</button>
+                  <output class="custom-dictionary-status" id="debug-info-status" aria-live="polite"></output>
+                </div>
               </div>
             </div>
           </fieldset>
@@ -1451,7 +1302,7 @@
         <label class="field import-decision-target" id="import-decision-target-row" hidden>
           <span class="field-label">Dictionary to replace</span>
           <select id="import-decision-target"></select>
-          <span class="field-hint">The archive source matches more than one installed dictionary.</span>
+          <span class="field-hint">Matches more than one installed dictionary.</span>
         </label>
         <p class="field-hint">
           Replace keeps this dictionary’s position, display name, enabled state,
@@ -1461,6 +1312,17 @@
           <button class="primary-button" type="submit" value="replace">Replace existing</button>
           <button class="ghost" type="submit" value="separate">Add separately</button>
           <button class="ghost" type="submit" value="cancel">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="settings-dialog confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-body">
+      <form>
+        <h2 id="confirm-dialog-title"></h2>
+        <p id="confirm-dialog-body"></p>
+        <div class="dialog-actions">
+          <button id="confirm-dialog-cancel" type="button" class="ghost" autofocus>Cancel</button>
+          <button id="confirm-dialog-accept" type="button" class="ghost danger"></button>
         </div>
       </form>
     </dialog>
@@ -1501,12 +1363,15 @@
         <details class="dict-details">
           <summary class="dict-details-toggle">Details</summary>
           <div class="dict-footer">
-            <span class="dict-metadata"></span>
-            <span class="dict-memory">In memory: —</span>
-            <div class="dict-schedule" hidden>
-              <label>
-                <span class="cell-label">Automatic updates</span>
-                <select class="dict-update-schedule">
+            <dl class="dict-facts"><div class="dict-fact" hidden><dt>In memory</dt><dd class="dict-memory">—</dd></div></dl>
+            <label class="dict-detail-row dict-alias">
+              <span class="cell-label">Display name</span>
+              <input class="dict-display-name" type="text" autocomplete="off" aria-label="Display name" title="Display name" />
+            </label>
+            <div class="dict-detail-row dict-schedule" hidden>
+              <span class="cell-label">Automatic updates</span>
+              <span class="dict-detail-controls">
+                <select class="dict-update-schedule" aria-label="Automatic updates">
                   <option value="inherit">Use default</option>
                   <option value="off">Off</option>
                   <option value="hourly">Every hour</option>
@@ -1514,45 +1379,23 @@
                   <option value="weekly">Every week</option>
                   <option value="monthly">Every month</option>
                 </select>
-              </label>
-              <span class="dict-next-check"></span>
+                <span class="dict-next-check"></span>
+              </span>
             </div>
-            <label class="dict-alias">
-              <span class="cell-label">Display name</span>
-              <input
-                class="dict-display-name"
-                type="text"
-                autocomplete="off"
-                aria-label="Display name"
-                title="Display name"
-              />
-            </label>
-            <span class="dict-actions">
-              <label class="dict-position">
-                <span class="cell-label">Position</span>
-                <input
-                  class="dict-position-input"
-                  type="number"
-                  min="1"
-                  step="1"
-                />
-              </label>
-              <button type="button" class="ghost dict-move">Move</button>
-              <button type="button" class="ghost dict-update-check" hidden>
+            <div class="dict-detail-row dict-position">
+              <span class="cell-label">Position</span>
+              <span class="dict-detail-controls">
+                <input class="dict-position-input" type="number" min="1" step="1" aria-label="Position" />
+                <button type="button" class="ghost dict-move">Move</button>
+              </span>
+            </div>
+            <div class="dict-actions">
+              <button type="button" class="ghost dict-update-check" hidden title="Check for an update" aria-label="Check for an update">
                 <span class="hd-icon" data-icon="arrow-sync" aria-hidden="true"></span>
               </button>
-              <button type="button" class="ghost dict-update" hidden>
-                Update
-              </button>
-              <button
-                type="button"
-                class="ghost danger dict-remove"
-                aria-label="Remove"
-                title="Remove"
-              >
-                Remove
-              </button>
-            </span>
+              <button type="button" class="ghost dict-update" hidden>Update</button>
+              <button type="button" class="ghost danger dict-remove" aria-label="Remove" title="Remove">Remove</button>
+            </div>
           </div>
         </details>
       </li>
@@ -1624,13 +1467,14 @@
           >
             <span class="hd-icon" data-icon="arrow-down" aria-hidden="true"></span>
           </button>
-          <button type="button" class="ghost dict-group-member-remove">
-            Remove
-          </button>
+          <button type="button" class="ghost icon-only danger dict-group-member-remove" title="Remove from group"><span class="hd-icon" data-icon="dismiss" aria-hidden="true"></span>Remove</button>
         </span>
       </li>
     </template>
 
+    <script type="module" src="select-menu.js"></script>
+    <script type="module" src="list-reorder.js"></script>
+    <script type="module" src="settings-dialogs.js"></script>
     <script type="module" src="settings.js"></script>
   </body>
 </html>

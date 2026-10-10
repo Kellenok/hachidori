@@ -1,11 +1,10 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-
 :root {
   color-scheme: light dark;
-  --bg: #f2f3f5;
+  --bg: #f6f6f8;
   --surface: #ffffff;
-  --surface-sunken: #f7f8fa;
-  --border: #d9dce3;
+  --surface-sunken: #f4f4f6;
+  --border: #e7e8ec;
   --border-strong: #858c9b;
   --text: #20232b;
   --text-dim: #5c6370;
@@ -17,87 +16,32 @@
   --error: #b13232;
   --favorite: #966815;
 }
-
-.theme-store-grid {
-  min-width: 0;
-  max-width: 100%;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(240px, 80%);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
-  gap: 12px;
-}
-
-.theme-store-card {
-  min-width: 0;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-
-#theme-store { min-width: 0; }
-.theme-store-carousel {
-  --theme-store-preview-height: 130px;
-  position: relative;
-}
-/* Previous and Next themes straddle the row's edges, centred on the previews
-   (13px is the card's border and padding above its preview). Sitting 12px
-   outside keeps them within the narrowest (16px) page gutter. */
-.theme-store-carousel .theme-store-scroll {
-  position: absolute;
-  top: calc(13px + (var(--theme-store-preview-height) - var(--control-height)) / 2);
-  width: var(--control-height);
-  padding: 0;
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-overlay);
-}
-#theme-store-previous { left: -12px; }
-#theme-store-previous .hd-icon { transform: scaleX(-1); }
-#theme-store-next { right: -12px; }
-/* The page focus ring is drawn for page surfaces; a surface halo keeps it
-   visible over the dark previews, where light palettes' accent is too dim. */
-.theme-store-carousel .theme-store-scroll:focus-visible { box-shadow: 0 0 0 7px var(--surface), var(--shadow-overlay); }
-.theme-store-scroll:disabled { visibility: hidden; }
-@media (prefers-reduced-motion: no-preference) {
-  .theme-store-grid { scroll-behavior: smooth; }
-}
-.theme-store-card h3, .theme-store-card p { margin: 0; }
-.theme-store-card button { margin-top: auto; }
-.theme-store-card button[aria-pressed="true"] { outline: 2px solid var(--accent); }
-.theme-store-preview { width: 100%; height: var(--theme-store-preview-height); object-fit: contain; background: #111; border-radius: 4px; }
-
 @media (prefers-color-scheme: dark) {
   :root:not([data-hoshidicts-theme]) {
-    --bg: #15171b;
-    --surface: #1d2026;
-    --surface-sunken: #242830;
-    --border: #353b46;
-    --border-strong: #737c8e;
-    --text: #edf0f5;
-    --text-dim: #a8b0be;
-    --accent: #a8c2ff;
-    --accent-fill: var(--accent);
-    --accent-soft: #27354d;
-    --accent-contrast: #162449;
+    --bg: #0e0f12;
+    --surface: #141519;
+    --surface-sunken: #1b1c21;
+    --border: #26282e;
+    --border-strong: #7b808c;
+    --text: #ececf0;
+    --text-dim: #9a9ea9;
+    --accent: #9db4ff;
+    --accent-fill: #8aa4ff;
+    --accent-soft: #232b45;
+    --accent-contrast: #0c1330;
     --ok: #8bd3ab;
     --error: #ffaaa7;
     --favorite: #eac887;
   }
 }
-
 :root[data-hoshidicts-theme] {
   color-scheme: var(--hoshidicts-palette-color-scheme);
-  --bg: color-mix(
-    in srgb,
-    var(--hoshidicts-palette-base-200) 55%,
-    var(--hoshidicts-palette-base-100)
+  /* A dark palette's base-200 can be lighter than its base-100 (Lux), which
+     would leave the page darker than the ground around it; the ground is a
+     step darker than the page in every dark palette instead. */
+  --bg: light-dark(
+    color-mix(in srgb, var(--hoshidicts-palette-base-200) 55%, var(--hoshidicts-palette-base-100)),
+    color-mix(in oklab, var(--hoshidicts-palette-base-100) 82%, black)
   );
   --surface: var(--hoshidicts-palette-base-100);
   --surface-sunken: color-mix(
@@ -125,6 +69,10 @@
     var(--hoshidicts-palette-base-100)
   );
   --accent-contrast: var(--hoshidicts-palette-base-100);
+  /* Where no text sits on it (a switch that is on, the page's glow), the
+     palette's own primary, as the popup's tags wear it. Text and the fills
+     text sits on keep the readable accent above. */
+  --accent-tone: var(--hoshidicts-palette-primary);
   --ok: color-mix(
     in srgb,
     var(--hoshidicts-palette-success) 5%,
@@ -141,28 +89,26 @@
     var(--hoshidicts-palette-base-content)
   );
 }
-
 /*
  * The branded default keeps the popup palette while lowering Settings' border
  * glare and separating supporting text from primary content.
  */
 :root[data-hoshidicts-theme="default"] {
-  --bg: #22232c;
-  --surface: #2b2b36;
-  --surface-sunken: #252630;
-  --border: #454653;
-  --border-strong: #747586;
-  --text: #e8e5eb;
-  --text-dim: #aaa8b2;
-  --accent: #b1a5ee;
-  --accent-fill: #a89ce4;
-  --accent-soft: #353247;
-  --accent-contrast: #211d30;
+  --bg: #0e0f12;
+  --surface: #141519;
+  --surface-sunken: #1b1c21;
+  --border: #26282e;
+  --border-strong: #7b808c;
+  --text: #ececf0;
+  --text-dim: #9a9ea9;
+  --accent: #b3a8f5;
+  --accent-fill: #a79cf0;
+  --accent-soft: #262336;
+  --accent-contrast: #1a1630;
   --ok: #8bb79b;
   --error: #d28a8c;
   --favorite: #d1aa71;
 }
-
 :root[data-hoshidicts-theme="autumn"] {
   --bg: #eee2cb;
   --surface: #fbf6e9;
@@ -179,34 +125,33 @@
   --error: #983f35;
   --favorite: #85520d;
 }
-
 :root[data-hoshidicts-theme="high-contrast"] {
   --border: #777777;
   --border-strong: #ffffff;
   --text-dim: #f0f0f0;
   --accent: #ffe000;
   --accent-fill: #ffe000;
+  --accent-tone: #ffe000;
   --accent-soft: #141414;
   --accent-contrast: #000000;
   --ok: #51ff8f;
   --error: #ff6b6b;
   --favorite: #ffd400;
 }
-
 /*
  * One scale for the whole page. Every radius, weight, size step, control
- * metric and elevation below reads from here, so a control looks the same in
+ * metric and surface below reads from here, so a control looks the same in
  * every section.
  */
 :root {
-  --radius-control: 4px;
-  --radius-surface: 8px;
-  --radius-dialog: 12px;
+  --radius-control: 10px;
+  --radius-surface: 18px;
+  --radius-dialog: 22px;
   --radius-pill: 999px;
 
   --weight-body: 400;
-  --weight-medium: 600;
-  --weight-bold: 650;
+  --weight-medium: 500;
+  --weight-bold: 600;
 
   --font-caption: 12px;
   --font-small: 13px;
@@ -215,31 +160,56 @@
   --font-large: 17px;
   --font-page-title: 24px;
 
-  --control-height: 36px;
-  --row-padding: 12px;
+  --control-height: 34px;
+  --row-padding: 14px;
+  --card-inset: 18px;
 
-  --shadow-raised: 0 4px 12px rgb(0 0 0 / 6%);
-  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 22%);
+  /* Surfaces and lines are tints of the text colour, so every palette gets
+     matching neutrals without entries of its own. As in iOS grouped lists, a
+     card is set apart by its fill alone: white on a grey page in a light
+     palette, a lighter step above the page in a dark one. */
+  --page: light-dark(color-mix(in srgb, var(--text) 4%, var(--surface)), var(--surface));
+  --card: light-dark(var(--surface), color-mix(in srgb, var(--text) 5.5%, var(--surface)));
+  --hairline: color-mix(in srgb, var(--text) 10%, var(--card));
+  --control-bg: color-mix(in srgb, var(--text) 6%, var(--card));
+  --control-bg-hover: color-mix(in srgb, var(--text) 9%, var(--card));
+  --control-border: transparent;
+  --control-border-hover: transparent;
+  --control-fill: color-mix(in srgb, var(--text) 8%, var(--card));
+  --control-fill-hover: color-mix(in srgb, var(--text) 13%, var(--card));
+  --nav-active: color-mix(in srgb, var(--text) 9%, var(--bg));
+  --nav-hover: color-mix(in srgb, var(--text) 5%, var(--bg));
+  --nav-text: color-mix(in srgb, var(--text) 80%, var(--bg));
+  --switch-track: color-mix(in srgb, var(--text) 24%, var(--card));
+  --switch-knob: #ffffff;
+  --focus-ring: color-mix(in srgb, var(--accent) 28%, transparent);
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 8%);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 24%);
+}
+/* High contrast keeps its own strong edges instead of the soft tints. */
+:root[data-hoshidicts-theme="high-contrast"] {
+  --hairline: var(--border);
+  --control-border: var(--border-strong);
+  --control-border-hover: var(--text);
+  --card: var(--surface);
+  --switch-knob: var(--accent-contrast);
 }
 
+/* ---------------------------------------------------------------- Base */
 * {
   box-sizing: border-box;
 }
-
 html {
   scrollbar-gutter: stable;
 }
-
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font:
-    14px/1.5 system-ui,
-    sans-serif;
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-
 /*
  * settings-theme.js marks the root until the saved theme is read. Nothing of
  * the interface paints before then, including the canvas: a transparent body
@@ -249,9 +219,12 @@ body {
   visibility: hidden;
   background: transparent;
 }
-
+[hidden] {
+  display: none !important;
+}
 a {
   color: var(--accent);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 button,
@@ -259,6 +232,8 @@ input,
 select,
 textarea {
   font: inherit;
+  font-size: var(--font-body);
+  color: inherit;
 }
 button,
 .file-button {
@@ -266,9 +241,28 @@ button,
 }
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
-
+h1 {
+  margin: 0;
+  font-size: var(--font-page-title);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+h2 {
+  margin: 0;
+  font-size: var(--font-title);
+  font-weight: var(--weight-bold);
+  line-height: 1.35;
+}
+code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--control-fill);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.92em;
+}
 .skip-link {
   position: fixed;
   top: 8px;
@@ -281,690 +275,79 @@ button,
 .skip-link:focus {
   transform: none;
 }
-
-.settings-shell {
-  display: grid;
-  grid-template-columns: 216px minmax(0, 1fr);
-  max-width: 1440px;
-  margin: 0 auto;
-}
-.settings-sidebar {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  max-height: 100vh;
-  overflow-y: auto;
-  padding: 32px 16px;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: var(--font-large);
-  font-weight: var(--weight-bold);
-  letter-spacing: -0.025em;
-  padding: 0 10px;
-}
-.brand-context {
-  display: block;
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-  font-weight: var(--weight-body);
-  letter-spacing: normal;
-}
-.setup-resume {
-  display: block;
-  margin: 14px 10px 0;
-  font-size: var(--font-small);
-  font-weight: var(--weight-medium);
-}
-/* A plain footer link, below the sections, like a settings page's About link. */
-.privacy-link {
-  display: block;
-  margin: 0 10px 14px;
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-.settings-search { display: grid; gap: 6px; margin: 22px 10px 0; }
-.settings-search input { width: 100%; min-width: 0; }
-.settings-search-results h1 { margin-top: 0; }
-.settings-search-results ul { display: grid; gap: 8px; margin: 20px 0 0; padding: 0; list-style: none; }
-.settings-search-results a { display: grid; gap: 3px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-surface); color: var(--text); text-decoration: none; }
-.settings-search-results a:hover { border-color: var(--accent); background: var(--surface-sunken); }
-.settings-search-results small { color: var(--text-dim); }
-.settings-search-results strong { color: var(--accent); font-weight: var(--weight-medium); }
-
-.settings-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  margin: 28px 0;
-}
-.settings-section-picker,
-.compact-nav-status {
-  display: none;
-}
-.settings-nav a {
-  display: block;
-  padding: 9px 10px;
-  border-radius: var(--radius-control);
-  color: var(--text-dim);
-  text-decoration: none;
-}
-.settings-nav a:hover {
-  background: var(--surface-sunken);
-  color: var(--text);
-}
-.settings-nav a[aria-current="page"] {
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: var(--weight-medium);
-}
-.nav-status {
-  display: block;
-  padding: 2px 10px 8px;
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-  overflow-wrap: anywhere;
-}
-.engine-status {
-  display: block;
-  margin: 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-  overflow-wrap: anywhere;
-}
-.engine-status-failures {
-  display: grid;
-  gap: 10px;
-  margin: 12px 0 0;
-  padding: 0 0 0 12px;
-  border-left: 3px solid var(--error);
-  list-style: none;
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-  overflow-wrap: anywhere;
-}
-.engine-status-failure-title,
-.engine-status-failure-error {
-  display: block;
-}
-.engine-status-failure-title {
-  color: var(--text);
-  font-weight: var(--weight-medium);
-}
-
-.engine-status.is-ready,
-.nav-status.is-ready,
-.import-state.is-ready,
-.custom-dictionary-status.is-ready,
-.update-state.is-ready,
-.dict-update-status.is-ready {
-  color: var(--ok);
-}
-
-.engine-status.is-error,
-.nav-status.is-error,
-.import-state.is-error,
-.custom-dictionary-status.is-error,
-.update-state.is-error,
-.dict-update-status.is-error {
-  color: var(--error);
-}
-
-.page {
-  min-width: 0;
-  min-height: 100vh;
-  padding: 36px 40px 64px;
-  border-inline: 1px solid var(--border);
-  background: var(--surface);
-}
-.section-tabs {
-  display: flex;
-  gap: 6px;
-  margin: 0 0 28px;
-  padding: 0 0 12px;
-  overflow-x: auto;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-.section-tabs a {
-  /* The label and its hidden semibold copy share one column. */
-  display: grid;
-  justify-items: center;
-  flex: 0 0 auto;
-  padding: 7px 10px;
-  border-radius: var(--radius-control);
-  color: var(--text-dim);
-  font-size: var(--font-small);
-  text-decoration: none;
-}
-/*
- * data-label repeats each tab's text. This hidden semibold copy makes every
- * tab as wide as it is when current, so moving aria-current restyles one tab
- * without moving the others. It is clipped so it adds no scrollable overflow.
- */
-.section-tabs a::after {
-  content: attr(data-label);
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  font-weight: var(--weight-medium);
-}
-/* An experimental tab stays hidden while its switch is off. */
-.section-tabs a[hidden] {
-  display: none;
-}
-.section-tabs a:hover {
-  background: var(--surface-sunken);
-  color: var(--text);
-}
-.section-tabs a[aria-current="page"] {
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: var(--weight-medium);
-}
-.design-layout {
-  display: grid;
-  grid-template-columns: minmax(360px, 1fr) minmax(0, 1.25fr);
-  gap: 32px;
-  align-items: start;
-}
-.design-controls {
-  display: grid;
-  gap: 24px;
-  min-width: 0;
-}
-.design-controls .fields { grid-template-columns: minmax(0, 1fr); }
-.design-sample {
-  position: sticky;
-  top: 24px;
-  min-width: 0;
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-surface);
-  background: var(--surface-sunken);
-}
-.preview-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.preview-size-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: var(--font-body);
-}
-.preview-viewport {
-  overflow: auto;
-  border: 1px solid var(--border);
-  background: #f6f5f1;
-  border-radius: var(--radius-control);
-}
-#preview-canvas { position: relative; }
-#design-preview {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  transform-origin: top left;
-}
-.options-feedback-slot {
-  position: sticky;
-  top: 12px;
-  z-index: 1;
-}
-.options-feedback-slot:empty { display: none; }
-#options-feedback {
-  display: grid;
-  gap: 10px;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-surface);
-  background: var(--surface-sunken);
-  box-shadow: var(--shadow-raised);
-}
-#options-feedback:has(.is-quiet) {
-  padding: 0;
-  border: 0;
-  background: var(--surface);
-  box-shadow: none;
-}
-#options-status.is-quiet {
-  color: var(--text-dim);
-}
-#options-feedback:has(.is-error) {
-  border-color: var(--error);
-}
-@media (max-width: 1100px) {
-  .design-layout { grid-template-columns: minmax(0, 1fr); }
-  .design-sample { position: static; grid-row: 1; }
-}
-h1 {
-  margin: 0;
-  font-size: var(--font-page-title);
-  font-weight: var(--weight-bold);
-  letter-spacing: -0.035em;
-}
-/*
- * A section is its title, then its groups. The quiet autosave status
- * ("Saved.") sits at the end of the title row, where settings pages put it; a
- * failure or a refused edit takes a row of its own under the title and stays
- * in view while the section scrolls. The quiet status is positioned beside
- * the title, so a section stays the flex column it was.
- */
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  scroll-margin-top: 24px;
-}
-.card > .options-feedback-slot:has(#options-status.is-quiet) {
-  position: absolute;
-  top: 6px;
-  right: 0;
-}
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.card-head {
-  display: grid;
-  gap: 5px;
-}
-.card-head h1 {
-  width: fit-content;
-}
-h2 {
-  margin: 0;
-  font-size: var(--font-title);
-  font-weight: var(--weight-bold);
-}
-.section-action {
-  flex-shrink: 0;
-  font-size: var(--font-small);
-  font-weight: var(--weight-medium);
-}
-.hint,
-.section-note,
-.editor-help {
-  margin: 0;
-  max-width: 66ch;
-  color: var(--text-dim);
-}
-.section-note,
-.editor-help {
-  font-size: var(--font-caption);
-  line-height: 1.6;
-}
-.local-file-access h2 {
-  margin: 0 0 6px;
-}
-.local-file-access p {
-  margin: 0;
-  color: var(--text-dim);
-  line-height: 1.6;
-}
-.local-file-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-.local-file-access #local-file-instruction { margin-top: 12px; }
-.local-file-access output {
-  display: block;
-  color: var(--text-dim);
-}
-.local-file-access output:not(:empty) { margin-top: 12px; }
-.local-file-access.is-enabled .local-file-actions { margin-top: 0; }
-.local-file-access.is-enabled output { color: var(--ok); }
-.local-file-access.is-enabled:has(.local-file-actions[hidden]) output { margin-top: 0; }
-code {
-  padding: 1px 5px;
-  border-radius: var(--radius-control);
-  background: var(--surface-sunken);
-  font-family: ui-monospace, monospace;
-  font-size: var(--font-caption);
-}
-
-/* Every button in the page is the same height, so a primary and a ghost
-   button sitting in one row line up. */
-.primary-button,
-.file-button,
-button.ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: var(--control-height);
-  border-radius: var(--radius-control);
-}
-.primary-button,
-.file-button {
-  width: fit-content;
-  padding: 0 15px;
-  border: 1px solid transparent;
-  background: var(--accent-fill);
-  color: var(--accent-contrast);
-  font-weight: var(--weight-medium);
-}
-.primary-button:hover:not(:disabled),
-.file-button:hover {
-  filter: brightness(1.1);
-}
-.file-button {
-  position: relative;
-  display: inline-flex;
-  overflow: hidden;
-}
-.file-button:focus-within {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-.file-button input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-.primary-button:disabled,
-.file-button:has(input:disabled) {
-  background: var(--surface-sunken);
-  border-color: var(--border);
-  color: var(--text-dim);
-  cursor: default;
-  filter: none;
-}
-button.ghost {
-  min-width: var(--control-height);
-  padding: 0 10px;
-  border: 1px solid var(--border-strong);
-  background: var(--surface);
-  color: var(--text);
-}
-button.ghost:hover:not(:disabled) {
-  border-color: var(--accent);
-  background: var(--surface-sunken);
-}
-button.ghost:disabled {
-  color: var(--text-dim);
-  border-color: var(--border);
-  cursor: default;
-  opacity: 0.6;
-}
-button.danger {
-  color: var(--error);
-}
-button.danger:hover:not(:disabled) {
-  border-color: var(--error);
-}
-
-.backup-preview h2 { margin: 0 0 8px; }
-.backup-preview p { margin: 6px 0; color: var(--text-dim); }
-.automatic-backup-list { display: grid; margin: 0; padding: 0; list-style: none; }
-.automatic-backup-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 32px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
-}
-.automatic-backup-row > div { display: grid; gap: 2px; min-width: 0; }
-.automatic-backup-age { color: var(--text); font-weight: var(--weight-medium); }
-.automatic-backup-detail, .automatic-backup-created { color: var(--text-dim); font-size: var(--font-caption); }
-.automatic-backup-restore { flex: none; }
-.backup-status { display: block; margin-top: 20px; }
-.backup-status.is-error { color: var(--error); }
-.backup-preview { margin-top: 24px; padding: 24px; background: var(--surface-sunken); border: 1px solid var(--border); border-radius: var(--radius-surface); }
-.backup-preview .backup-file-name { color: var(--text); overflow-wrap: anywhere; }
-.backup-preview details { margin-top: 16px; }
-.backup-preview li { overflow-wrap: anywhere; }
-.backup-confirm { display: flex; align-items: start; gap: 12px; margin: 24px 0 16px; }
-.backup-confirm input { flex: none; margin-top: 4px; }
-.backup-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-
-.import-row,
-.update-actions,
-.custom-dictionary-actions,
-.options-actions,
-.recommended-retry,
-.dict-bulk-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.import-row {
-  gap: 12px;
-}
-.import-drop-zone {
-  display: grid;
-  gap: 10px;
-  padding: 16px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-surface);
-  background: var(--surface-sunken);
-  transition:
-    border-color 120ms ease,
-    background-color 120ms ease,
-    box-shadow 120ms ease;
-}
-.import-drop-zone.is-dragging {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  box-shadow: inset 0 0 0 1px var(--accent);
-}
-.import-drop-zone[aria-disabled="true"] {
-  color: var(--text-dim);
-}
-.import-drop-hint {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: var(--font-small);
-}
-.import-decision-dialog {
-  width: min(560px, calc(100vw - 32px));
-  max-height: calc(100vh - 32px);
-  padding: 0;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-dialog);
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow-overlay);
-}
-.import-decision-dialog::backdrop {
-  background: rgb(0 0 0 / 48%);
-}
-.import-decision-dialog form {
-  display: grid;
-  gap: 16px;
-  padding: 24px;
-}
-.import-decision-dialog h2,
-.import-decision-dialog p,
-.import-decision-dialog dl {
-  margin: 0;
-}
-.import-decision-revisions {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-surface);
-  background: var(--surface-sunken);
-}
-.import-decision-revisions div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
-}
-.import-decision-revisions dt {
-  color: var(--text-dim);
-}
-.import-decision-revisions dd {
-  overflow-wrap: anywhere;
-  font-weight: var(--weight-medium);
-}
-.import-decision-target {
-  display: grid;
-  gap: 6px;
-}
-.import-decision-target select {
-  width: 100%;
-}
-.import-decision-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
-}
-.import-state,
-.update-last-checked,
-.update-state,
-.custom-dictionary-status {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: var(--font-small);
-  font-variant-numeric: tabular-nums;
-}
-.import-state:empty,
-.nav-status:empty,
-.compact-nav-status:empty,
-.options-feedback-slot:has(#options-status:empty),
-.update-state:empty,
-.custom-dictionary-status:empty,
-.dict-group-error:empty,
-.lookup-group > [aria-live]:empty {
-  /* Empty live regions must remain available for their first announcement. */
+.visually-hidden,
+.settings-search .field-label,
+.anki-template-order,
+.keybind-number,
+.keybind-fields .field-label,
+.anki-marker-combobox-status {
   position: absolute;
   width: 1px;
   height: 1px;
-  margin: -1px;
-  padding: 0;
   overflow: hidden;
   clip-path: inset(50%);
-}
-.custom-dictionary-errors {
-  margin: 0;
-  padding: 12px 16px 12px 34px;
-  border-left: 3px solid var(--error);
-  background: var(--surface-sunken);
-  color: var(--error);
-  overflow-wrap: anywhere;
-}
-.custom-dictionary-errors li + li {
-  margin-top: 6px;
-}
-.recommendations {
-  display: grid;
-  gap: 14px;
-  padding-bottom: 0;
-}
-.recommended-dictionary-list:not(:empty) {
-  border-top: 1px solid var(--border);
-}
-.recommendations-head {
-  display: grid;
-  gap: 5px;
-}
-.recommended-dictionary-list {
-  display: grid;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.recommended-dictionary-list li {
-  min-width: 0;
-  display: grid;
-  gap: 3px;
-  padding: var(--row-padding) 0;
-}
-.recommended-dictionary-list li + li {
-  border-top: 1px solid var(--border);
-}
-.recommended-dictionary-link {
-  width: fit-content;
-  font-weight: var(--weight-medium);
-}
-.recommended-dictionary-list span,
-.recommended-retry {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-.recommended-retry {
-  margin: 0;
-}
-.track {
-  height: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-sunken);
-  overflow: hidden;
-}
-/* Import progress has no byte count; only the batch outcome is determinate. */
-.track-fill {
-  width: 34%;
-  height: 100%;
-  border-radius: var(--radius-pill);
-  background: var(--accent-fill);
-  animation: slide 1.4s ease-in-out infinite;
-}
-@keyframes slide {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(300%);
-  }
+  white-space: nowrap;
 }
 
-.dict-controls {
-  display: flex;
-  align-items: end;
-  flex-wrap: wrap;
-  gap: 14px 20px;
-}
-.dict-search {
-  flex: 1 1 240px;
+/* ---------------------------------------------------------------- Controls */
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
   min-width: 0;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 6px 10px;
+  height: var(--control-height);
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background-color: var(--control-bg);
+  color: var(--text);
+  font-size: var(--font-body);
 }
-.dict-search input {
-  grid-column: 1 / -1;
+:is(input[type="text"], input[type="password"], input[type="search"], input[type="url"], input[type="number"], select, textarea):hover:not(:disabled) {
+  border-color: var(--control-border-hover);
+  background-color: var(--control-bg-hover);
 }
-.dict-match-count {
-  grid-column: 2;
-  grid-row: 1;
+:is(input[type="text"], input[type="password"], input[type="search"], input[type="url"], input[type="number"], select, textarea):focus-visible {
+  /* A transparent outline still draws under Windows contrast themes. */
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
-.dict-match-count,
-.dict-selection-count {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
+:is(input, select, textarea):disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+::placeholder {
+  color: color-mix(in srgb, var(--text-dim) 80%, transparent);
+}
+select {
+  appearance: none;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' fill='none' stroke='%238e919a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+select option,
+select optgroup {
+  background: var(--surface);
+  color: var(--text);
+}
+input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
-.dict-selection-controls {
-  display: grid;
-  gap: 4px;
-}
-.dict-select-all,
-.cell {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+textarea {
+  height: auto;
+  padding: 8px 10px;
+  line-height: 1.55;
 }
 input[type="checkbox"] {
   flex-shrink: 0;
@@ -973,6 +356,120 @@ input[type="checkbox"] {
   margin: 0;
   accent-color: var(--accent-fill);
 }
+@media (forced-colors: active) {
+  select {
+    appearance: auto;
+    padding-right: 10px;
+    background-image: none;
+  }
+}
+
+/* Buttons: one height, one radius. Primary is the text colour inverted;
+   secondary is a quiet filled outline; an icon button has no chrome until hovered. */
+.primary-button,
+.file-button,
+button.ghost,
+.section-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--control-height);
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.primary-button,
+.file-button {
+  width: fit-content;
+  background: var(--accent-fill);
+  color: var(--accent-contrast);
+}
+.primary-button:hover:not(:disabled),
+.file-button:hover {
+  background: color-mix(in srgb, var(--accent-fill) 88%, var(--text));
+}
+button.ghost,
+.file-button.ghost,
+.section-action {
+  border-color: var(--control-border);
+  background: var(--control-fill);
+  color: var(--text);
+}
+button.ghost:hover:not(:disabled),
+.file-button.ghost:hover,
+.section-action:hover {
+  background: var(--control-fill-hover);
+}
+.primary-button:disabled,
+button.ghost:disabled,
+.file-button:has(input:disabled) {
+  opacity: 0.45;
+  cursor: default;
+}
+button.danger {
+  color: var(--error);
+}
+button.danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--error) 12%, var(--card));
+}
+.primary-button .hd-icon,
+button.ghost .hd-icon,
+.section-action .hd-icon {
+  width: 16px;
+  height: 16px;
+}
+/* Icon buttons: the label stays for assistive tech, the glyph is what shows. */
+button.icon-only,
+button:is(.dict-up, .dict-down, .dict-update-check, .dict-group-up, .dict-group-down,
+  .dict-group-member-up, .dict-group-member-down, .audio-up, .audio-down) {
+  width: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+  gap: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0;
+}
+button.icon-only:hover:not(:disabled),
+button:is(.dict-up, .dict-down, .dict-update-check, .dict-group-up, .dict-group-down,
+  .dict-group-member-up, .dict-group-member-down, .audio-up, .audio-down):hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--control-fill-hover);
+  color: var(--text);
+}
+button.icon-only.danger:hover:not(:disabled) {
+  color: var(--error);
+}
+button.icon-only .hd-icon,
+button:is(.dict-up, .dict-down, .dict-update-check, .dict-group-up, .dict-group-down,
+  .dict-group-member-up, .dict-group-member-down, .audio-up, .audio-down) .hd-icon {
+  width: 18px;
+  height: 18px;
+}
+.file-button {
+  position: relative;
+  overflow: hidden;
+}
+.file-button:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.file-button input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
 /*
  * Every on/off setting is a switch: the setting rows, and the Enabled toggle
  * of a dictionary, audio source or keybind. It stays a native checkbox, so
@@ -981,27 +478,27 @@ input[type="checkbox"] {
  */
 .lookup-enable > input[type="checkbox"],
 input:is(.dict-enabled, .audio-enabled, .keybind-enabled-input) {
-  --switch-knob: var(--border-strong);
   appearance: none;
+  flex: none;
   width: 36px;
   height: 20px;
-  border: 1px solid var(--border-strong);
+  margin: 0;
+  border: 1px solid transparent;
   border-radius: var(--radius-pill);
   background: radial-gradient(circle closest-side, var(--switch-knob) 0 calc(100% - 1px), transparent 100%)
-    no-repeat 1px 50% / 16px 16px var(--surface);
+    no-repeat 1px 50% / 16px 16px var(--switch-track);
   cursor: pointer;
 }
 .lookup-enable > input[type="checkbox"]:checked,
 input:is(.dict-enabled, .audio-enabled, .keybind-enabled-input):checked {
-  --switch-knob: var(--accent-contrast);
-  border-color: var(--accent-fill);
-  background-color: var(--accent-fill);
+  border-color: var(--accent-tone, var(--accent-fill));
+  background-color: var(--accent-tone, var(--accent-fill));
   background-position: calc(100% - 1px) 50%;
 }
 .lookup-enable > input[type="checkbox"]:disabled,
 input:is(.dict-enabled, .audio-enabled, .keybind-enabled-input):disabled {
   cursor: default;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 @media (prefers-reduced-motion: no-preference) {
   .lookup-enable > input[type="checkbox"],
@@ -1032,461 +529,548 @@ input:is(.dict-enabled, .audio-enabled, .keybind-enabled-input):disabled {
     opacity: 1;
   }
 }
+
+/* ---------------------------------------------------------------- Shell */
+.settings-shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  max-width: 1480px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+.settings-sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 20px 12px 20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 10px;
+  font-size: var(--font-title);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.brand img {
+  width: 28px;
+  height: 28px;
+}
+.brand-context {
+  display: block;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-body);
+  letter-spacing: normal;
+}
+.setup-resume {
+  display: block;
+  margin: 12px 10px 0;
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
+}
+.settings-search {
+  display: grid;
+  margin: 18px 0 0;
+}
+.settings-search input {
+  padding-inline: 12px;
+  background-color: var(--nav-hover);
+}
+.settings-section-picker,
+.compact-nav-status {
+  display: none;
+}
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 6px 0 24px;
+}
+/* Group labels: quiet, small and not links. */
+.nav-group {
+  margin: 18px 0 4px;
+  padding: 0 10px;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+}
+.settings-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: var(--radius-control);
+  color: var(--nav-text);
+  text-decoration: none;
+}
+.settings-nav a .hd-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+}
+.settings-nav a:hover {
+  background: var(--nav-hover);
+  color: var(--text);
+}
+.settings-nav a[aria-current="page"] {
+  background: var(--nav-active);
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.settings-nav a[aria-current="page"] .hd-icon {
+  color: var(--accent);
+}
+.nav-status {
+  display: block;
+  padding: 0 10px 6px 38px;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  overflow-wrap: anywhere;
+}
+/* A plain footer link at the bottom of the rail, like a settings page's About link. */
+.privacy-link {
+  display: block;
+  margin: auto 10px 12px;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  text-decoration: none;
+}
+.privacy-link:hover {
+  color: var(--text);
+}
+.engine-status {
+  display: block;
+  margin: 0 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  overflow-wrap: anywhere;
+}
+.engine-status-failures {
+  display: grid;
+  gap: 10px;
+  margin: 12px 10px 0;
+  padding: 0 0 0 12px;
+  border-left: 2px solid var(--error);
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+.engine-status-failure-title,
+.engine-status-failure-error {
+  display: block;
+}
+.engine-status-failure-title {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.engine-status.is-ready,
+.nav-status.is-ready,
+.import-state.is-ready,
+.custom-dictionary-status.is-ready,
+.update-state.is-ready,
+.dict-update-status.is-ready {
+  color: var(--ok);
+}
+.engine-status.is-error,
+.nav-status.is-error,
+.import-state.is-error,
+.custom-dictionary-status.is-error,
+.update-state.is-error,
+.dict-update-status.is-error,
+.is-error {
+  color: var(--error);
+}
+
+/* The page is one raised panel beside the rail. */
+.page {
+  min-width: 0;
+  min-height: calc(100vh - 16px);
+  margin: 8px 8px 8px 0;
+  padding: 44px 48px 96px;
+  border-radius: var(--radius-dialog);
+  background: var(--page);
+}
+.page > * {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+.page > #keybinds,
+.page > #anki {
+  max-width: 860px;
+}
+.page > #design {
+  max-width: 1120px;
+}
+
+/* Sub-pages of one rail item: plain underline tabs. */
+.section-tabs {
+  display: flex;
+  gap: 22px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--hairline);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.section-tabs a {
+  /* The label and its hidden copy share one column. */
+  display: grid;
+  justify-items: center;
+  flex: 0 0 auto;
+  margin-bottom: -1px;
+  padding: 10px 0 9px;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+/*
+ * data-label repeats each tab's text. This hidden copy keeps each tab as wide
+ * as it is when current, so moving aria-current restyles one tab without
+ * moving the others. It is clipped so it adds no scrollable overflow.
+ */
+.section-tabs a::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: var(--weight-medium);
+}
+/* An experimental tab stays hidden while its switch is off. */
+.section-tabs a[hidden] {
+  display: none;
+}
+.section-tabs a:hover {
+  color: var(--text);
+}
+.section-tabs a[aria-current="page"] {
+  border-bottom-color: var(--accent);
+  color: var(--text);
+}
+
+/*
+ * A section is its title, then its groups. The quiet autosave status
+ * ("Saved.") sits at the end of the title row, where settings pages put it; a
+ * failure or a refused edit takes a row of its own under the title and stays
+ * in view while the section scrolls.
+ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  scroll-margin-top: 24px;
+}
+.card-head {
+  display: grid;
+  gap: 6px;
+}
+.card-head h1 {
+  width: fit-content;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.section-action {
+  flex-shrink: 0;
+}
+.options-feedback-slot {
+  position: sticky;
+  top: 12px;
+  z-index: 3;
+}
+.options-feedback-slot:empty {
+  display: none;
+}
+.card > .options-feedback-slot:has(#options-status.is-quiet) {
+  position: absolute;
+  top: 6px;
+  right: 0;
+}
+#options-feedback {
+  display: grid;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-surface);
+  background: var(--card);
+  box-shadow: var(--shadow-overlay);
+}
+#options-feedback:has(.is-quiet) {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+#options-feedback:has(.is-error) {
+  border-color: color-mix(in srgb, var(--error) 50%, var(--hairline));
+}
+#options-status.is-quiet {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.hint,
+.section-note,
+.editor-help {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  line-height: 1.5;
+}
+/* Hints are optional: an empty one takes no room. */
+.field-hint:empty,
+.hint:empty,
+.section-note:empty,
+.editor-help:empty,
+.group-desc:empty {
+  display: none;
+}
+.import-state:empty,
+.nav-status:empty,
+.compact-nav-status:empty,
+.options-feedback-slot:has(#options-status:empty),
+.update-state:empty,
+.custom-dictionary-status:empty,
+.dict-group-error:empty,
+.lookup-group [aria-live]:empty {
+  /* Empty live regions must remain available for their first announcement. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* ---------------------------------------------------------------- Groups and rows */
+/*
+ * A group is a title, an optional one-line description, and a card of rows.
+ * The fieldset only groups; the card draws the surface.
+ */
+.lookup-group {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.lookup-group > legend,
+.group-title {
+  margin: 0 0 10px;
+  padding: 0;
+  font-size: var(--font-title);
+  font-weight: var(--weight-bold);
+  line-height: 1.35;
+}
+.group-title {
+  margin: 0;
+}
+.group-desc {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.lookup-group > legend + .group-desc {
+  margin-top: -6px;
+}
+.group-desc + .group-desc {
+  margin-top: -8px;
+}
+.group-card {
+  container-type: inline-size;
+  min-width: 0;
+  padding: 0 var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+/*
+ * Rows: a row draws the line above itself only when something visible comes
+ * before it, so a line appears only between two rows, whichever rows are
+ * hidden, and never at a card's top edge. A row inside a wrapper or a list
+ * that comes first there looks past it, to whatever comes before the wrapper.
+ */
+.group-card > :is(.lookup-enable, .field, .setting-row, .setting-block, .settings-disclosure, .row-actions,
+  .table-toolbar, .anki-mapping-columns),
+.group-card > :is(div, form, .fields) > :is(.lookup-enable, .field, .setting-row, .setting-block, .row-actions,
+  .anki-template-row),
+.group-card > :is(ol, ul) > li,
+.dict-list > li,
+.dict-group-members > li {
+  padding: var(--row-padding) 0;
+}
+.group-card > :not([hidden], :empty, template, script, style)
+  ~ :is(.lookup-enable, .field, .setting-row, .setting-block, .settings-disclosure, .row-actions,
+    .table-toolbar, .anki-mapping-columns),
+.group-card > :is(div, form, .fields) > :not([hidden], :empty, template, script, style)
+  ~ :is(.lookup-enable, .field, .setting-row, .setting-block, .row-actions, .anki-template-row),
+.group-card > :not([hidden], :empty, template, script, style)
+  ~ :is(div, form, .fields) > :is(.lookup-enable, .field, .setting-row, .setting-block, .row-actions,
+    .anki-template-row):nth-child(1 of :not([hidden], :empty, template, script, style)),
+.group-card > :is(ol, ul) > :not([hidden]) ~ li,
+.group-card > :not([hidden], :empty, template, script, style)
+  ~ :is(ol, ul) > li:nth-child(1 of :not([hidden])),
+.dict-list > :not([hidden]) ~ li,
+.dict-group-members > :not([hidden]) ~ li {
+  border-top: 1px solid var(--hairline);
+}
+.group-card > :is(div, form, .fields):not(.field, .setting-row, .setting-block, .row-actions, .table-toolbar,
+  .anki-mapping-columns) {
+  min-width: 0;
+}
+.group-card > :is(ol, ul),
+.group-card > :is(div, form):not(.field, .setting-row, .setting-block, .row-actions, .table-toolbar,
+  .anki-mapping-columns) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fields {
+  display: contents;
+}
+/* Row titles and their one-line hints. */
+.field-label,
+.lookup-enable > span:first-child,
+.setting-title,
+.setting-text > h2,
+.cell-label {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+}
+.field-hint,
+.suffix {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  line-height: 1.45;
+}
+.field-hint.is-error {
+  color: var(--error);
+}
+
+/* Single-line rows share one height, whether they end in a switch, a field or a button. */
+.group-card > :is(.lookup-enable, .field, .setting-row),
+.group-card > :is(div, form, .fields) > :is(.lookup-enable, .field, .setting-row) {
+  min-height: calc(var(--control-height) + 2 * var(--row-padding) + 1px);
+}
+/* A switch with a hint keeps the hint right under its title. */
+.group-card .lookup-enable:has(+ .field-hint:not(:empty, [hidden])) {
+  min-height: 0;
+}
+/* A switch row: its title on the left, the switch on the right. */
 .lookup-enable {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
-}
-.dict-list,
-.dict-group-list,
-.dict-group-members,
-.experimental-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-/* One separator idiom for every list on the page: the list owns the top and
-   bottom rule, and each row after the first owns the rule above it. A list in a
-   card is closed by the card's edge instead, so each of its rows owns the rule
-   above it (audio sources, keybinds, custom buttons, automatic backups). */
-.dict-group-members:not(:empty),
-.anki-templates:not(:empty) {
-  border-block: 1px solid var(--border);
-}
-/* The library is one card; a row's padding is its own, so a disabled row's tint spans it. */
-.dict-list:not(:empty) {
-  overflow: clip;
-}
-.dict-row {
-  display: grid;
-  grid-template-columns: 16px minmax(30px, max-content) minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 4px 12px;
-  padding: var(--row-padding) 16px;
-}
-.dict-row + .dict-row {
-  border-top: 1px solid var(--border);
-}
-.dict-row.is-drop-target {
-  box-shadow: inset 0 3px var(--accent-fill);
-}
-.dict-row.is-off {
-  background: var(--surface-sunken);
-}
-.dict-row-select,
-.dict-order,
-.toggle {
-  padding-top: 3px;
-}
-.dict-order {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--text-dim);
-}
-.dict-drag {
-  font-size: var(--font-large);
-  line-height: 1;
-  cursor: grab;
-  user-select: none;
-}
-.dict-drag:active {
-  cursor: grabbing;
-}
-.dict-drag[draggable="false"] {
-  cursor: default;
-  opacity: 0.4;
-}
-.dict-rank {
-  font-size: var(--font-caption);
-  font-variant-numeric: tabular-nums;
-  min-width: 3ch;
-  text-align: end;
-}
-.dict-main {
-  min-width: 0;
-  display: grid;
-  gap: 2px;
-}
-.dict-heading,
-.dict-badges {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.dict-title {
-  font-size: var(--font-title);
-  font-weight: var(--weight-bold);
-  overflow-wrap: anywhere;
-}
-.dict-favorite {
-  color: var(--favorite);
-}
-.dict-canonical,
-.dict-pinned,
-.dict-metadata,
-.dict-memory,
-.dict-update-status,
-.dict-badge {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-  overflow-wrap: anywhere;
-}
-.dict-badge {
-  font-variant-numeric: tabular-nums;
-}
-.dict-badge.is-empty {
-  display: none;
-}
-.dict-update-status.is-available {
-  color: var(--accent);
-  font-weight: var(--weight-medium);
-}
-.dict-footer {
-  display: flex;
-  align-items: end;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 14px;
-  margin-top: 8px;
-  background: var(--surface-sunken);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control);
-}
-.dict-metadata,
-.dict-memory {
-  flex-basis: 100%;
-}
-.dict-schedule {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-}
-.dict-schedule label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.dict-next-check {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-.dict-quick-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.dict-order-actions {
-  display: flex;
-  gap: 4px;
-}
-.dict-details {
-  grid-column: 3 / -1;
-  min-width: 0;
-}
-/* Two disclosure idioms, and only two: a disclosure that wraps content is a
-   panel, and one that expands a list row is an inline link. */
-.dict-details-toggle,
-.anki-marker-reference > summary {
-  width: fit-content;
   cursor: pointer;
-  color: var(--accent);
-  font-size: var(--font-small);
-  font-weight: var(--weight-medium);
-  padding: 4px 0;
 }
-.dict-details-toggle:hover,
-.anki-marker-reference > summary:hover,
-.settings-disclosure > summary:hover,
-.format-help > summary:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.dict-alias {
-  flex: 1 1 220px;
-  max-width: 360px;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.dict-alias .cell-label {
-  white-space: nowrap;
-}
-.cell-label,
-.field-label {
-  font-size: var(--font-small);
-  font-weight: var(--weight-medium);
-}
-.cell-label {
-  color: var(--text-dim);
-}
-.dict-actions,
-.dict-group-actions,
-.dict-group-member-actions {
-  display: flex;
-  align-items: end;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.dict-actions {
-  margin-left: auto;
-}
-.dict-position {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-input[type="text"],
-input[type="password"],
-input[type="search"],
-input[type="url"],
-input[type="number"],
-select,
-textarea {
-  width: 100%;
-  min-width: 0;
-  min-height: var(--control-height);
-  padding: 0 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-control);
-  background: var(--surface);
-  color: var(--text);
-}
-/* A textarea grows, so its padding is its own. */
-textarea {
-  padding: 10px;
-}
-#opt-custom-popup-css {
-  margin-top: 10px;
-  resize: vertical;
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: var(--font-small);
-  line-height: 1.6;
-  tab-size: 2;
-}
-.custom-css-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-.dict-position .dict-position-input {
-  width: 4.5em;
-}
-.dict-group-create {
-  display: grid;
-  grid-template-columns: minmax(0, 320px) auto;
-  justify-content: start;
-  align-items: end;
-  gap: 8px;
-}
-/* Panels that are not rows of settings (a form, a group, the recommendations) pad themselves. */
-.dict-group-create,
-.dict-group,
-.recommendations,
-.custom-dictionary-form,
-.local-file-access {
-  padding: 16px;
-}
-.dict-group-create label,
-.dict-group-name-field {
-  display: grid;
-  gap: 6px;
-}
-.dict-group-error {
-  grid-column: 1 / -1;
-  color: var(--error);
-  font-size: var(--font-caption);
-}
-.name-draft-feedback {
-  flex-basis: 100%;
-  grid-column: 1 / -1;
-  grid-row: 2;
-  display: grid;
-  gap: 8px;
-  color: var(--error);
-  font-size: var(--font-caption);
-}
-.dict-group-list {
-  display: grid;
-  gap: 16px;
-}
-.dict-group-head,
-.dict-group-member {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 12px;
-}
-.dict-group-add-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-.dict-group-add {
-  flex-shrink: 0;
-}
-.dict-group-members {
-  margin-top: 14px;
-}
-.dict-group-member {
-  padding: var(--row-padding) 0;
-  align-items: center;
-}
-.dict-group-member + .dict-group-member {
-  border-top: 1px solid var(--border);
-}
-.dict-group-member-label {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.dict-group-member-canonical,
-.dict-group-members-empty {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-.dict-group-members-empty {
-  margin: 12px 0 0;
-}
-.empty-state {
-  margin: 0;
-  padding: 28px 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-surface);
-  background: var(--surface-sunken);
-  color: var(--text-dim);
-  text-align: center;
-}
-.empty-state.compact {
-  padding: 16px;
-}
-.library-empty {
-  display: grid;
-  justify-items: center;
-  gap: 14px;
-  padding: 44px 24px;
-}
-.empty-state-icon {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 2px;
-  border-radius: var(--radius-dialog);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: var(--font-page-title);
-}
-.library-empty h2 {
-  color: var(--text);
-  font-size: var(--font-large);
-}
-.library-empty p {
-  max-width: 44ch;
-  margin: 0;
-}
-.empty-state-actions {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 6px;
+/* A hint after a row belongs to that row: no line above it, right under the title. */
+.group-card > .field-hint,
+.group-card > div:not([class]) > .field-hint,
+.group-card > output.field-hint {
+  margin-top: calc(4px - var(--row-padding));
+  padding: 0 60px var(--row-padding) 0;
 }
 
-.custom-dictionary-form,
-.custom-dictionary-source-field {
+/* A control row: title and hint on the left, the control on the right. */
+.field {
   display: grid;
-  gap: 12px;
-}
-.custom-dictionary-source-field {
-  gap: 6px;
-}
-.custom-dictionary-source-field textarea {
-  min-height: 320px;
-  padding: 12px;
-  background: var(--surface-sunken);
-  font-family: ui-monospace, monospace;
-  font-size: var(--font-small);
-  line-height: 1.7;
-  resize: vertical;
-  tab-size: 2;
-}
-/*
- * Every card has one surface: a group of settings, the library, Anki's panels
- * and the panels that are not rows. Its edge is an inset outline, so a first
- * row's top rule falls on it instead of doubling it, whatever that row is.
- */
-.lookup-group,
-.anki-panel,
-.dict-list:not(:empty),
-.dict-group-create,
-.dict-group,
-.recommendations,
-.custom-dictionary-form,
-.local-file-access {
-  border-radius: var(--radius-surface);
-  outline: 1px solid var(--border);
-  outline-offset: -1px;
-  background: var(--surface);
-}
-/*
- * A group of settings is one card of rows, titled by its legend above it, as
- * in Chrome's and macOS's settings.
- */
-.lookup-group {
-  position: relative;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 2px;
   min-width: 0;
-  margin: 0;
-  padding: 0 16px;
-  border: 0;
 }
-/*
- * Cards whose rows rearrange with their own width (see @container below):
- * Design's half-width column, the keybinds, the audio sources and, on a phone,
- * every card. Only these are query containers, as each costs a style pass.
- */
-.design-controls .lookup-group,
-#keybind-settings,
-#audio-sources {
-  container-type: inline-size;
+.field > .field-label,
+.field > .field-text {
+  grid-column: 1;
+  grid-row: 1;
 }
-.lookup-group:has(> legend) {
-  margin-top: 30px;
+.field > .field-hint {
+  grid-column: 1;
+  grid-row: 2;
 }
-.lookup-group > legend {
-  position: absolute;
-  bottom: 100%;
-  left: 2px;
-  max-width: 100%;
-  padding: 0 0 8px;
-  font-size: var(--font-title);
-  font-weight: var(--weight-bold);
-  overflow-wrap: anywhere;
+.field > :not(.field-label, .field-hint, .field-text) {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
 }
-/* Free text in a card is a row of its own: an introduction, a note or a status. */
-.lookup-group > :is(.field-hint, .hint, .section-note):not(.lookup-enable + *),
-.setting-row,
-.setting-block {
-  margin: 0;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
+/* With a hint under the title, the control centres on both lines. */
+.field:has(> :where(.field-hint:not(:empty, [hidden]))) > :where(:not(.field-label, .field-hint, .field-text)) {
+  grid-row: 1 / span 2;
 }
-.lookup-group > :is(.field-hint, .hint, .section-note) {
-  max-width: none;
+.field > :is(input[type="text"], input[type="url"], input[type="password"], input[type="search"]) {
+  width: 240px;
 }
+/* A closed dropdown is as wide as its value, within bounds. */
+.field > select,
+.inline-controls > select,
+.activation-input-controls select,
+.frequency-order-controls select,
+.scan-delay-controls select {
+  field-sizing: content;
+  width: auto;
+  min-width: 96px;
+  max-width: 200px;
+}
+.field > input[type="number"],
+.input-suffix input {
+  width: 92px;
+}
+.field-text {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  min-width: 0;
+}
+.input-suffix {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inline-controls,
+.activation-input-controls,
+.frequency-order-controls,
+.scan-delay-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inline-controls > input {
+  width: 200px;
+  min-width: 0;
+}
+#opt-blur-frequency-threshold { width: 140px; }
+#sharing-host-port { width: 110px; }
+#definition-blur-count-paused label {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* A row with free content: text on the left, actions on the right. */
 .setting-row {
   display: flex;
   align-items: center;
@@ -1494,34 +1078,40 @@ textarea {
   flex-wrap: wrap;
   gap: 10px 24px;
 }
-.setting-row > :is(.setting-text, .field-hint) {
-  flex: 1 1 320px;
-  min-width: 0;
-  margin: 0;
-}
 .setting-text {
   display: grid;
-  gap: 3px;
+  gap: 2px;
+  flex: 1 1 260px;
+  min-width: 0;
 }
-.setting-text h2 {
-  margin: 0;
-  font-size: var(--font-body);
-  font-weight: var(--weight-medium);
-}
-.setting-text p {
-  margin: 0;
+.setting-row > .field-hint {
+  flex: 1 1 260px;
 }
 .setting-block {
   display: grid;
+  gap: 6px;
+}
+.options-actions,
+.update-actions,
+.sharing-actions,
+.custom-dictionary-actions,
+.recommended-retry,
+.dict-bulk-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
-/* A switch's description sits under its label, inside the same row. */
-.lookup-enable:has(+ .field-hint:not([hidden])) {
-  padding-bottom: 2px;
+.row-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-block: 12px;
 }
-.lookup-enable + .field-hint {
-  margin: 0;
-  padding: 0 56px var(--row-padding) 0;
+/* A row whose only content is a hidden control takes no room. */
+.sharing-unlink-row:has(#sharing-client-unlink[hidden]) {
+  display: none;
 }
 /* An option for the action beside it (Start over), so a checkbox, not a switch. */
 .check-row {
@@ -1530,72 +1120,100 @@ textarea {
   gap: 8px;
   margin-top: 8px;
 }
+
+/* A disclosure is one more row: its summary reads as the row's title. */
 .settings-disclosure,
 .format-help {
   min-width: 0;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-surface);
-  background: var(--surface);
-}
-/* In the personal dictionary's card the format help is a plain disclosure above the source. */
-.custom-dictionary-form > .format-help {
-  padding: 0;
-  border: 0;
-  border-radius: 0;
 }
 .settings-disclosure > summary,
-.format-help > summary {
+.format-help > summary,
+.dict-details-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  list-style: none;
   cursor: pointer;
   font-weight: var(--weight-medium);
 }
-.settings-disclosure[open] > summary,
-.format-help[open] > summary {
-  margin-bottom: 16px;
+.settings-disclosure > summary::-webkit-details-marker,
+.format-help > summary::-webkit-details-marker,
+.dict-details-toggle::-webkit-details-marker {
+  display: none;
 }
-.settings-disclosure > p:last-child {
-  margin-bottom: 0;
+.settings-disclosure > summary::before,
+.format-help > summary::before,
+.dict-details-toggle::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: var(--text-dim);
+  mask: var(--hd-icon) center / contain no-repeat;
+  transform: rotate(-90deg);
 }
-.settings-disclosure code {
-  background: var(--surface-sunken);
+.settings-disclosure[open] > summary::before,
+.format-help[open] > summary::before {
+  transform: none;
 }
-/* Inside a card a disclosure is one more row: its summary reads as the row's title. */
-.lookup-group > .settings-disclosure {
-  padding: var(--row-padding) 0;
-  border: 0;
-  border-top: 1px solid var(--border);
-  border-radius: 0;
-  background: none;
+@media (forced-colors: active) {
+  .settings-disclosure > summary::before,
+  .format-help > summary::before,
+  .dict-details-toggle::before {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
 }
-.lookup-group > .settings-disclosure[open] > summary {
-  margin-bottom: 4px;
+@media (prefers-reduced-motion: no-preference) {
+  .settings-disclosure > summary::before,
+  .format-help > summary::before,
+  .dict-details-toggle::before {
+    transition: transform 120ms ease;
+  }
 }
-.fields {
-  display: grid;
+.settings-disclosure[open] > summary {
+  margin-bottom: 6px;
 }
+.settings-disclosure > p {
+  margin: 4px 0 0;
+}
+/* Rows inside an open disclosure: the same rows, one step in. */
+.settings-disclosure .field {
+  margin-left: 21px;
+  padding: 10px 0;
+  border-top: 1px solid var(--hairline);
+}
+.settings-disclosure > .field-hint {
+  margin-left: 21px;
+}
+.settings-disclosure .field:first-of-type {
+  border-top: 0;
+}
+
+/* ---------------------------------------------------------------- Status */
 .operational-status {
-  --status-color: var(--border-strong);
+  --status-color: var(--text-dim);
   display: grid;
-  grid-template-columns: 26px minmax(0, 1fr);
+  grid-template-columns: 20px minmax(0, 1fr);
   align-items: start;
-  gap: 12px;
-  min-height: 58px;
+  gap: 10px;
   margin: 0;
-  padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--status-color) 45%, var(--border));
-  border-inline-start-width: 4px;
+  padding: 12px 14px;
   border-radius: var(--radius-surface);
-  background: color-mix(in srgb, var(--status-color) 8%, var(--surface));
+  background: color-mix(in srgb, var(--status-color) 10%, var(--card));
   color: var(--text);
-  font-size: var(--font-large);
-  font-weight: var(--weight-bold);
-  white-space: pre-line;
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
   line-height: 1.45;
+  white-space: pre-line;
   overflow-wrap: anywhere;
 }
 .operational-status::before {
-  margin-top: 1px;
   color: var(--status-color);
+}
+.operational-status:empty {
+  display: none;
 }
 .operational-status.is-working {
   --status-color: var(--accent);
@@ -1606,126 +1224,28 @@ textarea {
 .operational-status.is-error {
   --status-color: var(--error);
 }
-#anki {
-  gap: 16px;
-}
-#anki .field-hint { margin: 0; }
-#anki .section-heading .card-head h1,
-#anki .anki-panel legend,
-#anki .anki-mapping-header h2 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#anki .section-heading .card-head h1 > .hd-icon {
-  width: 26px;
-  height: 26px;
-  color: var(--accent);
-}
-#anki button > .hd-icon {
-  width: 16px;
-  height: 16px;
-}
-.anki-panel {
-  padding: 16px;
-}
-/* An Anki card is padded, so its introduction needs no rule of its own. */
-.lookup-group.anki-panel > legend + .field-hint {
-  padding-top: 0;
-  border-top: 0;
-}
-.anki-card {
-  display: grid;
-  gap: 14px;
-}
-.anki-setting-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-.anki-setting-row + .anki-setting-row {
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-}
-.anki-setting-col {
-  display: grid;
-  flex: 1 1 0;
-  gap: 4px;
-  min-width: 0;
-}
-.anki-connection-card {
-  gap: 14px;
-}
-.anki-connection-fields {
-  flex-basis: 440px;
-}
-.anki-url-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.anki-url-row input {
-  flex: 1 1 auto;
-  width: auto;
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-  font-size: var(--font-small);
-}
-.anki-api-key-panel {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control);
-  background: var(--surface-sunken);
-}
-.anki-api-key-panel .field {
-  gap: 6px;
-}
-.anki-connection-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 0 1 auto;
-  gap: 8px;
-  min-width: 0;
-}
-#anki button.anki-icon-button {
-  position: relative;
-  display: grid;
-  flex: 0 0 var(--control-height);
-  place-items: center;
-  width: var(--control-height);
-  height: var(--control-height);
-  padding: 0;
-}
-.anki-icon-button-label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
+/* A small state pill: a dot and a word or two. */
 .anki-status-pill {
-  --status-color: var(--border-strong);
+  --status-color: var(--text-dim);
   display: inline-flex;
   grid-template-columns: none;
   align-items: center;
   gap: 6px;
-  min-height: 0;
+  width: fit-content;
+  max-width: 100%;
   margin: 0;
-  padding: 5px 9px;
-  border: 1px solid color-mix(in srgb, var(--status-color) 35%, var(--border));
+  padding: 2px 9px 2px 8px;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--status-color) 9%, var(--surface));
+  background: color-mix(in srgb, var(--status-color) 14%, var(--card));
   color: var(--status-color);
   font-size: var(--font-caption);
   font-weight: var(--weight-medium);
-  line-height: 1.35;
+  line-height: 1.5;
   white-space: pre-line;
 }
 .anki-status-pill::before {
   content: "";
+  flex: none;
   width: 7px;
   height: 7px;
   margin: 0;
@@ -1742,224 +1262,1000 @@ textarea {
 .anki-status-pill[data-state="offline"] {
   --status-color: var(--text-dim);
 }
-#anki-setup-status:empty,
-#anki-audio-status:empty,
-#anki-url-error:empty {
+.track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--control-fill);
+  overflow: hidden;
+}
+/* Import progress has no byte count; only the batch outcome is determinate. */
+.track-fill {
+  width: 34%;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-fill);
+  animation: slide 1.4s ease-in-out infinite;
+}
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track-fill {
+    width: 100%;
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
+/* ---------------------------------------------------------------- Search results */
+.settings-search-results h1 {
+  margin-top: 0;
+}
+.settings-search-results ul {
+  display: grid;
+  margin: 0;
+  padding: 0 var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+  list-style: none;
+}
+.settings-search-results ul:empty {
   display: none;
 }
-.anki-setup-row > button {
-  flex-shrink: 0;
+.settings-search-results li + li {
+  border-top: 1px solid var(--hairline);
 }
-.anki-template-strip,
-.anki-template-pills,
-.anki-template-actions,
-.anki-template-navigation {
+.settings-search-results a {
+  display: grid;
+  gap: 2px;
+  padding: 12px 0;
+  color: var(--text);
+  text-decoration: none;
+}
+.settings-search-results a:hover span,
+.settings-search-results a:focus-visible span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.settings-search-results small {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.settings-search-results strong {
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+
+/* ---------------------------------------------------------------- Dictionaries */
+.dict-controls {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  gap: 10px 16px;
+}
+.dict-search {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+.dict-search .field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dict-search input {
+  padding-right: 92px;
+}
+.dict-match-count {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+.dict-match-count,
+.dict-selection-count {
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+}
+.dict-selection-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dict-select-all,
+.cell {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
-.anki-template-strip {
+.dict-list,
+.dict-group-list,
+.dict-group-members,
+.experimental-list,
+.audio-source-list,
+.custom-button-list,
+.automatic-backup-list,
+.browser-shortcut-list,
+.keybind-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dict-list:not(:empty) {
+  padding: 0 var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.dict-row {
+  display: grid;
+  grid-template-columns: 16px auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 4px 14px;
+}
+.dict-list > li.dict-row {
+  padding: 12px 0;
+}
+.dict-row.is-drop-target {
+  box-shadow: inset 0 2px var(--accent-fill);
+}
+.dict-row.is-off .dict-main {
+  opacity: 0.55;
+}
+.dict-row-select,
+.dict-order,
+.toggle {
+  padding-top: 2px;
+}
+.dict-order {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-dim);
+}
+.dict-drag {
+  display: inline-flex;
+  line-height: 1;
+  cursor: grab;
+  user-select: none;
+}
+.dict-drag .hd-icon {
+  width: 16px;
+  height: 16px;
+}
+.dict-drag:active {
+  cursor: grabbing;
+}
+.dict-drag[draggable="false"] {
+  cursor: default;
+  opacity: 0.4;
+}
+.dict-rank {
+  min-width: 3ch;
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+.dict-main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.dict-heading,
+.dict-badges {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.dict-title {
+  font-size: var(--font-body);
+  font-weight: var(--weight-bold);
+  overflow-wrap: anywhere;
+}
+.dict-favorite {
+  color: var(--favorite);
+}
+.dict-favorite .hd-icon {
+  width: 14px;
+  height: 14px;
+}
+.dict-canonical,
+.dict-pinned,
+.dict-metadata,
+.dict-memory,
+.dict-update-status,
+.dict-badge {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  overflow-wrap: anywhere;
+}
+.dict-badge {
+  font-variant-numeric: tabular-nums;
+}
+.dict-badge.is-empty {
+  display: none;
+}
+.dict-update-status.is-available {
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+.dict-quick-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.dict-quick-actions .cell-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dict-order-actions {
+  display: flex;
+  gap: 2px;
+}
+.dict-details {
+  grid-column: 3 / -1;
+  min-width: 0;
+}
+.dict-details-toggle {
+  padding: 2px 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.dict-details-toggle:hover {
+  color: var(--text);
+}
+.dict-footer {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--control-bg);
+}
+.dict-metadata,
+.dict-memory,
+.dict-schedule {
+  flex-basis: 100%;
+}
+.dict-schedule {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.dict-schedule label,
+.dict-alias,
+.dict-position {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dict-schedule select {
+  width: 180px;
+}
+.dict-next-check {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.dict-alias {
+  flex: 1 1 220px;
+  max-width: 360px;
+  min-width: 0;
+}
+.dict-alias .cell-label,
+.dict-schedule .cell-label,
+.dict-position .cell-label {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  white-space: nowrap;
+}
+.dict-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+.dict-position .dict-position-input {
+  width: 64px;
+}
+.empty-state {
+  margin: 0;
+  padding: 28px 20px;
+  border-radius: var(--radius-surface);
+  background: var(--card);
+  color: var(--text-dim);
+  text-align: center;
+}
+.empty-state.compact {
+  padding: 18px;
+}
+.library-empty {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 44px 24px;
+}
+.empty-state-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 2px;
+  border-radius: var(--radius-surface);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 22px;
+}
+.library-empty h2 {
+  color: var(--text);
+  font-size: var(--font-large);
+}
+.library-empty p {
+  max-width: 44ch;
+  margin: 0;
+}
+.empty-state-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Add dictionaries */
+.import-drop-zone {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 36px 24px;
+  border: 1.5px dashed color-mix(in srgb, var(--text) 18%, var(--card));
+  border-radius: var(--radius-surface);
+  background: var(--card);
+  text-align: center;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.import-drop-zone.is-dragging {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.import-drop-zone[aria-disabled="true"] {
+  color: var(--text-dim);
+}
+.import-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.import-drop-hint {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.import-state,
+.update-last-checked,
+.update-state,
+.custom-dictionary-status {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  font-variant-numeric: tabular-nums;
+}
+.recommendations {
+  display: grid;
+  padding: 0 var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.recommendations-head {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  border: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 16px 0;
+}
+.recommendations-head > div {
+  display: grid;
+  gap: 2px;
+}
+.recommended-dictionary-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recommended-dictionary-list li {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--hairline);
+}
+.recommended-dictionary-link {
+  width: fit-content;
+  font-weight: var(--weight-medium);
+}
+.recommended-dictionary-list span,
+.recommended-retry {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.recommended-retry {
+  margin: 0;
+}
+.import-decision-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  border-radius: var(--radius-dialog);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+}
+.import-decision-dialog::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+.import-decision-dialog form {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+.import-decision-dialog h2,
+.import-decision-dialog p,
+.import-decision-dialog dl {
+  margin: 0;
+}
+.import-decision-revisions {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
   border-radius: var(--radius-control);
-  background: var(--surface-sunken);
+  background: var(--card);
+}
+.import-decision-revisions div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.import-decision-revisions dt {
+  color: var(--text-dim);
+}
+.import-decision-revisions dd {
+  margin: 0;
+  font-weight: var(--weight-medium);
+  overflow-wrap: anywhere;
+}
+.import-decision-target {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+.import-decision-target > * {
+  grid-column: 1;
+  grid-row: auto;
+  justify-self: stretch;
+}
+.import-decision-target select {
+  width: 100%;
+}
+.import-decision-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Groups */
+.dict-group-create {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding: 14px var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.dict-group-create label,
+.dict-group-name-field {
+  display: grid;
+  flex: 0 1 320px;
+  gap: 6px;
+}
+.dict-group-error {
+  flex-basis: 100%;
+  color: var(--error);
+  font-size: var(--font-small);
+}
+.name-draft-feedback {
+  display: grid;
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  gap: 8px;
+  color: var(--error);
+  font-size: var(--font-small);
+}
+.dict-group-list {
+  display: grid;
+  gap: 16px;
+}
+.dict-group {
+  padding: 16px var(--card-inset) 4px;
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.dict-group-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px;
+}
+.dict-group-actions,
+.dict-group-member-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.dict-group-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+.dict-group-add-select {
+  max-width: 320px;
+}
+.dict-group-add {
+  flex-shrink: 0;
+}
+.dict-group-members {
+  margin: 0;
+}
+.dict-group-member {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+.dict-group-members > li.dict-group-member {
+  padding: 10px 0;
+}
+.dict-group-member-label {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dict-group-member-canonical,
+.dict-group-members-empty {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.dict-group-members-empty {
+  margin: 0 0 12px;
+}
+
+/* Personal dictionary */
+.custom-dictionary-form {
+  display: grid;
+  gap: 14px;
+  padding: 16px var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.format-help > summary {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.format-help[open] > summary {
+  margin-bottom: 8px;
+}
+.custom-dictionary-source-field {
+  display: grid;
+  gap: 6px;
+}
+.custom-dictionary-source-field textarea {
+  min-height: 300px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--font-small);
+  line-height: 1.7;
+  resize: vertical;
+  tab-size: 2;
+}
+.custom-dictionary-errors {
+  margin: 0;
+  padding: 12px 16px 12px 34px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--error) 10%, var(--card));
+  color: var(--error);
+  overflow-wrap: anywhere;
+}
+.custom-dictionary-errors li + li {
+  margin-top: 6px;
+}
+
+/* A browser permission panel (Reading → local files). */
+.local-file-access {
+  display: grid;
+  gap: 8px;
+  padding: 16px var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.local-file-access h2,
+.local-file-access p {
+  margin: 0;
+}
+.local-file-access p,
+.local-file-access output {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.local-file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.local-file-access output {
+  display: block;
+}
+.local-file-access.is-enabled output {
+  color: var(--ok);
+}
+
+/* ---------------------------------------------------------------- Design */
+.design-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  align-items: start;
+  gap: 32px;
+}
+.design-controls {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+.design-sample {
+  position: sticky;
+  top: 24px;
+  min-width: 0;
+  padding: 14px;
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.preview-size-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.preview-size-label select {
+  width: auto;
+}
+.preview-viewport {
+  overflow: auto;
+  border-radius: var(--radius-control);
+  background: #f6f5f1;
+}
+#preview-canvas {
+  position: relative;
+}
+#design-preview {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  transform-origin: top left;
+}
+#theme-store {
+  min-width: 0;
+}
+.theme-store-carousel {
+  --theme-store-preview-height: 130px;
+  position: relative;
+}
+.theme-store-grid {
+  display: grid;
+  grid-auto-columns: minmax(240px, 80%);
+  grid-auto-flow: column;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  padding-bottom: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.theme-store-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: var(--radius-surface);
+  background: var(--card);
+  scroll-snap-align: start;
+}
+/* Previous and Next themes straddle the row's edges, centred on the previews
+   (13px is the card's border and padding above its preview). Sitting 12px
+   outside keeps them within the narrowest (16px) page gutter. */
+.theme-store-carousel .theme-store-scroll {
+  position: absolute;
+  z-index: 1;
+  top: calc(13px + (var(--theme-store-preview-height) - var(--control-height)) / 2);
+  width: var(--control-height);
+  padding: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: var(--shadow-overlay);
+}
+#theme-store-previous { left: -12px; }
+#theme-store-previous .hd-icon { transform: scaleX(-1); }
+#theme-store-next { right: -12px; }
+/* The page focus ring is drawn for page surfaces; a surface halo keeps it
+   visible over the dark previews, where light palettes' accent is too dim. */
+.theme-store-carousel .theme-store-scroll:focus-visible { box-shadow: 0 0 0 7px var(--surface), var(--shadow-overlay); }
+.theme-store-scroll:disabled { visibility: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .theme-store-grid { scroll-behavior: smooth; }
+}
+.theme-store-card h3,
+.theme-store-card p { margin: 0; }
+.theme-store-card h3 { font-size: var(--font-body); font-weight: var(--weight-bold); }
+.theme-store-card button { margin-top: auto; }
+.theme-store-card button[aria-pressed="true"] { outline: 2px solid var(--accent); }
+.theme-store-preview { width: 100%; height: var(--theme-store-preview-height); object-fit: contain; border-radius: 6px; background: #111; }
+.custom-css-disclosure textarea {
+  margin-top: 6px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--font-small);
+  line-height: 1.6;
+  tab-size: 2;
+}
+.custom-css-disclosure > .field-label {
+  display: block;
+  margin-top: 10px;
+}
+#custom-javascript {
+  display: grid;
+  gap: 4px;
+  margin-top: 18px;
+}
+.custom-css-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.custom-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.custom-button-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.custom-button-summary {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  overflow-wrap: anywhere;
+}
+.custom-button-kind {
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+.custom-button-actions {
+  display: flex;
+  gap: 6px;
+}
+#custom-buttons-status:empty {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- Audio */
+.audio-source-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+.audio-source-heading,
+.audio-source-enabled,
+.audio-source-actions,
+.audio-test-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.audio-source-heading {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.audio-source-enabled {
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+.audio-source-actions {
+  gap: 2px;
+}
+.audio-source-row .field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+.audio-source-row .field > * {
+  grid-column: 1;
+  grid-row: auto;
+  justify-self: stretch;
+}
+.audio-source-row .field-label {
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+}
+.audio-source-row select,
+.audio-url {
+  width: 100%;
+}
+.audio-test-status {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  overflow-wrap: anywhere;
+}
+#audio-sources .group-card {
+  container-type: inline-size;
+}
+/* A wide card puts a source's type, its URL or voice and Test on one line under its heading. */
+@container (min-width: 560px) {
+  .audio-source-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) auto;
+    align-items: end;
+    gap: 8px 10px;
+  }
+  .audio-source-heading { grid-column: 1 / -1; }
+  .audio-source-row > .field { grid-row: 2; grid-column: 1; }
+  .audio-source-row > :is(.audio-url-field, .audio-voice-field) { grid-column: 2; }
+  .audio-test-line { grid-row: 2; grid-column: 3; min-height: var(--control-height); }
+  .audio-test-status { max-width: 24ch; }
+}
+
+/* ---------------------------------------------------------------- Anki */
+.anki-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .anki-template-pills {
-  flex: 1 1 300px;
+  display: contents;
 }
-#anki button.anki-template-pill {
+button.anki-template-pill,
+button.anki-template-new {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 30px;
-  padding: 5px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control);
-  background: transparent;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--control-fill);
   color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-#anki button.anki-template-pill:hover:not(:disabled) {
-  border-color: var(--border-strong);
-  background: var(--surface);
-  color: var(--text);
-}
-#anki button.anki-template-pill[aria-pressed="true"] {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  background: var(--accent-soft);
-  color: var(--text);
+  font-size: var(--font-small);
   font-weight: var(--weight-medium);
+}
+button.anki-template-pill:hover,
+button.anki-template-new:hover {
+  background: var(--control-fill-hover);
+  color: var(--text);
+}
+button.anki-template-pill[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+button.anki-template-new {
+  background: transparent;
 }
 .anki-template-pill-badge {
-  padding: 1px 5px;
-  border-radius: var(--radius-control);
-  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
-  color: var(--accent);
-  font-size: 10px;
-  font-weight: var(--weight-medium);
-}
-#anki button.anki-template-new {
-  border-style: dashed;
-  color: var(--text-dim);
-}
-.anki-template-editor {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto;
-  gap: 10px 16px;
-  align-items: end;
-}
-#anki .anki-template-name {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 0;
-  border: 0;
-  align-items: stretch;
-}
-.anki-template-actions {
-  justify-content: flex-end;
-}
-#anki-template-status {
-  grid-column: 1 / -1;
-}
-.anki-template-navigation {
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  color: var(--text-dim);
-}
-.anki-template-navigation > button {
-  font-size: var(--font-small);
-}
-.anki-template-navigation > button:first-child,
-.anki-template-navigation > button:nth-of-type(2) {
-  width: var(--control-height);
-  padding-inline: 0;
-  font-size: var(--font-large);
-  line-height: 1;
-}
-.anki-template-picker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: min(100%, 260px);
-}
-.anki-template-picker select {
-  min-width: 0;
-}
-.anki-template-position {
-  font-size: var(--font-caption);
-  white-space: nowrap;
-}
-.anki-template-role {
-  padding: 3px 8px;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  padding: 0 6px;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
-  color: var(--text);
-  font-size: var(--font-caption);
-  font-weight: var(--weight-medium);
-  white-space: nowrap;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1.6;
 }
-.anki-template-role[hidden] {
-  display: none;
+.anki-url-field .inline-controls input {
+  width: 230px;
 }
-.anki-destination {
-  display: grid;
-  gap: 10px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
+.anki-name-field .inline-controls input {
+  width: 200px;
 }
-.anki-destination-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+.anki-mapping {
+  container-type: inline-size;
 }
-.anki-duplicate-row {
-  align-items: end;
-}
-.anki-duplicate-controls {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(150px, 1fr));
-  gap: 8px;
-  width: min(100%, 430px);
-}
-.anki-mapping-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px 20px;
-}
-.anki-mapping-header h2 {
-  font-size: var(--font-title);
-}
-.anki-preset-tools {
-  display: flex;
-  align-items: end;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.anki-preset {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-width: 100%;
-}
-.anki-field-filter-bar {
+.table-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px 0;
-  border-block: 1px solid var(--border);
+  gap: 8px 10px;
+  padding-block: 12px;
 }
-.anki-field-filter-bar input {
-  flex: 1 1 220px;
+.table-toolbar input[type="search"] {
+  width: 220px;
+}
+.table-toolbar select {
+  width: auto;
+}
+.table-toolbar-spacer {
+  flex: 1;
 }
 #anki-field-count {
-  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .anki-mapping-columns,
 .anki-template-row {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr) 150px;
-  gap: 16px;
+  grid-template-columns: 190px minmax(0, 1fr) 140px;
   align-items: center;
+  gap: 16px;
 }
-.anki-mapping-columns {
-  padding: 8px 0;
+.group-card > .anki-mapping-columns {
+  padding-block: 8px;
   color: var(--text-dim);
   font-size: var(--font-caption);
   font-weight: var(--weight-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
-.anki-template-row {
-  min-width: 0;
-  padding: var(--row-padding) 0;
+.group-card > div > .anki-template-row {
+  padding-block: 10px;
 }
-.anki-template-row + .anki-template-row {
-  border-top: 1px solid var(--border);
+.anki-template-row.is-unmapped .anki-template-heading .field-label {
+  color: var(--text-dim);
+  font-weight: var(--weight-body);
 }
 .anki-template-heading {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr);
   align-items: center;
-  gap: 4px 8px;
+  gap: 4px 6px;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 .anki-template-heading > button {
   grid-column: 1 / -1;
   justify-self: start;
-}
-.anki-template-row.is-unmapped .anki-template-heading .field-label {
-  color: var(--text-dim);
-  font-weight: var(--weight-body);
 }
 .anki-field-index {
   color: var(--text-dim);
@@ -1980,33 +2276,37 @@ textarea {
   position: relative;
 }
 .anki-marker-combobox textarea {
-  resize: vertical;
-  padding-right: 48px;
+  display: block;
+  min-height: var(--control-height);
+  padding-top: 6px;
+  padding-right: 40px;
+  padding-bottom: 6px;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: var(--font-small);
-  line-height: 1.6;
+  line-height: 1.55;
+  resize: vertical;
 }
 .anki-marker-combobox textarea[aria-invalid="true"] {
   border-color: var(--error);
 }
 .anki-marker-combobox-toggle {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: var(--control-height);
-  height: var(--control-height);
+  top: 3px;
+  right: 3px;
+  width: 28px;
+  height: 28px;
   padding: 0;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-control);
-  background: var(--surface);
-  color: var(--text);
-  font-size: var(--font-large);
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: var(--font-body);
   line-height: 1;
 }
 .anki-marker-combobox-toggle:hover,
 .anki-marker-combobox-toggle[aria-expanded="true"] {
-  border-color: var(--accent);
-  background: var(--surface-sunken);
+  background: var(--control-fill-hover);
+  color: var(--text);
 }
 .anki-marker-listbox {
   position: absolute;
@@ -2016,7 +2316,7 @@ textarea {
   left: 0;
   max-height: min(320px, 50vh);
   overflow-y: auto;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--control-border);
   border-radius: var(--radius-control);
   background: var(--surface);
   box-shadow: var(--shadow-overlay);
@@ -2028,7 +2328,7 @@ textarea {
   cursor: pointer;
 }
 .anki-marker-option + .anki-marker-option {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--hairline);
 }
 .anki-marker-option code {
   width: fit-content;
@@ -2050,17 +2350,9 @@ textarea {
   color: var(--text-dim);
   font-size: var(--font-caption);
 }
-.anki-marker-combobox-status {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 .anki-template-error {
   display: block;
-  margin-top: 6px;
+  margin-top: 4px;
   white-space: pre-line;
 }
 .anki-template-error:empty {
@@ -2068,8 +2360,8 @@ textarea {
 }
 .anki-template-mode {
   display: flex;
-  align-items: stretch;
   flex-direction: column;
+  align-items: stretch;
   gap: 4px;
   min-width: 0;
   margin: 0;
@@ -2082,148 +2374,327 @@ textarea {
 .anki-template-mode select {
   width: 100%;
 }
-.anki-marker-reference {
-  margin: 0;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
 .anki-audio-status {
   overflow-wrap: anywhere;
 }
+.anki-marker-reference > summary {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+@container (max-width: 600px) {
+  .group-card > .anki-mapping-columns { display: none; }
+  .anki-template-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .anki-template-mode { width: min(100%, 240px); }
+  .anki-template-mode > span { display: block; }
+}
 
-@media (max-width: 720px) {
-  .anki-setting-row {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  /* Stacked: a row-direction basis would become a height. */
-  .anki-setting-col {
-    flex-basis: auto;
-  }
-  .anki-connection-actions,
-  .anki-setup-row > button {
-    align-self: flex-start;
-  }
-  .anki-template-editor,
-  .anki-duplicate-controls,
-  .anki-template-row {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .anki-template-actions {
-    justify-content: flex-start;
-  }
-  .anki-mapping-columns {
-    display: none;
-  }
-  .anki-template-row {
-    gap: 8px;
-  }
-  .anki-template-mode {
-    width: min(100%, 240px);
-  }
-  .anki-template-mode > span {
-    display: block;
-  }
-}
-.field {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-/* List rows (audio sources, keybinds) lay their own fields out. */
-.lookup-group .field:not(li *) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, min(50%, 400px));
-  grid-template-rows: auto auto;
-  gap: 3px 24px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
-  align-items: center;
-}
-.lookup-group .field:not(li *) > .field-label {
-  grid-column: 1;
-  grid-row: 1;
-}
-.lookup-group .field:not(li *) > .field-hint {
-  grid-column: 1;
-  grid-row: 2;
-}
-.lookup-group .field:not(li *) > :not(.field-label, .field-hint) {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  justify-self: end;
-}
+/* ---------------------------------------------------------------- Keybinds */
 /*
- * In a narrow card (a phone, or Design beside its preview) a chooser or text
- * field goes under its label at full width, with its hint below it; a number
- * stays beside its label.
+ * Every keybind is one line, and the lines share one set of columns: the list
+ * is the grid and each row borrows its tracks, so Keys, Action and the rest
+ * line up down the list.
  */
-@container (max-width: 560px) {
-  .lookup-group .field:not(li *) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: 16px;
+#keybind-settings .group-card {
+  container-type: inline-size;
+}
+.keybind-list {
+  display: grid;
+  grid-template-columns: 36px 150px minmax(150px, 1fr) 130px auto auto;
+  column-gap: 10px;
+}
+.keybind-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  row-gap: 8px;
+}
+.group-card > ol > li.keybind-row {
+  padding-block: 10px;
+}
+.keybind-heading,
+.keybind-fields {
+  display: contents;
+}
+.keybind-enabled {
+  display: flex;
+  grid-row: 1;
+  grid-column: 1;
+}
+.keybind-fields > :nth-child(1) { grid-row: 1; grid-column: 2; }
+.keybind-fields > :nth-child(2) { grid-row: 1; grid-column: 3; }
+.keybind-count-field,
+.keybind-source-field,
+.keybind-option-field { grid-row: 1; grid-column: 4; }
+.keybind-scopes { grid-row: 1; grid-column: 5; }
+.keybind-buttons { grid-row: 1; grid-column: 6; }
+.keybind-row .field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.keybind-row .field > :is(input, select) {
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+}
+/* The count is a multiplier, so it reads "× 3". */
+.keybind-count-field::before {
+  content: "×";
+  color: var(--text-dim);
+}
+.keybind-count {
+  max-width: 72px;
+  text-align: center;
+}
+.keybind-input {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
+  text-align: center;
+  cursor: pointer;
+}
+.keybind-scopes {
+  display: flex;
+  gap: 4px;
+}
+.keybind-scope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: var(--radius-pill);
+  background: var(--control-fill);
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.keybind-scope input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.keybind-scope:has(input:checked) {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.keybind-scope:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.keybind-scope:has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+.keybind-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0;
+}
+.keybind-buttons button.icon-only {
+  width: 28px;
+  min-width: 28px;
+  min-height: 28px;
+}
+.keybind-buttons button.icon-only .hd-icon {
+  width: 16px;
+  height: 16px;
+}
+@media (hover: hover) {
+  .keybind-buttons {
+    opacity: 0;
+    transition: opacity 120ms ease;
   }
-  .lookup-group .field:not(li *):has(select, textarea, input:is([type="text"], [type="url"], [type="password"], [type="search"])) {
+  .keybind-row:hover .keybind-buttons,
+  .keybind-row:focus-within .keybind-buttons {
+    opacity: 1;
+  }
+}
+/* A narrow card: Keys and Action on the first line, the rest under them. */
+@container (max-width: 640px) {
+  .keybind-list {
+    grid-template-columns: 36px minmax(0, 1fr) minmax(0, 1.3fr) auto;
+  }
+  .keybind-count-field,
+  .keybind-source-field,
+  .keybind-option-field { grid-row: 2; grid-column: 2; }
+  .keybind-scopes { grid-row: 2; grid-column: 3 / -1; }
+  .keybind-buttons { grid-row: 1; grid-column: 4; }
+}
+.browser-shortcut-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.group-card > ul > li:is(.browser-shortcut-list li) {
+  padding-block: 12px;
+}
+.browser-shortcut-list kbd {
+  padding: 2px 8px;
+  border: 1px solid var(--control-border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--control-bg);
+  font: inherit;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
+}
+
+/* ---------------------------------------------------------------- Sharing, backup, advanced */
+.sharing-addresses {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sharing-addresses li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.sharing-addresses code {
+  padding: 4px 8px;
+}
+#sharing-client-remote .inline-controls input {
+  width: 200px;
+}
+.automatic-backup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+.automatic-backup-row > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.automatic-backup-age {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.automatic-backup-detail,
+.automatic-backup-created {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+}
+.automatic-backup-restore {
+  flex: none;
+}
+.backup-status {
+  display: block;
+}
+.backup-status:empty {
+  display: none;
+}
+.backup-preview {
+  padding: 18px var(--card-inset);
+  border-radius: var(--radius-surface);
+  background: var(--card);
+}
+.backup-preview h2 {
+  margin: 0 0 8px;
+}
+.backup-preview p {
+  margin: 6px 0;
+  color: var(--text-dim);
+}
+.backup-preview .backup-file-name {
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.backup-preview details {
+  margin-top: 12px;
+}
+.backup-preview li {
+  overflow-wrap: anywhere;
+}
+.backup-confirm {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  margin: 18px 0 14px;
+}
+.backup-confirm input {
+  flex: none;
+  margin-top: 3px;
+}
+.backup-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.memory-stats {
+  gap: 2px;
+}
+.memory-stats .section-note {
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  font-variant-numeric: tabular-nums;
+}
+.experimental-list li > .lookup-enable {
+  padding: 0;
+}
+.experimental-list li > .field-hint {
+  margin-top: 2px;
+  padding-right: 60px;
+}
+
+/* ---------------------------------------------------------------- Narrow cards */
+/* A narrow card (a phone, or Design beside its preview): a chooser or text
+   field goes under its title at full width; a number or switch stays beside it. */
+@container (max-width: 520px) {
+  .field:has(> :is(select, textarea, .inline-controls, .activation-input-controls, .frequency-order-controls,
+    .scan-delay-controls, input:is([type="text"], [type="url"], [type="password"], [type="search"]))) {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 6px;
   }
-  .lookup-group .field:not(li *):has(select, textarea, input:is([type="text"], [type="url"], [type="password"], [type="search"]))
-    > :not(.field-label, .field-hint) {
+  .field:has(> :is(select, textarea, .inline-controls, .activation-input-controls, .frequency-order-controls,
+    .scan-delay-controls, input:is([type="text"], [type="url"], [type="password"], [type="search"])))
+    > :not(.field-label, .field-hint, .field-text) {
     grid-column: 1;
     grid-row: 2;
     justify-self: stretch;
+    width: 100%;
   }
-  .lookup-group .field:not(li *):has(select, textarea, input:is([type="text"], [type="url"], [type="password"], [type="search"]))
+  .field:has(> :is(select, textarea, .inline-controls, .activation-input-controls, .frequency-order-controls,
+    .scan-delay-controls, input:is([type="text"], [type="url"], [type="password"], [type="search"])))
     > .field-hint {
     grid-row: 3;
   }
-}
-.lookup-group input[type="number"] {
-  width: 8ch;
-}
-#opt-blur-frequency-threshold { width: 12ch; }
-#opt-automatic-backup-days { width: 8ch; }
-#sharing-host-port { width: 12ch; }
-#definition-blur-count-paused label {
-  cursor: pointer;
-  text-decoration: underline;
-}
-.field-hint,
-.suffix {
-  color: var(--text-dim);
-  font-size: var(--font-caption);
-}
-.input-suffix {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.input-suffix input {
-  flex: 0 0 auto;
-}
-.frequency-order-controls,
-.activation-input-controls,
-.scan-delay-controls {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.frequency-order-controls select,
-.activation-input-controls select,
-.scan-delay-controls select {
-  min-width: 0;
-  flex: 1 1 180px;
-}
-.frequency-order-controls button,
-.activation-input-controls button {
-  white-space: nowrap;
-}
-[hidden] {
-  display: none !important;
+  .inline-controls > :is(input, select),
+  .activation-input-controls select,
+  .frequency-order-controls select,
+  .scan-delay-controls select {
+    flex: 1 1 0;
+    width: auto;
+  }
+  .group-card > .field-hint,
 }
 
+/* ---------------------------------------------------------------- Narrow windows */
+@media (max-width: 1000px) {
+  .design-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .design-sample {
+    position: static;
+    grid-row: 1;
+  }
+}
 @media (max-width: 900px) {
   .settings-shell {
     display: block;
@@ -2234,18 +2705,30 @@ textarea {
     grid-template-columns: 1fr minmax(180px, 300px);
     gap: 12px 24px;
     align-items: center;
+    min-height: 0;
     max-height: none;
     overflow: visible;
-    padding: 20px 24px;
+    padding: 16px 20px;
   }
   .settings-sidebar .brand {
     padding: 0;
+  }
+  .settings-search {
+    margin-top: 0;
   }
   .settings-section-picker {
     display: grid;
     grid-column: 2;
     grid-row: 1;
     gap: 5px;
+  }
+  .settings-section-picker .field-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .settings-nav {
     display: none;
@@ -2261,47 +2744,48 @@ textarea {
     grid-column: 1;
     margin: 0;
   }
+  .privacy-link {
+    display: none;
+  }
   .engine-status {
     grid-column: 1 / -1;
+    margin: 0;
     padding-top: 10px;
   }
   .engine-status-failures {
     grid-column: 1 / -1;
-    margin-top: 0;
+    margin: 0;
   }
   .page {
-    min-height: calc(100vh - 148px);
+    min-height: calc(100vh - 120px);
+    margin: 0 8px 8px;
     padding: 28px 24px 60px;
-    border-inline: 0;
-    border-top: 1px solid var(--border);
   }
   .dict-details {
     grid-column: 1 / -1;
   }
 }
-
+/* A phone: a control goes under its title at full width; a number or switch stays beside it. */
 @media (max-width: 620px) {
-  .lookup-group {
-    container-type: inline-size;
-  }
-  /* On a phone a switch's description may run under the switch's column. */
-  .lookup-enable + .field-hint {
-    padding-right: 0;
-  }
-  /* A long title and "Unsaved changes…" do not fit one row on a phone. */
   .card > .options-feedback-slot:has(#options-status.is-quiet) {
     position: static;
   }
   .settings-sidebar {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 12px;
-    padding: 16px;
+    padding: 14px 12px;
   }
   .page {
-    padding: 24px 16px 40px;
+    margin: 0;
+    padding: 22px 14px 40px;
+    border-inline: 0;
+    border-radius: var(--radius-dialog) var(--radius-dialog) 0 0;
   }
-  .design-sample {
-    padding: 14px;
+  :root {
+    --card-inset: 14px;
+  }
+  .group-card > div:not([class]) > .field-hint {
+    padding-right: 0;
   }
   .library-empty {
     padding: 32px 16px;
@@ -2313,16 +2797,9 @@ textarea {
   .empty-state-actions .primary-button {
     width: auto;
   }
-  .recommended-dictionary-list,
-  .dict-group-head,
-  .dict-group-member,
-  .dict-group-create {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .dict-row {
-    grid-template-columns: 16px minmax(24px, max-content) minmax(0, 1fr);
-    gap: 10px;
-    padding: 14px 12px;
+    grid-template-columns: 16px auto minmax(0, 1fr);
+    gap: 8px 10px;
   }
   .dict-quick-actions {
     grid-column: 3;
@@ -2331,255 +2808,1130 @@ textarea {
   .dict-details {
     grid-column: 1 / -1;
   }
-  .dict-footer {
-    padding: 12px;
-  }
   .dict-actions {
     margin-left: 0;
   }
   .dict-alias {
     max-width: none;
   }
+  .dict-group-head,
+  .dict-group-member {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .dict-group-actions,
   .dict-group-member-actions {
     justify-content: flex-end;
   }
   .dict-group-add-row {
-    align-items: stretch;
     flex-direction: column;
+    align-items: stretch;
   }
   .automatic-backup-row {
-    align-items: stretch;
     flex-direction: column;
+    align-items: stretch;
   }
   .automatic-backup-restore {
     align-self: start;
   }
+  .design-sample {
+    padding: 12px;
+  }
+}
+.group-card > .setting-block,
+.group-card > p {
+  max-width: none;
+}
+/* Navigation moves focus to the section title for screen readers; it is not a control. */
+h1[tabindex="-1"]:focus {
+  outline: none;
 }
 
-.audio-source-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* ---------------------------------------------------------------- Dropdown menus */
+/* select-menu.js draws an open dropdown's list here; the <select> stays the control. */
+select[aria-expanded="true"] {
+  background-color: var(--control-bg-hover);
 }
-.audio-source-row {
+.select-menu {
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(340px, calc(100vw - 16px));
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Transparent, so Windows contrast themes still draw the menu's edge. */
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: light-dark(var(--surface), color-mix(in srgb, var(--text) 9%, var(--surface)));
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--hairline), 0 16px 40px rgb(0 0 0 / 28%);
+  font-size: var(--font-body);
+  outline: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .select-menu {
+    animation: select-menu-in 110ms ease-out;
+  }
+}
+@keyframes select-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+.select-menu-group + .select-menu-group,
+.select-menu-option + .select-menu-group,
+.select-menu-group + .select-menu-option {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--hairline);
+}
+.select-menu-heading {
+  padding: 6px 10px 4px 32px;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+}
+.select-menu-option {
   display: grid;
-  gap: 12px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
+  grid-template-columns: 16px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+  padding: 7px 12px 7px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
 }
-.audio-source-heading,
-.audio-source-enabled,
-.audio-source-actions,
-.audio-test-line {
+.select-menu-option[data-active] {
+  background: var(--control-fill-hover);
+}
+.select-menu-option[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.select-menu-check {
+  grid-row: 1 / span 2;
+  width: 16px;
+  height: 16px;
+}
+.select-menu-option[aria-selected="true"] .select-menu-check {
+  background: var(--accent);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5 6.5 11.5 12.5 4.5' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.select-menu-label {
+  grid-column: 2;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.select-menu-option[aria-selected="true"] .select-menu-label {
+  font-weight: var(--weight-medium);
+}
+.select-menu-hint {
+  grid-column: 2;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+@media (forced-colors: active) {
+  .select-menu-option[data-active] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .select-menu-option[aria-selected="true"] .select-menu-check {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}
+
+/* ---------------------------------------------------------------- Quiet row actions */
+/* Reordering and editing controls in a list appear with the row under the
+   pointer or keyboard focus; a touch screen always shows them. */
+@media (hover: hover) {
+  :is(.custom-button-actions, .dict-order-actions, .dict-row-select) {
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  :is(.custom-button-row, .dict-row):is(:hover, :focus-within) :is(.custom-button-actions, .dict-order-actions, .dict-row-select),
+  .dict-list:has(.dict-selected:checked) .dict-row-select {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- Dictionary rows */
+/* One line of facts under the title: its source name, then its counts. */
+.dict-list > li.dict-row {
+  position: relative;
+  padding-right: 38px;
+  align-items: center;
+}
+.dict-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 6px;
+  row-gap: 1px;
+}
+.dict-heading,
+.dict-pinned,
+.dict-update-status {
+  flex-basis: 100%;
+}
+.dict-update-status:empty {
+  display: none;
+}
+.dict-badges {
+  display: inline-flex;
+  gap: 6px;
+}
+.dict-canonical:not([hidden]) + .dict-badges::before,
+.dict-badge:not(.is-empty) ~ .dict-badge:not(.is-empty)::before {
+  content: "·";
+  margin-right: 6px;
+  color: var(--text-dim);
+}
+.dict-canonical:not([hidden]) + .dict-badges::before {
+  margin-right: 0;
+}
+.dict-badge {
+  white-space: nowrap;
+}
+.dict-row-select,
+.dict-order,
+.toggle {
+  align-self: center;
+  padding-top: 0;
+}
+/* Details opens from a chevron at the end of the row. */
+/* No gap: the hidden "Details" text is still a flex item and would push the
+   chevron off centre. */
+.dict-details > .dict-details-toggle {
+  gap: 0;
+  position: absolute;
+  top: 19px;
+  right: 0;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--radius-control);
+  font-size: 0;
+}
+.dict-details > .dict-details-toggle:hover {
+  background: var(--control-fill-hover);
+}
+/* The row's chevron points down while closed and turns over when open, at
+   the size of the move arrows beside it. */
+.dict-details > .dict-details-toggle::before {
+  width: 18px;
+  height: 18px;
+  transform: none;
+}
+.dict-details[open] > .dict-details-toggle::before {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------- Custom buttons */
+.custom-button-row {
+  flex-wrap: nowrap;
+}
+.custom-button-text {
+  flex: 1 1 auto;
+}
+.custom-button-text strong {
+  font-weight: var(--weight-medium);
+}
+.custom-button-summary {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.custom-button-summary code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: var(--font-caption);
+}
+.custom-button-kind {
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  font-size: var(--font-caption);
+}
+.custom-button-actions {
+  flex: none;
+  gap: 0;
+}
+.custom-button-editor > summary {
+  color: var(--accent);
+}
+.custom-button-editor .custom-button-form {
+  display: block;
+}
+.custom-button-editor .row-actions {
+  margin-left: 21px;
+  padding: 10px 0 2px;
+  border-top: 1px solid var(--hairline);
+}
+
+/* ---------------------------------------------------------------- Anki field rows */
+/* A marker field is one line until it holds more, and says nothing while empty. */
+.anki-marker-combobox textarea {
+  field-sizing: content;
+  min-height: var(--control-height);
+  max-height: 180px;
+  resize: none;
+}
+.anki-marker-combobox textarea:not(:focus)::placeholder {
+  color: transparent;
+}
+/* The On overwrite column exists only while duplicates overwrite. */
+.anki-mapping:not(:has(.anki-template-mode:not([hidden]))) :is(.anki-mapping-columns, .anki-template-row) {
+  grid-template-columns: 190px minmax(0, 1fr);
+}
+.anki-mapping:not(:has(.anki-template-mode:not([hidden]))) .anki-mapping-columns > :last-child {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- Groups */
+/* A new group is one line: its name, then Create. */
+.dict-group-create > label .field-label,
+.dict-group-name-field .cell-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dict-group-create {
+  align-items: center;
+}
+/* A group's name is its heading, edited in place. */
+.dict-group-head {
+  align-items: center;
+}
+input.dict-group-name {
+  padding-inline: 8px;
+  margin-left: -8px;
+  background-color: transparent;
+  font-size: var(--font-title);
+  font-weight: var(--weight-bold);
+}
+input.dict-group-name:is(:hover, :focus-visible) {
+  background-color: var(--control-bg);
+}
+.dict-group-member-actions,
+.audio-source-actions {
+  gap: 0;
+}
+@media (hover: hover) {
+  :is(.dict-group-member-actions, .audio-source-actions) {
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  :is(.dict-group-member, .audio-source-row):is(:hover, :focus-within) :is(.dict-group-member-actions, .audio-source-actions) {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- Drag to reorder */
+/* list-reorder.js: a row is picked up from anywhere on it; it lifts and
+   follows the pointer while the rows around it slide out of its way. */
+:is(#dict-list, #dict-group-list, .dict-group-members, #audio-source-list, #custom-button-list) > li {
+  cursor: grab;
+}
+:is(#dict-list, #dict-group-list, .dict-group-members, #audio-source-list, #custom-button-list) > li
+  :is(input, select, textarea, button, a, summary, label, .dict-footer) {
+  cursor: auto;
+}
+:is(#dict-list, #dict-group-list, .dict-group-members, #audio-source-list, #custom-button-list) > li
+  :is(button, a, summary, select, label) {
+  cursor: pointer;
+}
+.is-reordering,
+.is-reordering * {
+  cursor: grabbing !important;
+  user-select: none;
+}
+.is-reorder-lifted {
+  position: relative;
+  z-index: 5;
+  border-top-color: transparent !important;
+}
+.is-reorder-lifted::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -1px -10px 0;
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--hairline), 0 16px 32px -10px rgb(0 0 0 / 45%);
+}
+#dict-group-list > .is-reorder-lifted::before {
+  inset: 0;
+  border-radius: var(--radius-surface);
+}
+.is-reorder-lifted + li {
+  border-top-color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .is-reorder-shifting {
+    transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .is-reorder-lifted::before {
+    animation: reorder-lift 140ms ease-out;
+  }
+  @keyframes reorder-lift {
+    from {
+      box-shadow: 0 0 0 1px var(--hairline);
+    }
+  }
+}
+.dict-drag {
+  color: var(--text-dim);
+}
+
+/* ---------------------------------------------------------------- Checkboxes */
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input) {
+  appearance: none;
+  position: relative;
+  display: inline-grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1.5px solid var(--control-border-hover);
+  border-radius: 5px;
+  background: var(--control-bg);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+:root:not([data-hoshidicts-theme="high-contrast"]) input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input) {
+  border-color: color-mix(in srgb, var(--text) 30%, var(--card));
+}
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input):hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--text) 50%, var(--card));
+}
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input):is(:checked, :indeterminate) {
+  border-color: var(--accent-fill);
+  background: var(--accent-fill);
+}
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input)::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: var(--accent-contrast);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2 5 8.7 9.5 3.5' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: scale(0);
+  transition: transform 120ms ease;
+}
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input):checked::after {
+  transform: scale(1);
+}
+input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input):indeterminate::after {
+  height: 2px;
+  border-radius: 1px;
+  mask: none;
+  transform: scale(0.75, 1);
+}
+input[type="checkbox"]:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+@media (forced-colors: active) {
+  input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input) {
+    appearance: auto;
+  }
+  input[type="checkbox"]:not(.lookup-enable > input, .dict-enabled, .audio-enabled, .keybind-enabled-input, .keybind-scope input)::after {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- Dictionary details */
+/* Details continue the row inside the same card, under its title and out to
+   the card's edge: one row per setting with its control at the end, as
+   everywhere else, then a last line with the package's facts beside its
+   actions. */
+.dict-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0;
+  margin: 12px -38px 0 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+.dict-footer > .dict-facts,
+.dict-footer > .dict-actions {
+  grid-row: 99;
+  align-self: stretch;
+  border-top: 1px solid var(--hairline);
+}
+.dict-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 0;
+  grid-column: 1;
+  margin: 0;
+  padding: 10px 0;
+  color: var(--text-dim);
+  font-size: var(--font-caption);
+}
+.dict-fact {
+  display: flex;
+}
+.dict-fact[hidden] {
+  display: none;
+}
+.dict-fact:not(:first-child)::before {
+  content: "·";
+  padding-inline: 6px;
+}
+.dict-fact > dt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.dict-fact > dd {
+  margin: 0;
+}
+.dict-detail-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  max-width: none;
+  min-height: 48px;
+  padding: 6px 0;
+  border-top: 1px solid var(--hairline);
+}
+.dict-detail-row > .cell-label {
+  color: var(--text);
+  font-size: var(--font-small);
+  font-weight: var(--weight-body);
+}
+.dict-detail-row > :last-child {
+  justify-self: end;
+}
+.dict-detail-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
 }
-.audio-source-heading { justify-content: space-between; flex-wrap: wrap; }
-.audio-source-enabled { font-weight: var(--weight-medium); }
-.audio-source-actions { gap: 6px; }
-.audio-source-row .field { display: grid; gap: 6px; }
-.audio-source-row .field[hidden] { display: none; }
-.audio-source-row select { width: 100%; }
-/* A wide card puts a source's type, its URL or voice and Test on one line under its heading. */
-@container (min-width: 640px) {
-  .audio-source-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) auto;
-    align-items: end;
-    gap: 10px 12px;
-  }
-  .audio-source-heading { grid-column: 1 / -1; }
-  .audio-source-row > .field { grid-row: 2; grid-column: 1; }
-  .audio-source-row > :is(.audio-url-field, .audio-voice-field) { grid-column: 2; }
-  .audio-test-line { grid-row: 2; grid-column: 3; min-height: var(--control-height); align-items: center; }
-  .audio-test-status { max-width: 28ch; }
+.dict-footer .dict-display-name {
+  width: 240px;
+  max-width: 100%;
 }
-.audio-url { width: 100%; }
-.audio-test-status { color: var(--text-dim); overflow-wrap: anywhere; }
-.audio-test-line { align-items: baseline; }
-#audio > p { margin: 0; }
-#audio-source-add { align-self: flex-start; }
-
-.custom-button-list {
+.dict-footer .dict-update-schedule {
+  width: auto;
+}
+.dict-footer .dict-position-input {
+  width: 64px;
+}
+.dict-footer .dict-actions {
+  display: flex;
+  grid-column: 2;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
   margin: 0;
-  padding: 0;
-  list-style: none;
+  padding: 8px 0 2px 16px;
 }
-.custom-button-row {
+.dict-footer .dict-remove {
+  margin-left: 0;
+}
+
+/* ---------------------------------------------------------------- Dialogs */
+.settings-dialog {
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  /* Transparent, so Windows contrast themes still draw the dialog's edge. */
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background: light-dark(var(--surface), color-mix(in srgb, var(--text) 6%, var(--surface)));
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--hairline), 0 24px 60px rgb(0 0 0 / 40%);
+}
+.settings-dialog::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .settings-dialog[open] {
+    animation: settings-dialog-in 160ms ease-out;
+  }
+}
+@keyframes settings-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+.settings-dialog form {
+  display: grid;
+  gap: 16px;
+  padding: 22px 22px 18px;
+}
+.settings-dialog h2 {
+  font-size: var(--font-large);
+}
+.settings-dialog .field {
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 6px;
+}
+.settings-dialog .field > * {
+  grid-column: 1;
+  grid-row: auto;
+  justify-self: stretch;
+}
+.settings-dialog .field > :is(input, select) {
+  field-sizing: fixed;
+  width: 100%;
+  max-width: none;
+}
+.settings-dialog :is(input, select) {
+  background-color: color-mix(in srgb, var(--text) 7%, var(--surface));
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------------- Controls on inner surfaces */
+/* A dialog or a Details panel is its own surface; its fields and buttons are
+   tinted from it, so they stay visible on it. */
+.settings-dialog {
+  --layer: light-dark(var(--surface), color-mix(in srgb, var(--text) 6%, var(--surface)));
+}
+.settings-dialog {
+  --control-bg: color-mix(in srgb, var(--text) 8%, var(--layer));
+  --control-bg-hover: color-mix(in srgb, var(--text) 12%, var(--layer));
+  --control-fill: color-mix(in srgb, var(--text) 10%, var(--layer));
+  --control-fill-hover: color-mix(in srgb, var(--text) 15%, var(--layer));
+  --hairline: color-mix(in srgb, var(--text) 11%, var(--layer));
+}
+.settings-dialog :is(input, select) {
+  background-color: var(--control-bg);
+}
+
+/* ---------------------------------------------------------------- Overlay scrollbars */
+:is(.select-menu, .anki-marker-listbox, .theme-gallery-body) {
+  scrollbar-width: none;
+}
+.theme-gallery-body {
+  position: relative;
+}
+.overlay-scrollbar {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  width: 4px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text) 35%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+.is-scrolling > .overlay-scrollbar {
+  opacity: 1;
+  transition-duration: 60ms;
+}
+
+/* ---------------------------------------------------------------- Anki marker menu */
+/* The marker list is drawn like every other open menu. */
+.anki-marker-listbox {
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: light-dark(var(--surface), color-mix(in srgb, var(--text) 9%, var(--surface)));
+  box-shadow: 0 0 0 1px var(--hairline), 0 16px 40px rgb(0 0 0 / 28%);
+}
+.anki-marker-option {
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+.anki-marker-option + .anki-marker-option {
+  border-top: 0;
+}
+.anki-marker-option:hover {
+  background: var(--control-fill-hover);
+}
+.anki-marker-option[aria-selected="true"] {
+  outline: 0;
+  background: var(--control-fill-hover);
+}
+.anki-marker-option code {
+  font-size: var(--font-small);
+}
+.anki-marker-combobox-toggle {
+  font-size: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' fill='none' stroke='%238e919a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+.anki-marker-combobox-toggle:hover,
+.anki-marker-combobox-toggle[aria-expanded="true"] {
+  background-color: var(--control-fill-hover);
+}
+@media (forced-colors: active) {
+  .anki-marker-option[aria-selected="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
+
+/* ---------------------------------------------------------------- Audio sources */
+/* A source is one line, like every other list row: on, kind, address or
+   voice, Test, then its move and remove controls. */
+.audio-source-row,
+.group-card > ol > li.audio-source-row {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 0.9fr) minmax(0, 1.4fr) auto auto;
+  align-items: center;
+  gap: 6px 10px;
+  padding-block: 10px;
+}
+.audio-source-heading,
+.audio-test-line {
+  display: contents;
+}
+/* The grip gives the pointer somewhere to take hold: the rest of the line is
+   controls. */
+.audio-drag { grid-row: 1; grid-column: 1; display: inline-flex; margin-inline: -4px -6px; padding: 4px; color: var(--text-dim); cursor: grab; }
+.audio-drag .hd-icon { width: 16px; height: 16px; }
+.audio-source-enabled { grid-row: 1; grid-column: 2; }
+.audio-source-row > .field { grid-row: 1; grid-column: 3; }
+.audio-source-row > :is(.audio-url-field, .audio-voice-field) { grid-row: 1; grid-column: 4; }
+.audio-test { grid-row: 1; grid-column: 5; }
+.audio-source-actions { grid-row: 1; grid-column: 6; }
+.audio-test-status { grid-row: 2; grid-column: 3 / -1; }
+.audio-test-status:empty { display: none; }
+.audio-number,
+.audio-source-row .field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.audio-source-row .field {
+  display: block;
+}
+.audio-source-row select {
+  field-sizing: fixed;
+  width: 100%;
+  max-width: none;
+}
+@container (max-width: 560px) {
+  .audio-source-row,
+  .group-card > ol > li.audio-source-row {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+  }
+  .audio-source-row > .field { grid-column: 3; }
+  .audio-source-actions { grid-row: 1; grid-column: 4; }
+  .audio-source-row > :is(.audio-url-field, .audio-voice-field) { grid-row: 2; grid-column: 3; }
+  .audio-test { grid-row: 2; grid-column: 4; }
+  .audio-test-status { grid-row: 3; }
+}
+
+/* ---------------------------------------------------------------- Theme gallery */
+.theme-gallery {
+  width: min(760px, calc(100vw - 32px));
+  max-height: min(720px, calc(100vh - 32px));
+  overflow: hidden;
+}
+.theme-gallery[open] {
+  display: flex;
+  flex-direction: column;
+}
+.theme-gallery-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
+  padding: 16px 16px 8px 22px;
 }
-.custom-button-text { display: grid; gap: 3px; min-width: 0; }
-.custom-button-summary {
+.theme-gallery-body {
+  display: grid;
+  gap: 22px;
+  min-height: 0;
+  padding: 6px 22px 22px;
+  overflow-y: auto;
+}
+.theme-gallery-palettes {
+  display: grid;
+  gap: 22px;
+}
+.theme-gallery-section h3,
+.theme-gallery #theme-store > legend {
+  margin: 0 0 10px;
+  padding: 0;
   color: var(--text-dim);
-  font-size: var(--font-caption);
-  overflow-wrap: anywhere;
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
 }
-.custom-button-kind {
+.theme-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.theme-tile {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font-size: var(--font-small);
+  text-align: left;
+  cursor: pointer;
+}
+.theme-tile-preview {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--hairline);
+  transition: box-shadow 120ms ease, transform 120ms ease;
+}
+.theme-tile-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--text);
+}
+.theme-tile:hover .theme-tile-preview {
+  box-shadow: 0 0 0 1px var(--control-border-hover), 0 0 0 4px var(--control-fill);
+}
+.theme-tile[aria-pressed="true"] .theme-tile-preview {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.theme-tile[aria-pressed="true"] .theme-tile-name {
   color: var(--accent);
   font-weight: var(--weight-medium);
 }
-.custom-button-actions { display: flex; gap: 6px; }
-.custom-button-form { display: grid; gap: 8px; }
-.custom-button-form input[type="text"] { width: 100%; }
-
-.keybind-list {
-  margin: 0;
+.theme-tile:focus-visible {
+  outline: none;
+}
+.theme-tile:focus-visible .theme-tile-preview {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 5px var(--focus-ring);
+}
+/* The Store's cards sit in the gallery as a grid, not a scrolling row. */
+.theme-gallery #theme-store {
+  gap: 0;
+}
+.theme-gallery .theme-store-carousel .theme-store-scroll {
+  display: none;
+}
+.theme-gallery .theme-store-grid {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  overflow: visible;
   padding: 0;
-  list-style: none;
 }
-.keybind-row {
-  display: grid;
-  gap: 12px;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
+.theme-gallery .theme-store-card {
+  padding: 10px;
+  background: var(--control-bg);
 }
-.keybind-heading,
-.keybind-enabled,
-.keybind-buttons,
-.keybind-scopes,
-.keybind-scope,
-.keybind-list-actions {
+.theme-store-preview {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+}
+.theme-store-preview svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.audio-source-row .field > :is(input, select) {
+  width: 100%;
+}
+/* A configuration problem reads as a short note under the title, not a long pill. */
+.anki-status-pill.is-error {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: var(--weight-body);
 }
-.keybind-heading,
-.keybind-scopes,
-.keybind-list-actions { justify-content: space-between; flex-wrap: wrap; }
-.keybind-scopes { justify-content: flex-start; }
-.keybind-enabled { font-weight: var(--weight-medium); }
-.keybind-buttons { gap: 6px; }
-.keybind-scope { gap: 6px; }
-.keybind-fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 136px), 1fr));
-  gap: 12px;
+.anki-status-pill.is-error::before {
+  display: none;
 }
-.keybind-row .field { display: grid; gap: 6px; }
-.keybind-row .field[hidden],
-.keybind-scope[hidden] { display: none; }
-.keybind-row :is(input[type="text"], input[type="number"], select) { width: 100%; }
-.keybind-list-actions { justify-content: flex-start; }
-.keybind-columns { display: none; }
-/*
- * A wide card shows one row per keybind, as Chrome's and VS Code's shortcut
- * lists do: the rows and the column titles share one grid, so the columns line
- * up whatever the buttons and scopes measure. Keys and Action keep their labels
- * as accessible names; the column titles say them once.
- */
-@container (min-width: 760px) {
-  .keybind-table {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 0.8fr) auto auto;
-    column-gap: 12px;
-  }
-  .keybind-columns,
-  .keybind-list,
-  .keybind-row {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
-    align-items: center;
-  }
-  .keybind-columns {
-    padding: 10px 0 6px;
-    border-top: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: var(--font-caption);
-    font-weight: var(--weight-medium);
-  }
-  .keybind-columns > :nth-child(1) { grid-column: 2; }
-  .keybind-columns > :nth-child(2) { grid-column: 3; }
-  .keybind-columns > :nth-child(3) { grid-column: 5; }
-  .keybind-heading,
-  .keybind-fields { display: contents; }
-  .keybind-row > *,
-  .keybind-heading > *,
-  .keybind-fields > * { grid-row: 1; }
-  .keybind-enabled { grid-column: 1; }
-  .keybind-fields > :nth-child(1) { grid-column: 2; }
-  .keybind-fields > :nth-child(2) { grid-column: 3; }
-  .keybind-fields > :nth-child(n + 3) {
-    grid-column: 4;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 8px;
-  }
-  .keybind-scopes {
-    grid-column: 5;
-    flex-direction: column;
-    align-items: start;
-    gap: 4px;
-  }
-  .keybind-buttons {
-    grid-column: 6;
-    justify-content: end;
-  }
-  .keybind-number,
-  .keybind-fields > :is(:nth-child(1), :nth-child(2)) > .field-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-}
-.browser-shortcut-list {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: var(--row-padding) 0;
-  border-top: 1px solid var(--border);
-  list-style: none;
-}
-.browser-shortcut-list li {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-}
-.browser-shortcut-list kbd { font: inherit; font-weight: var(--weight-medium); }
-
-@media (prefers-reduced-motion: reduce) {
-  .track-fill {
-    width: 100%;
-    animation: none;
-    opacity: 0.5;
-  }
+.anki-status-pill.is-error::first-line {
+  font-weight: var(--weight-bold);
 }
 
-#sharing .field-hint { margin: 0; }
-#sharing-status:empty { display: none; }
-.sharing-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
+/* ---------------------------------------------------------------- Advanced theme tiles */
+/* In the gallery an Advanced theme is a tile like any palette: its preview and
+   name; the whole tile is its Use button, and the current one is outlined. */
+.group-link {
+  display: inline-flex;
+  vertical-align: -3px;
+  margin-left: 4px;
+  color: var(--text-dim);
 }
-#sharing-host-addresses { display: grid; gap: 8px; }
-.sharing-addresses {
-  display: grid;
+.group-link:hover {
+  color: var(--accent);
+}
+.group-link .hd-icon {
+  width: 16px;
+  height: 16px;
+}
+.theme-gallery .theme-store-grid {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.theme-gallery .theme-store-card {
+  position: relative;
   gap: 6px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+/* An Advanced theme keeps its one-line purpose under its name. */
+.theme-gallery .theme-store-benchmark {
+  display: none;
+}
+.theme-gallery .theme-store-card .hint {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--font-caption);
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.theme-gallery .theme-store-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  row-gap: 18px;
+}
+.theme-gallery .theme-store-card h3 {
+  font-size: var(--font-small);
+  font-weight: var(--weight-body);
+}
+.theme-gallery .theme-store-preview {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--hairline);
+  transition: box-shadow 120ms ease;
+}
+.theme-gallery .theme-store-card button {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+.theme-gallery .theme-store-card button[aria-pressed="true"] {
+  outline: none;
+}
+.theme-gallery .theme-store-card:hover .theme-store-preview {
+  box-shadow: 0 0 0 1px var(--control-border-hover), 0 0 0 4px var(--control-fill);
+}
+.theme-gallery .theme-store-card:has(button[aria-pressed="true"]) .theme-store-preview {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.theme-gallery .theme-store-card:has(button[aria-pressed="true"]) h3 {
+  color: var(--accent);
+  font-weight: var(--weight-medium);
+}
+.theme-gallery .theme-store-card:has(button:focus-visible) .theme-store-preview {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 5px var(--focus-ring);
+}
+.theme-gallery .theme-store-card button:focus-visible {
+  outline: none;
+}
+.theme-gallery #theme-store > legend {
+  display: flex;
+  align-items: center;
+}
+/* Every palette already uses the standard layout; it needs no tile of its own. */
+.theme-gallery .theme-store-card[data-theme="default"] {
+  display: none;
+}
+/* The tile is the button: it takes no fill of its own on hover. */
+.theme-gallery .theme-store-card button.ghost,
+.theme-gallery .theme-store-card button.ghost:hover:not(:disabled) {
+  border-color: transparent;
+  background: transparent;
+}
+/* The current section shows its icon filled. */
+.settings-nav a[aria-current="page"] .hd-icon {
+  mask-image: var(--hd-icon-filled, var(--hd-icon));
+}
+/* With no buttons yet, the note and Add button share one row. */
+.custom-button-add-row {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.custom-button-add-row > .field-hint {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   padding: 0;
-  list-style: none;
 }
-.sharing-addresses li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
+.custom-button-add-row > button {
+  flex: none;
 }
-.sharing-addresses code {
-  padding: 4px 8px;
+
+/* ---------------------------------------------------------------- Details */
+/* Counts keep their width as they change; headings and hints wrap without a
+   lone last word. */
+:is(.dict-match-count, .dict-selection-count, .dict-badge, .dict-rank, .dict-facts, input[type="number"]) {
+  font-variant-numeric: tabular-nums;
+}
+:is(h1, h2, legend) {
+  text-wrap: balance;
+}
+.field-hint {
+  text-wrap: pretty;
+}
+/* A button gives a little under the pointer, so a click is felt at once. */
+@media (prefers-reduced-motion: no-preference) {
+  :where(button) {
+    transition: scale 120ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+:where(button):active:not(:disabled) {
+  scale: 0.97;
+}
+
+/* ---------------------------------------------------------------- Ambient glow */
+/* A soft wash of the palette's accent from the page's top corner, beside the
+   rail: it lifts the page without touching any card on it. Contrast themes
+   draw a plain page. */
+.page {
+  background:
+    radial-gradient(ellipse 70% 360px at 0% 0%,
+      light-dark(oklch(from var(--accent-tone, var(--accent-fill)) l c h / 0.1), oklch(from var(--accent-tone, var(--accent-fill)) 0.6 calc(c * 1.3) h / 0.2)),
+      transparent 75%),
+    var(--page);
+}
+/* The rail's search field and its hover and current marks are tints of the
+   text, so they take the ground's tone in every palette. */
+.settings-sidebar {
+  --nav-hover: color-mix(in srgb, var(--text) 7%, transparent);
+  --nav-active: color-mix(in srgb, var(--text) 11%, transparent);
+}
+/* Cards let the glow through: a dark card is the text's tint over the page
+   rather than a solid step, a light one a nearly opaque white. On a plain
+   page each looks as it did. */
+:root {
+  --card-glass: light-dark(color-mix(in srgb, var(--surface) 88%, transparent), color-mix(in srgb, var(--text) 5.5%, transparent));
+}
+:is(.group-card, .dict-list:not(:empty), .settings-search-results ul, .empty-state, .import-drop-zone,
+  .recommendations, .dict-group-create, .dict-group, .custom-dictionary-form, .local-file-access,
+  .backup-preview) {
+  background: var(--card-glass);
+}
+@media (forced-colors: active) {
+  .page {
+    background: Canvas;
+  }
+}
+
+/* ---------------------------------------------------------------- Dictionary selection */
+/* Select visible sits beside the search as a control of the same height. */
+.dict-controls {
+  gap: 8px;
+}
+.dict-controls > .dict-select-all {
+  flex: none;
+  gap: 8px;
+  align-self: stretch;
+  padding: 0 12px 0 10px;
   border-radius: var(--radius-control);
-  background: var(--surface-sunken);
+  background: var(--control-bg);
+  cursor: pointer;
+  user-select: none;
+}
+.dict-controls > .dict-select-all:hover {
+  background: var(--control-bg-hover);
+}
+/* Bulk actions float at the bottom of the window while dictionaries are
+   selected, so choosing a row never moves the list under the pointer. */
+.dict-bulk-actions {
+  position: sticky;
+  z-index: 20;
+  bottom: 16px;
+  flex-wrap: nowrap;
+  gap: 2px;
+  /* Pulled up through the section's 32px gap to sit just under the list. */
+  margin: -24px 0 0;
+  padding: 6px;
+  overflow-x: auto;
+  border-radius: var(--radius-surface);
+  background: light-dark(color-mix(in srgb, var(--text) 6%, var(--surface)), color-mix(in srgb, var(--text) 10%, var(--surface)));
+}
+/* The count leads; the actions gather at the far end. */
+.dict-bulk-actions > .dict-selection-count {
+  margin-right: auto;
+}
+.dict-bulk-actions[hidden] {
+  display: none;
+}
+.dict-bulk-actions > .dict-selection-count {
+  padding: 0 10px 0 12px;
+  color: var(--text);
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+.dict-bulk-actions > button {
+  flex: none;
+  min-height: 32px;
+  background: transparent;
+}
+.dict-bulk-actions > button:hover:not(:disabled) {
+  background: var(--control-fill-hover);
+}
+@media (forced-colors: active) {
+  .dict-bulk-actions {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Start over: the personal-dictionary choice and the one action on a line. */
+.library-reset-row {
+  align-items: center;
+  justify-content: space-between;
+}
+.library-reset-row > .check-row {
+  margin: 0;
+}
+/* Its outcome reads on a line of its own under them. */
+.library-reset-row > #library-reset-status {
+  flex-basis: 100%;
+}
+.library-reset-row > #library-reset-status:empty {
+  display: none;
+}
+/* A confirmation: the question, what it means, then Cancel and the action,
+   which wears the danger tint of Settings' other removals, a step stronger. */
+.confirm-dialog #confirm-dialog-accept {
+  background: color-mix(in srgb, var(--error) 18%, var(--layer));
+}
+.confirm-dialog #confirm-dialog-accept:hover {
+  background: color-mix(in srgb, var(--error) 26%, var(--layer));
+}
+.confirm-dialog p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: var(--font-small);
+  text-wrap: pretty;
 }
